@@ -11,6 +11,7 @@ Live: https://ucsb-pace.github.io/ferpa-data-reports/
 - `sample-data/` - synthetic advising-notes sample (CSV + XLSX), no real records
 - `ferpa_pipeline_colab.ipynb` - ready-to-run companion notebook
 - `knowledge/ferpa-data-reports.md` - the chat assistant's knowledge source
+- `worker/` - the Cloudflare Worker proxy source (deploy with wrangler; the key is a server-side secret)
 
 The "Ask the assistant" chat calls a Cloudflare Worker proxy that holds the bot API key
 server-side, so the key is never in this repo or the page.

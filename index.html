@@ -295,6 +295,7 @@
       <a href="#pattern">The transferable pattern</a>
       <a href="#ci-loop">The continuous-improvement loop</a>
       <a href="#ferpa">FERPA-safe AI &amp; the gateway</a>
+      <a href="#get-key">Get your LLM Sandbox key</a>
       <h4>The API</h4>
       <a href="#sandbox-api">LLM Sandbox API reference</a>
       <a href="#sandbox-api-auth" class="sub">Base URL &amp; auth</a>
@@ -308,6 +309,7 @@
       <h4>No-code path</h4>
       <a href="#colab">Google Colab + Secrets</a>
       <a href="#worked-example">End-to-end worked example</a>
+      <a href="#vscode">Beyond Colab: VS Code</a>
       <h4>Make it yours</h4>
       <a href="#principles">Principles &amp; checklist</a>
       <a href="#how-made">How this was made</a>
@@ -464,6 +466,28 @@
       <div class="takeaway">If the model call leaves UCSB's vetted boundary, nothing else in this guide matters. Pick the gateway first.</div>
     </section>
 
+    <!-- ─────────────────────────── GET YOUR KEY ─────────────────────────── -->
+    <section id="get-key">
+      <p class="kicker">Before you write (or generate) a single line</p>
+      <h2>Get your LLM Sandbox key (UCSB) <a class="anchorlink" href="#get-key">#</a></h2>
+      <p>Everything here needs two things from UCSB's LLM Sandbox: a <strong>base URL</strong> and an <strong>API key</strong>. There is no cost, this is the campus gateway. Here is how to get them.</p>
+
+      <h3>The quick way: a direct key</h3>
+      <p>Open the LLM Sandbox dev console at <a href="https://llmdev.cloud.ucsb.edu" target="_blank" rel="noopener">llmdev.cloud.ucsb.edu</a>, then the menu (top left) &rarr; <strong>Settings</strong> &rarr; <strong>My API Keys</strong>. You will see your <strong>Base URL</strong> (paste it as the <code>base_url</code> in any OpenAI-compatible client, or as <code>LLM_SANDBOX_BASE_URL</code> in Colab Secrets) and a <strong>Generate new key</strong> button.</p>
+      <figure class="shotfig">
+        <img class="shot" src="img/ls-apikeys.png" alt="LLM Sandbox My API Keys page: the Base URL field and a Generate new key button, with numbered callouts">
+        <figcaption>Settings &rarr; My API Keys: your Base URL, plus Generate new key. The key is shown only once, copy it right away.</figcaption>
+      </figure>
+      <div class="callout warn"><span class="ti">Treat the key like a password</span>
+        Anyone with your key can call the API as you, and the usage counts against your quota. Store it in a secrets manager (<a href="#colab">Colab Secrets</a>, an environment variable, or a vault), <strong>never</strong> in a cell, a commit, or a public page. If a key might have leaked, revoke it and generate a new one.
+      </div>
+
+      <h3>The other way: create a key from a bot</h3>
+      <p>You can also mint a key from a bot you have set up: <strong>Settings &rarr; My Bots</strong>, open a bot, click its three-dots menu, and choose <strong>Create API</strong>. That is handy for a key scoped to a specific bot. For just running the code on this site, the direct key above is simpler.</p>
+      <p class="muted">No access to the console yet? LLM Sandbox is open to UCSB affiliates; if you cannot reach it, ask your department IT or the LLM Sandbox team.</p>
+      <div class="takeaway">Two values, the base URL and a key, unlock everything here. Grab them once, store the key as a Secret, and you never touch it again.</div>
+    </section>
+
     <!-- ─────────────────────────── API REFERENCE ─────────────────────────── -->
     <section id="sandbox-api">
       <p class="kicker">The centerpiece</p>
@@ -519,7 +543,7 @@
           <tr><td><code>messages</code></td><td>array</td><td>Required. <code>{role, content}</code> objects; roles are <code>system</code>, <code>user</code>, <code>assistant</code>.</td></tr>
           <tr><td><code>max_tokens</code></td><td>integer</td><td>Cap on the completion length. this pipeline uses <code>1024</code>, enough for a keyword line + two short paragraphs.</td></tr>
           <tr><td><code>temperature</code></td><td>number</td><td>Optional. Lower (0 to 0.4) for consistent, reproducible summaries; the cache makes determinism cheap.</td></tr>
-          <tr><td><code>stream</code></td><td>boolean</td><td>Optional. For batch report generation you almost always want <code>false</code>.</td></tr>
+          <tr><td><code>stream</code></td><td>boolean</td><td>Optional. For batch report generation you almost always want <code>false</code>. For a live chat UI, set <code>true</code> and read the server-sent-event token chunks as they arrive.</td></tr>
         </tbody>
       </table>
       <div class="callout note"><span class="ti">Picking a model</span>
@@ -764,6 +788,7 @@ Keep everything else the same.</code></pre></div>
       </div>
 
       <h3>Step 1, Store your key in Colab Secrets</h3>
+      <p class="muted">Don't have a key yet? Grab one first, see <a href="#get-key">Get your LLM Sandbox key</a> (it takes a minute).</p>
       <ol>
         <li>Open a new notebook at <a href="https://colab.research.google.com" target="_blank" rel="noopener">colab.research.google.com</a>.</li>
         <li>In the left sidebar, click the <strong>🔑 key icon</strong> ("Secrets").</li>
@@ -959,6 +984,26 @@ styles = getSampleStyleSheet()
       </div>
     </section>
 
+    <!-- ─────────────────────────── BEYOND COLAB: VS CODE ─────────────────────────── -->
+    <section id="vscode">
+      <p class="kicker">When you outgrow Colab</p>
+      <h2>Beyond Colab: VS Code (free, and still no-code) <a class="anchorlink" href="#vscode">#</a></h2>
+      <p>Colab is the easiest place to start, and it covers this entire pipeline. When you want to keep files on your own machine, work offline, or manage a bigger project, the usual next step is <strong>Visual Studio Code</strong> (VS Code), Microsoft's code editor. Two things to know before you worry:</p>
+      <ul>
+        <li><strong>It's free.</strong> Download it for Windows, Mac, or Linux, or run it right in your browser at <a href="https://vscode.dev" target="_blank" rel="noopener">vscode.dev</a> with nothing to install.</li>
+        <li><strong>It's also a no-code tool.</strong> VS Code calls itself an "AI code editor": with an AI assistant (GitHub Copilot, Cline, Continue, and others) you describe what you want in plain English and it writes and edits the code for you, the exact same move you already learned with <a href="#colab">Gemini in Colab</a>. So "the jump" to VS Code is not a jump into writing code; it is a jump into a roomier place to let AI write it.</li>
+      </ul>
+      <figure class="shotfig">
+        <img class="shot" src="img/vscode-home.png" alt="VS Code homepage: the open source AI code editor, with a free Download button, annotated">
+        <figcaption>VS Code calls itself an "AI code editor", the assistant does the typing, and it is a free download.</figcaption>
+      </figure>
+      <p>You do not need VS Code for anything on this site. But if your current tools feel limiting and Colab is starting to feel small, this is the gentle next step, and the "ask the AI to write it" habit carries straight over.</p>
+      <figure class="shotfig">
+        <img class="shot" src="img/vscode-dev.png" alt="VS Code running in the browser at vscode.dev, annotated">
+        <figcaption>Not ready to install anything? The same editor runs free in your browser at vscode.dev.</figcaption>
+      </figure>
+    </section>
+
     <!-- ─────────────────────────── PRINCIPLES ─────────────────────────── -->
     <section id="principles">
       <p class="kicker">Carry these, forget the rest</p>
@@ -1018,6 +1063,9 @@ styles = getSampleStyleSheet()
           <tr><td>Delivery</td><td>Published REST API + this in-page widget (async post, then poll)</td><td>In-page chat with no separate login wall</td></tr>
         </tbody>
       </table>
+
+      <h3>It's open source, including the key-hiding trick</h3>
+      <p>This whole site is a public repo: <a href="https://github.com/UCSB-PaCE/ferpa-data-reports" target="_blank" rel="noopener">github.com/UCSB-PaCE/ferpa-data-reports</a>. It is plain static HTML on GitHub Pages, so updating it is a <code>git push</code>. The one piece worth a developer's attention: the chat widget here is on a <strong>public</strong> page, yet its API key is nowhere in the source. The widget calls a tiny <strong>Cloudflare Worker</strong> proxy that holds the key as a server-side secret, allows only this origin, and rate-limits requests, then forwards to the bot API with the key attached. That is the standard pattern for putting a keyed API behind a public site, and the Worker code is short enough to read in a minute.</p>
 
       <div class="callout good"><span class="ti">The disclaimer, plainly</span>
         Everything on this site, the words, the code, the diagrams, the annotated screenshots, and the assistant, was generated with the help of UCSB's LLM Sandbox. An AI drafted, proofread, and adjusted the content; a human supervised, reviewed, and approved it before publication. The same model family the pipeline uses for analysis also helped write these words. If you spot something off, that is exactly the human-at-the-gate check this site preaches: let us know and we will fix it.
@@ -1153,8 +1201,8 @@ styles = getSampleStyleSheet()
 /* Per-section "revised N times" badges: honest counts of wording adjustments during the build. */
 (function(){
   var DATE = "Jun 18, 2026";
-  var revs = {overview:3, pattern:3, "ci-loop":3, ferpa:2, "sandbox-api":2, quickstart:2,
-              caching:1, economics:2, colab:4, "worked-example":1, principles:2, "how-made":2};
+  var revs = {overview:3, pattern:3, "ci-loop":3, ferpa:2, "get-key":1, "sandbox-api":2, quickstart:2,
+              caching:1, economics:2, colab:4, "worked-example":1, vscode:1, principles:2, "how-made":3};
   Object.keys(revs).forEach(function(id){
     var sec = document.getElementById(id); if(!sec) return;
     var h = sec.querySelector('h2'); if(!h) return;

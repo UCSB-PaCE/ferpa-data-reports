@@ -1,0 +1,23 @@
+{
+  // Cloudflare Worker proxy for the LLM Sandbox bot API (hides the key from the public site).
+  "name": "ferpa-reports-bot-proxy",
+  "main": "worker.js",
+  "compatibility_date": "2026-06-01",
+
+  // Public, non-secret config. BOT_API_KEY is a SECRET (see README), never put it here.
+  "vars": {
+    "BOT_API_BASE": "https://3em1pblmjl.execute-api.us-east-1.amazonaws.com/api"
+  },
+
+  // Native per-IP rate limit. Verify/adjust at deploy; the Worker no-ops if absent.
+  "unsafe": {
+    "bindings": [
+      {
+        "name": "RATE_LIMITER",
+        "type": "ratelimit",
+        "namespace_id": "1001",
+        "simple": { "limit": 20, "period": 60 }
+      }
+    ]
+  }
+}
