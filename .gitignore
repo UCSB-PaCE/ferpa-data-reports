@@ -1,0 +1,15 @@
+# Build / scratch artifacts (never commit)
+__pycache__/
+*.pyc
+img/raw-*.png
+raw-*.png
+_mk_*.py
+
+# Cloudflare Worker local cache
+worker/.wrangler/
+node_modules/
+
+# Editor / OS / tooling
+.playwright-mcp/
+.DS_Store
+Thumbs.db
