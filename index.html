@@ -472,16 +472,28 @@
       <h2>Get your LLM Sandbox key (UCSB) <a class="anchorlink" href="#get-key">#</a></h2>
       <p>Everything here needs two things from UCSB's LLM Sandbox: a <strong>base URL</strong> and an <strong>API key</strong>. There is no cost, this is the campus gateway. Here is how to get them.</p>
 
-      <h3>Create a key from a bot (available now)</h3>
-      <p>In <strong>LLM Sandbox</strong> (<a href="https://llmsandbox.cloud.ucsb.edu" target="_blank" rel="noopener">llmsandbox.cloud.ucsb.edu</a>), go to <strong>Settings &rarr; My Bots</strong>, open or create a bot, click its three-dots menu, and choose <strong>Create API</strong>. That gives you an API key tied to that bot. This route is open to anyone with LLM Sandbox access, so it is the one to use if you are not sure.</p>
+      <h3>Publish a bot and use its API (available now)</h3>
+      <p>Build a bot in <strong>LLM Sandbox</strong> (<a href="https://llmsandbox.cloud.ucsb.edu" target="_blank" rel="noopener">llmsandbox.cloud.ucsb.edu</a>), give it instructions and, if you like, knowledge (files or a URL). Then from <strong>Settings &rarr; My Bots</strong> open the bot's three-dots menu and choose <strong>API Publish Settings</strong>.</p>
+      <figure class="shotfig">
+        <img class="shot" src="img/bot-api-menu.png" alt="My Bots list with a bot's three-dots menu open and API Publish Settings highlighted">
+        <figcaption>Settings &rarr; My Bots &rarr; the bot's three-dots menu &rarr; API Publish Settings.</figcaption>
+      </figure>
+      <p>Publishing deploys a small REST API for that bot and gives you <strong>both</strong> an <strong>API Endpoint</strong> (the URL) and an <strong>API Key</strong> on one screen, each with a copy button, so you do not have to hunt for the URL separately. Copy both; the key stays hidden until you click <strong>Show</strong>. This route is open to anyone with LLM Sandbox access, and it is exactly the endpoint plus key that powers the "Ask the assistant" widget on this page.</p>
+      <figure class="shotfig">
+        <img class="shot" src="img/bot-api-settings.png" alt="API Publish Settings screen showing the API Endpoint URL and an API Key that is hidden until Show, each with a copy button">
+        <figcaption>The publish screen hands you the API Endpoint (URL) and the API Key together. Both have copy buttons; reveal the key with Show.</figcaption>
+      </figure>
       <div class="callout warn"><span class="ti">Treat the key like a password</span>
         Anyone with your key can call the API as you, and the usage counts against your quota. Store it in a secrets manager (<a href="#colab">Colab Secrets</a>, an environment variable, or a vault), <strong>never</strong> in a cell, a commit, or a public page. If a key might have leaked, revoke it and generate a new one.
       </div>
+      <div class="callout note"><span class="ti">Bot API vs raw model calls</span>
+        A published bot API talks to a <em>bot you configured</em> (its own prompt and knowledge), so it is a different shape from the raw, OpenAI-compatible model calls in the <a href="#sandbox-api">code snippets</a> below. Reach for the bot API when you want a hosted assistant; reach for the direct key below when you want to call the model yourself.
+      </div>
 
       <h3>Get a direct key and your base URL (developer preview)</h3>
-      <p>LLM Sandbox also has a <strong>developer console</strong> at <a href="https://llmdev.cloud.ucsb.edu" target="_blank" rel="noopener">llmdev.cloud.ucsb.edu</a>. There, under the menu (top left) &rarr; <strong>Settings &rarr; My API Keys</strong>, you can see your <strong>Base URL</strong> (paste it as the <code>base_url</code> in any OpenAI-compatible client, or as <code>LLM_SANDBOX_BASE_URL</code> in Colab Secrets) and a <strong>Generate new key</strong> button for a direct, account-level key. This is the key style this project uses.</p>
+      <p>For the raw, OpenAI-compatible calls the pipeline code uses, LLM Sandbox has a <strong>developer console</strong> at <a href="https://llmdev.cloud.ucsb.edu" target="_blank" rel="noopener">llmdev.cloud.ucsb.edu</a>. Under the menu (top left) &rarr; <strong>Settings &rarr; My API Keys</strong> you can see your <strong>Base URL</strong> (paste it as the <code>base_url</code> in any OpenAI-compatible client, or as <code>LLM_SANDBOX_BASE_URL</code> in Colab Secrets) and a <strong>Generate new key</strong> button for a direct, account-level key. This is the key style the pipeline code and the Colab notebook here use.</p>
       <div class="callout note"><span class="ti">Currently in preview</span>
-        The developer console is in preview for people on the LLM Sandbox dev program, and it will roll out more broadly over time. If you do not have access to it yet, use the bot route above to get a key now, and ask the LLM Sandbox team for your base URL.
+        The developer console is in preview for people on the LLM Sandbox dev program, and it will roll out more broadly over time. If you do not have access to it yet, ask the LLM Sandbox team, and use the bot route above in the meantime.
       </div>
       <figure class="shotfig">
         <img class="shot" src="img/ls-apikeys.png" alt="LLM Sandbox developer console, My API Keys page: the Base URL field and a Generate new key button, with numbered callouts">
@@ -772,8 +784,18 @@ db.execute(<span class="ts">"""
         <figcaption>Add a cell, run it (or press Run all), and read the output below. Nothing to install.</figcaption>
       </figure>
 
+      <h3>Meet Gemini, Colab's built-in AI helper</h3>
+      <p>Colab ships with <strong>Gemini</strong>, an AI assistant that writes and explains code from a plain-English prompt. This is the helper that makes the no-code path work: ask it to "read advising_notes.xlsx and show the first rows" and it drops a runnable cell in for you. Open it from the spark button, or click <em>generate</em> inside any empty cell.</p>
+      <figure class="shotfig">
+        <img class="shot" src="img/colab-gemini.png" alt="Annotated Colab Gemini panel and its entry points: generate-in-cell, the chat panel, the model picker, and the spark toggle">
+        <figcaption>Ask in plain English; Gemini writes the cell. Pick the model in the prompt box.</figcaption>
+      </figure>
+      <div class="callout note"><span class="ti">Gemini in Colab is UCSB-approved up to P4</span>
+        At UCSB, Gemini is approved for Institutional Information up to <a href="https://cio.ucsb.edu/artificial-intelligence/genai-tools-ucsb" target="_blank" rel="noopener">Protection Level P4</a>, so within that approval it can handle protected data per policy. Always confirm your data's level first on UCSB's <a href="https://cio.ucsb.edu/artificial-intelligence" target="_blank" rel="noopener">data protection levels</a> page. Two habits still apply everywhere: never paste a secret or API key into any AI prompt, and remember that your repeatable, cached pipeline analysis runs through the <strong>LLM Sandbox gateway</strong>, which is what keeps results consistent across runs.
+      </div>
+
       <h3>The trick for non-coders: you don't edit the code, Gemini does</h3>
-      <p>Here is what makes this genuinely no-code. Every cell comes pre-filled with working example code. To make a cell fit <em>your</em> spreadsheet, you do not edit it by hand. You click the cell, tell <strong>Gemini</strong> (Colab's built-in AI helper) what your columns are called in plain English, and it rewrites the cell for you. Then you click <strong>Accept &amp; Run</strong>. That is the whole skill, and you already have it.</p>
+      <p>Now put Gemini to work. Every cell comes pre-filled with working example code. To make a cell fit <em>your</em> spreadsheet, you do not edit it by hand. You click the cell, tell <strong>Gemini</strong> what your columns are called in plain English, and it rewrites the cell for you. Then you click <strong>Accept &amp; Run</strong>. That is the whole skill, and you already have it.</p>
       <figure class="shotfig">
         <img class="shot" src="img/colab-gemini-edit.png" alt="Colab with Gemini: a plain-English request in the Gemini panel, and the cell rewritten as a red and green diff with an Accept and Run button">
         <figcaption>You describe your spreadsheet in plain English; Gemini rewrites the cell (red = old, green = your version) and you click Accept &amp; Run.</figcaption>
@@ -834,16 +856,6 @@ df = pd.read_excel(<span class="ts">"advising_notes.xlsx"</span>)     <span clas
 df.head()</code></pre></div>
       <div class="callout warn"><span class="ti">FERPA when you attach data</span>
         Two cautions. (1) <strong>Uploaded files go to temporary session storage</strong> on Google infrastructure and vanish when the runtime recycles; mounting Drive is persistent but still Google-hosted. (2) For <strong>real</strong> FERPA records, confirm Colab is permitted for that data's <a href="https://cio.ucsb.edu/artificial-intelligence" target="_blank" rel="noopener">UCSB protection level</a>, prefer mounting from an approved Google Workspace (EDU) account, de-identify first, and remember the habit: <strong>only the free text ever leaves your notebook for the gateway.</strong> For a dry run, use synthetic data.
-      </div>
-
-      <h3>Bonus: the built-in AI helper (Gemini in Colab)</h3>
-      <p>Colab ships with <strong>Gemini</strong>, an AI assistant that writes and explains code from a plain-English prompt. It is genuinely handy on the no-code path: ask it to "read advising_notes.xlsx and show the first rows" and it drops a runnable cell in for you. Open it from the spark button, or click <em>generate</em> inside any empty cell.</p>
-      <figure class="shotfig">
-        <img class="shot" src="img/colab-gemini.png" alt="Annotated Colab Gemini panel and its entry points: generate-in-cell, the chat panel, the model picker, and the spark toggle">
-        <figcaption>Ask in plain English; Gemini writes the cell. Pick the model in the prompt box.</figcaption>
-      </figure>
-      <div class="callout note"><span class="ti">Gemini in Colab is UCSB-approved up to P4</span>
-        At UCSB, Gemini is approved for Institutional Information up to <a href="https://cio.ucsb.edu/artificial-intelligence/genai-tools-ucsb" target="_blank" rel="noopener">Protection Level P4</a>, so within that approval it can handle protected data per policy. Always confirm your data's level first on UCSB's <a href="https://cio.ucsb.edu/artificial-intelligence" target="_blank" rel="noopener">data protection levels</a> page. Two habits still apply everywhere: never paste a secret or API key into any AI prompt, and remember that your repeatable, cached pipeline analysis runs through the <strong>LLM Sandbox gateway</strong>, which is what keeps results consistent across runs.
       </div>
 
       <h3>Charts: let Gemini write the chart, don't let AI draw it</h3>
@@ -1203,8 +1215,8 @@ styles = getSampleStyleSheet()
 /* Per-section "revised N times" badges: honest counts of wording adjustments during the build. */
 (function(){
   var DATE = "Jun 18, 2026";
-  var revs = {overview:3, pattern:3, "ci-loop":3, ferpa:2, "get-key":2, "sandbox-api":2, quickstart:2,
-              caching:1, economics:2, colab:4, "worked-example":1, vscode:1, principles:2, "how-made":3};
+  var revs = {overview:3, pattern:3, "ci-loop":3, ferpa:2, "get-key":3, "sandbox-api":2, quickstart:2,
+              caching:1, economics:2, colab:5, "worked-example":1, vscode:1, principles:2, "how-made":3};
   Object.keys(revs).forEach(function(id){
     var sec = document.getElementById(id); if(!sec) return;
     var h = sec.querySelector('h2'); if(!h) return;
