@@ -472,19 +472,21 @@
       <h2>Get your LLM Sandbox key (UCSB) <a class="anchorlink" href="#get-key">#</a></h2>
       <p>Everything here needs two things from UCSB's LLM Sandbox: a <strong>base URL</strong> and an <strong>API key</strong>. There is no cost, this is the campus gateway. Here is how to get them.</p>
 
-      <h3>The quick way: a direct key</h3>
-      <p>Open the LLM Sandbox dev console at <a href="https://llmdev.cloud.ucsb.edu" target="_blank" rel="noopener">llmdev.cloud.ucsb.edu</a>, then the menu (top left) &rarr; <strong>Settings</strong> &rarr; <strong>My API Keys</strong>. You will see your <strong>Base URL</strong> (paste it as the <code>base_url</code> in any OpenAI-compatible client, or as <code>LLM_SANDBOX_BASE_URL</code> in Colab Secrets) and a <strong>Generate new key</strong> button.</p>
-      <figure class="shotfig">
-        <img class="shot" src="img/ls-apikeys.png" alt="LLM Sandbox My API Keys page: the Base URL field and a Generate new key button, with numbered callouts">
-        <figcaption>Settings &rarr; My API Keys: your Base URL, plus Generate new key. The key is shown only once, copy it right away.</figcaption>
-      </figure>
+      <h3>Create a key from a bot (available now)</h3>
+      <p>In <strong>LLM Sandbox</strong> (<a href="https://llmsandbox.cloud.ucsb.edu" target="_blank" rel="noopener">llmsandbox.cloud.ucsb.edu</a>), go to <strong>Settings &rarr; My Bots</strong>, open or create a bot, click its three-dots menu, and choose <strong>Create API</strong>. That gives you an API key tied to that bot. This route is open to anyone with LLM Sandbox access, so it is the one to use if you are not sure.</p>
       <div class="callout warn"><span class="ti">Treat the key like a password</span>
         Anyone with your key can call the API as you, and the usage counts against your quota. Store it in a secrets manager (<a href="#colab">Colab Secrets</a>, an environment variable, or a vault), <strong>never</strong> in a cell, a commit, or a public page. If a key might have leaked, revoke it and generate a new one.
       </div>
 
-      <h3>The other way: create a key from a bot</h3>
-      <p>You can also mint a key from a bot you have set up: <strong>Settings &rarr; My Bots</strong>, open a bot, click its three-dots menu, and choose <strong>Create API</strong>. That is handy for a key scoped to a specific bot. For just running the code on this site, the direct key above is simpler.</p>
-      <p class="muted">No access to the console yet? LLM Sandbox is open to UCSB affiliates; if you cannot reach it, ask your department IT or the LLM Sandbox team.</p>
+      <h3>Get a direct key and your base URL (developer preview)</h3>
+      <p>LLM Sandbox also has a <strong>developer console</strong> at <a href="https://llmdev.cloud.ucsb.edu" target="_blank" rel="noopener">llmdev.cloud.ucsb.edu</a>. There, under the menu (top left) &rarr; <strong>Settings &rarr; My API Keys</strong>, you can see your <strong>Base URL</strong> (paste it as the <code>base_url</code> in any OpenAI-compatible client, or as <code>LLM_SANDBOX_BASE_URL</code> in Colab Secrets) and a <strong>Generate new key</strong> button for a direct, account-level key. This is the key style this project uses.</p>
+      <div class="callout note"><span class="ti">Currently in preview</span>
+        The developer console is in preview for people on the LLM Sandbox dev program, and it will roll out more broadly over time. If you do not have access to it yet, use the bot route above to get a key now, and ask the LLM Sandbox team for your base URL.
+      </div>
+      <figure class="shotfig">
+        <img class="shot" src="img/ls-apikeys.png" alt="LLM Sandbox developer console, My API Keys page: the Base URL field and a Generate new key button, with numbered callouts">
+        <figcaption>In the developer console (preview): Settings &rarr; My API Keys shows your Base URL plus Generate new key. The key is shown only once, copy it right away.</figcaption>
+      </figure>
       <div class="takeaway">Two values, the base URL and a key, unlock everything here. Grab them once, store the key as a Secret, and you never touch it again.</div>
     </section>
 
@@ -1201,7 +1203,7 @@ styles = getSampleStyleSheet()
 /* Per-section "revised N times" badges: honest counts of wording adjustments during the build. */
 (function(){
   var DATE = "Jun 18, 2026";
-  var revs = {overview:3, pattern:3, "ci-loop":3, ferpa:2, "get-key":1, "sandbox-api":2, quickstart:2,
+  var revs = {overview:3, pattern:3, "ci-loop":3, ferpa:2, "get-key":2, "sandbox-api":2, quickstart:2,
               caching:1, economics:2, colab:4, "worked-example":1, vscode:1, principles:2, "how-made":3};
   Object.keys(revs).forEach(function(id){
     var sec = document.getElementById(id); if(!sec) return;
