@@ -17,22 +17,36 @@ UCSB's **LLM Sandbox** API, with a no-code Google Colab path for non-technical u
 
 ## How it is built and deployed
 
-This is **plain static HTML**, no build step. `index.html` is a single self-contained
-page (inline CSS + JS). To publish: commit and `git push origin main`; GitHub Pages
-auto-deploys in ~30-60s. Always verify live afterward (curl the page / check images 200).
+This is **plain static HTML**, no build step. The site is **four pages sharing one
+`styles.css` and one `app.js`**: `index.html` (the goal chooser, served at the root),
+`concept.html`, `sandbox.html`, and `guide.html` (the comprehensive guide). Per-page data
+(the "revised N×" badge counts/date and the chat's suggested questions) is set in a small
+inline `<script>` that runs before `app.js`. There is **no test suite, no linter, and no
+package manager** (no `package.json`, no CI workflow); "verify" means looking at the page
+(and running axe-core for accessibility), not running a unit-test runner.
+To publish: commit and `git push origin main`; GitHub Pages auto-deploys in ~30-60s.
+Always verify live afterward (curl the pages / check assets 200).
 
 ```bash
+# preview locally before pushing (relative asset paths + the chat widget need a server,
+# not a file:// open):
+python -m http.server 8000      # then open http://localhost:8000/
+
 # typical change loop
-#   1. edit index.html (or assets)
+#   1. edit a page (or styles.css / app.js)
 #   2. git add -A && git commit && git push origin main
-#   3. curl -s https://ucsb-pace.github.io/ferpa-data-reports/index.html | grep <new text>
+#   3. curl -s https://ucsb-pace.github.io/ferpa-data-reports/sandbox.html | grep <new text>
 ```
 
 ## File map
 
 | Path | Purpose |
 |------|---------|
-| `index.html` | The whole site. Sections: overview, 6-stage pattern, continuous-improvement loop, FERPA guardrails, **get-key** (how to get an LLM Sandbox key), API reference, system-agnostic snippets, SQLite caching, token economics, Colab + Secrets + Gemini, advising worked example, charts, VS Code, principles, "How this was made". Per-section "revised N× · date" badges + copy buttons live in inline `<script>` blocks near the bottom. |
+| `index.html` | The **goal chooser** (root URL): a short hero + three track cards routing readers to the editions. |
+| `concept.html` | **Concept edition**: the transferable 6-stage pattern, the continuous-improvement loop, FERPA principles. No keys, no code. |
+| `sandbox.html` | **Sandbox edition** (flagship): get an LLM Sandbox key, the API reference, verified copy-paste snippets, and the **common-errors cookbook**. |
+| `guide.html` | **Full guide** (the original single page, renamed): all sections end to end, cross-linked to the editions. Sections: overview, 6-stage pattern, CI loop, FERPA, get-key, API reference, snippets, SQLite caching, token economics, Colab + Secrets + Gemini, advising worked example, VS Code, principles, "How this was made". |
+| `styles.css`, `app.js` | The **shared design system** + behaviors (tabbed code, copy buttons, scrollspy, mobile nav, chat widget, "revised N×" badge renderer) used by all four pages. Edit these once; every page updates. |
 | `img/` | Annotated screenshots (PNG). `_annot.py` is the annotation helper (crop / box / numbered badge / legend). |
 | `knowledge/ferpa-data-reports.md` | The chat assistant's curated knowledge file (one of its two sources; see below). |
 | `sample-data/` | Synthetic `advising_notes_sample.csv` / `.xlsx` (KPI columns; no real records). |
@@ -103,6 +117,23 @@ called out as especially helpful), but it currently teaches **three things at on
 the transferable process, and how to drive the Sandbox), which can overwhelm even
 experienced readers. The reviewer also noted that official Sandbox docs were **sparse and
 had syntax errors** they had to fix with AI (Cursor). The roadmap responds to both.
+
+### Status (shipped 2026-06-21)
+- **P1 split: done.** `index.html` is now the goal chooser; the full guide moved to
+  `guide.html`; `concept.html` and `sandbox.html` are the focused editions. All four share
+  `styles.css` + `app.js` (P2 extraction done too).
+- **P1 cookbook: done.** `sandbox.html` carries a common-errors cookbook.
+- **Live-verified the gateway (2026-06-21), corrected the docs:** the key authenticates as
+  **either** `Authorization: Bearer` **or** `x-api-key` (the old "x-api-key, not Bearer"
+  claim was wrong and is fixed sitewide, including `knowledge/`), the Base URL ends in
+  `/v1`, and the real model catalog was captured (`claude-v4.6-sonnet`, `claude-v4.5-haiku`,
+  `amazon-nova-*`, `llama-4-*`, `gpt-4o` aliases, etc.). All four pages pass **axe-core
+  WCAG 2.1 AA** (0 violations).
+- **Still open:** add the new page URLs (`concept.html`, `sandbox.html`, `guide.html`) to the
+  bot's URL knowledge and re-sync; P3 niceties (`details`/`summary` progressive disclosure,
+  a mobile sticky section menu, streaming chat); fresh annotated key-creation screenshots.
+
+The items below are kept for context on the original intent.
 
 ### P1 — Split into audience-focused editions
 Keep the current comprehensive page as the "full guide", and add focused entry points that

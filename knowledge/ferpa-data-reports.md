@@ -68,11 +68,13 @@ UCSB's LLM Sandbox exposes an OpenAI-compatible Chat Completions API in front of
 
 Base URL and authentication:
 - Base URL: `https://<your-llm-sandbox-host>/v1`. From your institution's gateway admin. Ends in `/v1` like the OpenAI API.
-- Auth header: `x-api-key: <YOUR_KEY>`. Issued by the gateway. This header authenticates the call.
-- Model: for example `claude-v4.5-haiku`. From the gateway's model catalog; ask your admin for allowed model IDs.
+- Auth header: send your key as either `Authorization: Bearer <KEY>` (what OpenAI SDKs send automatically) or `x-api-key: <KEY>`. Either one authenticates.
+- Model: `claude-v4.5-haiku` is one of many valid IDs. List the live catalog with `GET {BASE_URL}/models`.
 - Content type: `application/json`.
 
-Auth quirk worth knowing: LLM Sandbox authenticates with the `x-api-key` header, not the `Authorization: Bearer` header the OpenAI SDK sends by default. When you use an OpenAI SDK you still pass an api_key (its client requires one), but the gateway ignores the bearer token and reads `x-api-key`. Set both so the SDK is happy and the gateway is authenticated.
+Good news, the key works two ways: LLM Sandbox accepts your key as a standard `Authorization: Bearer <KEY>` (exactly what the OpenAI SDKs already send) or as an `x-api-key: <KEY>` header. Either one authenticates, so a normal OpenAI client works with just a base_url and api_key, no header surgery. The raw HTTP examples use x-api-key because it is explicit; the bearer is equally valid. Verified live against the gateway, June 2026.
+
+Live model catalog (verified June 2026, via GET {BASE_URL}/models): Anthropic claude-v4.6-sonnet, claude-v4.6-opus, claude-v4.5-haiku, claude-v3.7-sonnet, claude-v3.5-haiku, claude-v3-opus; Amazon amazon-nova-pro, amazon-nova-lite, amazon-nova-micro; also llama-4-maverick-17b-instruct, llama-4-scout-17b-instruct, llama3-3-70b-instruct, mistral-large-2, mixtral-8x7b-instruct, deepseek-r1, qwen3-32b, and OpenAI-named aliases like gpt-4o. Always pull the current list from /models; the catalog grows over time.
 
 Endpoint: Chat Completions. `POST {BASE_URL}/chat/completions`. Request body uses model, max_tokens, and a messages array of {role, content} objects (roles are system, user, assistant). Response uses the OpenAI shape: read `choices[0].message.content` and `usage`. The usage object is how you meter cost; on LLM Sandbox the budget is tokens, not dollars, so `total_tokens` is the number that matters. A typical analysis is about 1,060 in plus 254 out, about 1.3K tokens.
 
@@ -86,7 +88,7 @@ Common parameters:
 Picking a model: summarizing short free text into a few keywords and a paragraph is a small, cheap-model job. A Haiku-class model is the right default: fast, low token cost, and more than capable. Reserve larger models for genuinely harder reasoning.
 
 Errors and retries (OpenAI-compatible HTTP status codes):
-- 401 or 403: bad or missing x-api-key. Check the header name and key; do not retry.
+- 401 or 403: key missing, wrong, or revoked. Send a current key as Authorization: Bearer or x-api-key; do not retry.
 - 404: unknown model or wrong path. Verify the model ID and that the base URL ends in /v1.
 - 429: rate or quota limit. Back off and retry with exponential delay. Caching reduces how often you hit this.
 - 5xx: gateway or upstream error. Retry a few times with backoff, then log and skip that record so one failure does not block the batch.
@@ -105,8 +107,7 @@ from openai import OpenAI
 
 client = OpenAI(
     base_url=os.environ["LLM_SANDBOX_BASE_URL"],
-    api_key=os.environ["LLM_SANDBOX_API_KEY"],
-    default_headers={"x-api-key": os.environ["LLM_SANDBOX_API_KEY"]},
+    api_key=os.environ["LLM_SANDBOX_API_KEY"],   # the SDK sends it as Bearer; the gateway accepts it
 )
 
 def analyze(comments):
@@ -123,7 +124,7 @@ def analyze(comments):
     return resp.choices[0].message.content
 ```
 
-Python with requests (no SDK), Node with fetch, and cURL all follow the same shape: POST to `{BASE_URL}/chat/completions` with the `x-api-key` header and a JSON body of model, max_tokens, and messages.
+Python with requests (no SDK), Node with fetch, and cURL all follow the same shape: POST to `{BASE_URL}/chat/completions` with the key in an `x-api-key` (or `Authorization: Bearer`) header and a JSON body of model, max_tokens, and messages.
 
 The two prompts. The insight quality comes mostly from the prompt. The system prompt sets the role. The task prompt asks for a color-coded keyword summary plus a short, citation-grounded insight, which is what stops the model from inventing problems students never raised.
 

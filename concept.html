@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Concept: One Pipeline, Any FERPA Dataset | FERPA Data to Reports</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="alternate icon" href="favicon.svg">
+<link rel="apple-touch-icon" href="favicon.svg">
+<meta name="description" content="The transferable idea behind turning any FERPA-protected dataset into shareable reports: the six-stage pattern, the continuous-improvement loop, and the FERPA principles. No keys, no code.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Nunito+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip-link" href="#content">Skip to content</a>
+
+<header class="topbar">
+  <div class="brand">
+    <img src="https://www.professional.ucsb.edu/sites/default/files/2025-05/Logo_PaCE_2025_Full.png" alt="UCSB PaCE logo">
+    <img src="https://otl.ucsb.edu/sites/default/files/images/ai-cop-spring-symposium-2026_logo.png" alt="UCSB AI Community of Practice logo">
+    <div class="sep"></div>
+    <div class="tag">FERPA Data &rarr; Reports
+      <small>The concept</small>
+    </div>
+  </div>
+  <div class="pills">
+    <button class="menu-toggle" id="menuToggle" aria-expanded="false">&#9776; Contents</button>
+    <a class="pill ghost" href="index.html">All paths</a>
+    <a class="pill link" href="sandbox.html">Use the Sandbox &rarr;</a>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav aria-label="Table of contents">
+      <p class="navgroup">The concept</p>
+      <a href="#pattern">The transferable pattern</a>
+      <a href="#ci-loop">The continuous-improvement loop</a>
+      <a href="#ferpa">FERPA-safe AI</a>
+      <a href="#principles">Three principles</a>
+      <p class="navgroup">Go deeper</p>
+      <a href="sandbox.html">Use the Sandbox &rarr;</a>
+      <a href="guide.html">The full pipeline &rarr;</a>
+    </nav>
+  </aside>
+
+  <main id="content" tabindex="-1">
+    <p class="crumb"><a href="index.html">Choose your path</a> <span class="sep">/</span> The concept</p>
+
+    <div class="hero">
+      <p class="kicker">The transferable idea</p>
+      <h1>The pattern, not the plumbing</h1>
+      <p class="lede">This is the "what and why" behind the FERPA-data-to-reports pipeline: the shape that lets one machine serve evaluations, advising notes, transcripts, or any sensitive record. No keys, no code, just the idea and the guardrails. When you want the how, the other two editions have it.</p>
+      <div class="rail" aria-hidden="true">
+        <span class="node"><b></b>Ingest</span><span class="link"></span>
+        <span class="node"><b></b>Standardize</span><span class="link"></span>
+        <span class="node"><b></b>Reconcile</span><span class="link"></span>
+        <span class="node gate"><b></b>AI insight</span><span class="link"></span>
+        <span class="node"><b></b>Render</span><span class="link"></span>
+        <span class="node"><b></b>Distribute</span>
+      </div>
+    </div>
+
+<section id="pattern">
+      <p class="kicker">The idea that transfers</p>
+      <h2>One shape, many datasets <a class="anchorlink" href="#pattern">#</a></h2>
+      <p>The evaluation pipeline is seven concrete steps, but underneath it is a <strong>six-stage pattern</strong>. Every stage is dataset-agnostic. Swap the inputs and the report template, keep the spine.</p>
+
+      <div class="flow">
+        <div class="stage"><span class="n">1</span><strong>Ingest</strong><span>Adapt to whatever export you were handed, CSV, XLSX, a SIS dump.</span></div>
+        <div class="stage"><span class="n">2</span><strong>Standardize</strong><span>Rename columns, validate types, coerce scales. Source is never mutated.</span></div>
+        <div class="stage"><span class="n">3</span><strong>Reconcile identity</strong><span>Fuzzy-match people to a roster of truth; resolve duplicates &amp; aliases.</span></div>
+        <div class="stage ai"><span class="n">4</span><strong>AI insight (cached)</strong><span>Summarize free-text into keywords + cited insight. Cache the result.</span></div>
+        <div class="stage"><span class="n">5</span><strong>Render report</strong><span>Per-subject, per-group, and global PDFs with charts and the AI insight.</span></div>
+        <div class="stage"><span class="n">6</span><strong>Distribute</strong><span>Upload, track, and share, with a human approving the release.</span></div>
+      </div>
+
+      <h3>What "any FERPA data" means in practice</h3>
+      <p>The pattern fits any record that has (a) some structured fields, (b) some free-text humans wrote, and (c) a natural "subject" to report on. A few examples of the same machine, re-pointed:</p>
+      <table>
+        <thead><tr><th scope="col">Domain</th><th scope="col">Source export</th><th scope="col">The "subject"</th><th scope="col">Free-text the AI summarizes</th></tr></thead>
+        <tbody>
+          <tr><td>Course evaluations <span class="badge-inline">origin</span></td><td>Qualtrics CSV</td><td>Instructor / course</td><td>Open-ended student comments</td></tr>
+          <tr><td>Academic advising</td><td>Advising-notes export</td><td>Student / advisor / program</td><td>Session notes &amp; follow-ups</td></tr>
+          <tr><td>Field-placement / internships</td><td>Supervisor eval forms</td><td>Student placement</td><td>Supervisor narrative feedback</td></tr>
+          <tr><td>Program assessment</td><td>Rubric + reflection exports</td><td>Cohort / outcome</td><td>Reflective free-response</td></tr>
+          <tr><td>Student support / case notes</td><td>Case-management dump</td><td>Case / caseworker</td><td>Interaction summaries</td></tr>
+          <tr><td>Scholarship / aid review</td><td>Application + reviewer notes</td><td>Applicant / committee</td><td>Reviewer rationale text</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout note"><span class="ti">The mental model</span>
+        <strong>Structured columns drive the charts. Free-text drives the AI insight. Identity reconciliation ties them to a person or group. Caching makes it cheap. A report template makes it shareable.</strong> Everything else is dataset-specific glue.
+      </div>
+
+      <h3>This is only the outer loop</h3>
+      <p>Everything above is the <strong>outer loop</strong>, it ships a report every cycle. But the real story is a <em>second</em> loop running inside it: the continuous-improvement cycle that keeps the outer loop cheap and reliable. That's the next section.</p>
+
+      <div class="takeaway">The product is not a report. The product is a process that keeps getting better while it runs, and it transfers because the spine is dataset-agnostic.</div>
+    </section>
+
+<section id="ci-loop">
+      <p class="kicker">Operate while you improve</p>
+      <h2>The continuous-improvement loop <a class="anchorlink" href="#ci-loop">#</a></h2>
+      <p>This pipeline is drawn as <strong>two concentric loops</strong>. The <strong>outer loop</strong> is the six-stage pipeline doing the operational work each cycle. A faster <strong>inner loop</strong>, observe, diagnose, improve, verify, keeps making that work leaner, cheaper, and more reliable. AI is a tool used inside the loops, only where it earns its place. This is the part that makes the pipeline <em>self-healing</em>, and it transfers to any process you run on a recurring basis.</p>
+
+      <div class="diagram panel">
+        <div class="ci-layout">
+          <div class="ci-stage" role="img" aria-label="Concentric diagram: an outer operational loop (ingest, standardize, reconcile, AI insight, render, distribute) with an inner four-step improvement cycle, observe, diagnose, improve, verify, rotating around a central self-healing hub.">
+            <div class="ci-ring outer" aria-hidden="true"></div>
+            <div class="ci-ring inner" aria-hidden="true"></div>
+            <div class="ci-orbit o" aria-hidden="true"><span class="ci-dot o"></span></div>
+            <div class="ci-orbit i" aria-hidden="true"><span class="ci-dot i"></span></div>
+            <div class="ci-hub" aria-hidden="true"><strong>Self-healing</strong><span>lean · continuous</span></div>
+            <div class="ci-node top"><span class="t">Observe</span><span class="l">Read the run &amp; the code</span></div>
+            <div class="ci-node right"><span class="t">Diagnose</span><span class="l">Find the root cause</span></div>
+            <div class="ci-node bottom"><span class="t">Improve</span><span class="l">One small modular change</span></div>
+            <div class="ci-node left"><span class="t">Verify</span><span class="l">Replay &amp; re-cache</span></div>
+          </div>
+          <div>
+            <div class="ci-legend">
+              <div class="row"><span class="sw out" aria-hidden="true"></span>Outer loop, the recurring pipeline (ships the report)</div>
+              <div class="row"><span class="sw inn" aria-hidden="true"></span>Inner loop, continuous improvement (makes it leaner)</div>
+            </div>
+            <p>You don't need both loops to start. But once the outer loop runs on a schedule, the inner loop is what keeps it reliable as your data and formats change over time, and the <a href="guide.html#caching">cache</a> is what keeps the inner loop <strong>free</strong>: re-running a fixed period re-reads cached insight instead of re-billing the model, so you can replay your fixes as often as you like at zero token cost.</p>
+          </div>
+        </div>
+      </div>
+
+      <h3>The four phases, and how they transfer</h3>
+      <table>
+        <thead><tr><th scope="col">Phase</th><th scope="col">In the original pipeline</th><th scope="col">For your dataset</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Observe</strong><br><span class="muted">read the run</span></td><td>Each run logs row counts, unmatched names, missing codes, token usage, and which records were freshly analyzed vs. served from cache.</td><td>Log the same: what came in, what failed to reconcile, what the AI actually saw, what it cost. You can't improve a run you can't see.</td></tr>
+          <tr><td><strong>Diagnose</strong><br><span class="muted">root cause</span></td><td>A mislabeled quarter, a fragile column name, a name that didn't fuzzy-match, traced back to one cause, not patched at the symptom.</td><td>Ask <em>why</em> a record dropped out. Usually it's a brittle assumption about the source format, not a one-off.</td></tr>
+          <tr><td><strong>Improve</strong><br><span class="muted">modular change</span></td><td>One small, testable change in a single module, a new column alias, a threshold tweak, never a sprawling rewrite.</td><td>Make the smallest change that fixes the cause. Keep it modular so the next run (and the next person) can reason about it.</td></tr>
+          <tr><td><strong>Verify</strong><br><span class="muted">replay &amp; cache</span></td><td>Replay the affected period. Cached insight makes the replay cost <strong>0 tokens</strong>; only genuinely new work is re-billed. Confirm the fix, then ship.</td><td>Re-run and compare. A warm cache means verifying a fix is fast and free, so you actually do it.</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout good"><span class="ti">Why AI makes this loop cheaper than it used to be</span>
+        The "Observe" and "Diagnose" phases used to be the expensive, human-only part. Now the system can help <em>read its own runs</em>, code analysis and log summarization are exactly the kind of small, bounded jobs the same gateway is good at. The cheapest improvement engine you have is a process that can explain its own last run back to you.
+      </div>
+
+      <div class="takeaway">The outer loop ships the cycle. The inner loop, reading your own runs and feeding back what each one teaches you, is how the pipeline stays lean and gets leaner. Both transfer.</div>
+    </section>
+
+<section id="ferpa">
+      <p class="kicker">Do this part first</p>
+      <h2>FERPA-safe AI: route through a gateway you control <a class="anchorlink" href="#ferpa">#</a></h2>
+      <p>FERPA protects education records. The moment you send a student's free-text comment to a third-party AI API on the public internet, you have made a disclosure, and most consumer AI endpoints reserve rights you can't accept on behalf of an institution. The single most important architectural decision in this whole pipeline is therefore <strong>where the model call goes</strong>.</p>
+
+      <div class="grid2">
+        <div class="card"><h4>Use UCSB's gateway</h4><p class="muted">The LLM gateway UCSB operates and vets keeps the request inside an approved boundary. At UCSB this is <strong>LLM Sandbox</strong>, an OpenAI-compatible endpoint in front of cloud foundation models, governed by the campus, token-metered rather than dollar-billed.</p></div>
+        <div class="card"><h4>Don't train on the data</h4><p class="muted">Confirm with your provider that prompts and completions are <em>not</em> retained for model training and are not logged beyond what you've approved. A gateway makes that one contract to verify, instead of one per team.</p></div>
+        <div class="card"><h4>Minimize what you send</h4><p class="muted">Send only the free-text that needs summarizing. Names, IDs, grades, and other identifiers belong in your structured pipeline, not in the prompt. De-identify before the call where you can.</p></div>
+        <div class="card"><h4>Keep a human at the gate</h4><p class="muted">AI drafts the insight; a person reviews and approves the report before it's shared. The model never has release authority. This is both a quality control and a compliance control.</p></div>
+      </div>
+
+      <div class="callout warn"><span class="ti">Verify before you build</span>
+        This guide shows the <em>architecture</em> for handling FERPA data responsibly; it is not legal advice and does not certify any specific tool as "FERPA-compliant." Before sending real records anywhere, confirm the data-governance terms with UCSB's registrar, privacy or compliance office, and IT security, and match your data to its <a href="https://cio.ucsb.edu/artificial-intelligence" target="_blank" rel="noopener">UCSB data protection level</a>. UCSB's LLM Sandbox is the campus-sanctioned path used here.
+      </div>
+
+      <h3>The de-identification habit</h3>
+      <p>Because the AI only ever needs the <em>free-text</em>, you can keep identifiers out of the prompt entirely. The pipeline numbers each comment so the model can cite it (<code>[1]</code>, <code>[2]</code>) without ever knowing who wrote it:</p>
+      <div class="callout note"><span class="ti">How it works, without the code</span>Each comment is numbered and stripped of names before the call, so the model can cite comment <code>[1]</code> or <code>[2]</code> without ever seeing who wrote it. The indices are reattached to the verbatim text inside your own system afterwards. The <a href="guide.html#ferpa">full guide</a> shows the exact de-identified prompt.</div>
+      <p class="muted">The bracketed indices are reattached to the verbatim comments after the model responds, inside your own system, so the insight can say "students praised clarity&nbsp;[1][3]" while the model never saw an identity.</p>
+
+      <div class="takeaway">If the model call leaves UCSB's vetted boundary, nothing else in this guide matters. Pick the gateway first.</div>
+    </section>
+
+    <section id="principles">
+      <p class="kicker">Carry these, forget the rest</p>
+      <h2>Three principles <a class="anchorlink" href="#principles">#</a></h2>
+      <p>Strip everything else away and these three ideas are what make the pipeline cheap, safe, and self-improving. They transfer to any recurring process, with or without AI.</p>
+      <div class="grid2">
+        <div class="card"><h4>1 · Build on top, never mutate</h4><p class="muted">Treat the source export as read-only. Every transformation produces a new clean layer. You can always re-derive; you can never un-corrupt a source you edited in place.</p></div>
+        <div class="card"><h4>2 · Cache hard-won output</h4><p class="muted">Pay for new work only, never repeated work. A relational key keeps the cache warm across runs and makes "re-run the whole thing" free.</p></div>
+        <div class="card"><h4>3 · Let the system read its own runs</h4><p class="muted">Code analysis and feedback are the cheapest improvement engine you have. One small, modular, testable change per cycle compounds.</p></div>
+      </div>
+      <div class="takeaway">You don't need a big budget to do this well: you need a process you can re-run, a memory of its hard-won output, and a human at the gate.</div>
+      <div class="callout note"><span class="ti">Ready for the plumbing?</span>
+        This was the what and why. When you want the how: <a href="sandbox.html">use the LLM Sandbox</a> (keys, snippets, errors) or open <a href="guide.html">the full pipeline guide</a> (caching, the no-code Colab path, a worked example).
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<footer>
+  <p><strong>From FERPA Data to Reports</strong>, a transferable build guide derived from a real student-evaluation pipeline. Built on UCSB's LLM Sandbox, an OpenAI-compatible, token-metered UCSB gateway. <a href="https://www.youtube.com/watch?v=wz-T6y6iLHI" target="_blank" rel="noopener">What is LLM Sandbox?</a></p>
+  <p class="tribute">AI insight powered by LLM Sandbox, with thanks to Yaheya &amp; the LLM Sandbox team.</p>
+  <p class="muted">This guide describes a responsible architecture for handling protected records; it is not legal advice and certifies no specific tool as "FERPA-compliant." Always verify data-governance terms and your data's <a href="https://cio.ucsb.edu/artificial-intelligence" target="_blank" rel="noopener">UCSB protection level</a> before sending real records.</p>
+</footer>
+
+<div id="askbot">
+  <button class="ask-bot" id="askbot-toggle" aria-expanded="false" aria-controls="askbot-panel">
+    <span class="ico" aria-hidden="true">&#128172;</span><span class="label">Ask the assistant</span><span class="dot" aria-hidden="true"></span>
+  </button>
+  <div class="askbot-panel" id="askbot-panel" role="dialog" aria-modal="true" aria-label="Ask the assistant" hidden>
+    <div class="askbot-head">
+      <strong>Ask the assistant</strong>
+      <div class="ha">
+        <a href="https://llmsandbox.cloud.ucsb.edu/bot/01KVEPQV2NF2PVSBVMNW53NYA5" target="_blank" rel="noopener" title="Open the full assistant in a new tab" aria-label="Open the full assistant in a new tab">&#8599;</a>
+        <button type="button" id="askbot-close" aria-label="Close chat">&#10005;</button>
+      </div>
+    </div>
+    <div class="askbot-msgs" id="askbot-msgs" aria-live="polite" aria-atomic="false">
+      <div class="askbot-msg bot">Hi. Ask me anything about the transferable pattern, the continuous-improvement loop, or the FERPA principles behind this pipeline.</div>
+    </div>
+    <form class="askbot-form" id="askbot-form">
+      <input id="askbot-input" type="text" placeholder="Ask a question..." autocomplete="off" aria-label="Your question">
+      <button type="submit" id="askbot-send" aria-label="Send">&#10148;</button>
+    </form>
+    <div class="askbot-foot">Powered by LLM Sandbox, grounded on this site</div>
+  </div>
+</div>
+
+<script>
+  window.PAGE_REVS = {pattern:3, "ci-loop":4, ferpa:2, principles:2};
+  window.PAGE_REV_DATE = "Jun 21, 2026";
+  window.ASKBOT_SUGGESTIONS = ["What are the six stages?", "What is the continuous-improvement loop?", "What does FERPA-safe AI mean?"];
+</script>
+<script src="app.js" defer></script>
+</body>
+</html>
