@@ -45,6 +45,7 @@
       <a href="#insight">4 &middot; AI insight</a>
       <a href="#render">5 &middot; Render</a>
       <a href="#distribute">6 &middot; Distribute</a>
+      <a href="#bonus">Where else AI helps</a>
       <p class="navgroup">Make it cheap and honest</p>
       <a href="#caching">Cache the AI work</a>
       <a href="#economics">What it costs</a>
@@ -62,13 +63,13 @@
     <div class="hero">
       <p class="kicker">For developers</p>
       <h1>Build it with code</h1>
-      <p class="lede">The job is a pipeline of six stages. Five of them are plain, testable scripts. One calls a model, and a person signs off before anything ships. This page builds each stage with code you can lift, and points to the <a href="gateway.html">gateway page</a> for the model call itself.</p>
+      <p class="lede">The job is a pipeline of six stages. In a steady run, one stage calls a model on your data and a person signs off; the rest is plain, testable code. But AI does more than that one call. It helps write the intake scripts, repair reconciliation when it breaks, and improve the whole thing each cycle. This page builds each stage with code you can lift, and points to the <a href="gateway.html">gateway page</a> for the model call itself.</p>
     </div>
 
     <section id="pattern">
       <p class="kicker">The idea that transfers</p>
       <h2>Six stages, three roles <a class="anchorlink" href="#pattern">#</a></h2>
-      <p>Underneath any version of this is the same six-stage spine. What makes it trustworthy is that each stage has a clear owner: a script, a model, or a person. The model runs in exactly one place.</p>
+      <p>Underneath any version of this is the same six-stage spine. What makes it trustworthy is that each stage has a clear runtime owner: a script, a model, or a person. The live call on your data lands in one stage, so you always know where your records go. That is the run. AI also helps you build and repair that run, which is <a href="#bonus">where else it earns its place</a>.</p>
 
       <div class="flow">
         <div class="stage"><span class="role script">script</span><span class="n">1</span><strong>Ingest</strong><span>Read whatever export you were handed.</span></div>
@@ -84,8 +85,8 @@
         <span><span class="role human">human</span> a person decides</span>
       </div>
 
-      <div class="callout note"><span class="ti">Two different jobs for AI, keep them straight</span>
-        The model <em>runs</em> in one stage. Everything else is plain code. That said, AI is also useful while you <em>write</em> that code: hand it a raw export and ask it to draft the loader and the cleaning script for your exact format. That is the no-coder's entire workflow, and it speeds up the rest of us. The distinction matters: a script you can read and re-run is not the same thing as a model deciding live. Let AI help you build the scripts, and keep the live model call to the one stage that needs judgment.
+      <div class="callout note"><span class="ti">Two modes for AI, keep them straight</span>
+        One is the <strong>live call</strong>: each run, your data's free text goes to a model in stage 4, and nowhere else. The other is AI as a <strong>builder and fixer</strong>, and it turns up all over, drafting your intake scripts, writing a lookup when reconciliation fails, reading a run to suggest the next change. The difference is what keeps this safe: the live call is a model deciding on your data, pinned to one stage you can point to; the builder work is a model writing code you read, test, and keep. AI earns its place in both. See <a href="#bonus">where else AI helps</a>.
       </div>
     </section>
 
@@ -131,7 +132,7 @@ clean = clean[clean[<span class="ts">"text"</span>] != <span class="ts">""</span
     <section id="reconcile">
       <p class="kicker">Stage 3 <span class="role script">script</span></p>
       <h2>Reconcile identity <a class="anchorlink" href="#reconcile">#</a></h2>
-      <p>Tie each row to a real subject, a person, a course, a cohort, against a roster of truth. Fuzzy matching handles typos and aliases; a score threshold keeps it from guessing.</p>
+      <p>Tie each row to a real subject, a person, a course, a cohort, against a roster of truth. Fuzzy matching handles typos and aliases; a score threshold keeps it from guessing. When a row will not match, that is a good place to ask the model for help: have it draft the lookup that resolves the identity, an LDAP query against your directory, say, so no one is hand-matching hundreds of names. <span class="muted">More of these in <a href="#bonus">where else AI helps</a>.</span></p>
       <div class="codeblock"><pre><code><span class="tk">from</span> thefuzz <span class="tk">import</span> process
 
 <span class="tk">def</span> <span class="tf">match</span>(name, roster):
@@ -142,7 +143,7 @@ clean = clean[clean[<span class="ts">"text"</span>] != <span class="ts">""</span
     <section id="insight">
       <p class="kicker">Stage 4 <span class="role ai">AI</span> <span class="muted">(cached)</span></p>
       <h2>AI insight <a class="anchorlink" href="#insight">#</a></h2>
-      <p>This is the only stage where a model runs. Send just the free text, numbered, and ask for a short summary that cites the comments it draws on. The call itself, base URL, key, snippets, lives on <a href="gateway.html">the gateway page</a>; what matters here is what you send and that you cache the result.</p>
+      <p>This is the only stage where a model runs <em>on your data</em>, each cycle. Send just the free text, numbered, and ask for a short summary that cites the comments it draws on. The call itself, base URL, key, snippets, lives on <a href="gateway.html">the gateway page</a>; what matters here is what you send and that you cache the result.</p>
       <div class="callout note"><span class="ti">Send the text, not the people</span>
         Names, ids, and grades stay in your structured layer. Number the comments so the summary can cite <code>[1]</code> and <code>[3]</code> without the model ever seeing who wrote them. The citations are reattached to the verbatim text on your side, after the model answers.
       </div>
@@ -169,7 +170,21 @@ insight = cache.get(key)
       <p class="kicker">Stage 6 <span class="role human">human</span></p>
       <h2>Distribute <a class="anchorlink" href="#distribute">#</a></h2>
       <p>Nothing ships on its own. A person reads the report and approves it; then a script uploads, emails, or files it. The model never has release authority. That one rule is both your quality control and your compliance control, and it is the cheapest safeguard you have.</p>
-      <div class="takeaway">Five scripts, one model call, one human gate. If you can point to who owns each stage, you can defend the whole pipeline.</div>
+      <div class="takeaway">Five scripts, one live model call, one human gate. AI helps write and repair the scripts too, but it decides on your records in only one stage, which is what makes the pipeline easy to defend.</div>
+    </section>
+
+    <section id="bonus">
+      <p class="kicker">The part we are proud of</p>
+      <h2>Where else AI helps <a class="anchorlink" href="#bonus">#</a></h2>
+      <p>Stage 4 is the only place a model touches your data on a run. But the model is a coding partner everywhere else, and that is where a lot of the leverage is. Three places it pays off most:</p>
+      <div class="grid2">
+        <div class="card"><h4>Intake scripts <span class="role ai">AI helps</span></h4><p class="muted">Every source has its own quirks. Hand the model a sample and it drafts a modular reader and cleaner for that exact format, which is most of stages 1 and 2. You read it and keep it.</p></div>
+        <div class="card"><h4>Reconciliation fallbacks <span class="role ai">AI helps</span></h4><p class="muted">When fuzzy matching cannot resolve an identity, the model writes the lookup that does, an LDAP query against your directory, for instance, so unmatched rows get resolved instead of dropped.</p></div>
+        <div class="card"><h4>The improvement loop <span class="role ai">AI helps</span></h4><p class="muted">The model reads a run's logs and code and proposes the next small, testable change. A system that can explain its own last run is the cheapest improver you have.</p></div>
+      </div>
+      <div class="callout good"><span class="ti">The line that keeps it safe</span>
+        In all three, the model writes code that <em>you</em> read, test, and keep. That is a different thing from the live call in stage 4, where the model decides on your data. Both are AI earning its place; only one runs on your records, and only in one stage.
+      </div>
     </section>
 
     <section id="caching">
