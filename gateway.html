@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Call your organization's LLM gateway | Data to Reports</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="alternate icon" href="favicon.svg">
+<link rel="apple-touch-icon" href="favicon.svg">
+<meta name="description" content="How to send text to a language model your organization controls: what an LLM gateway is, what to do if you do not have one, the OpenAI-compatible API, copy-paste snippets that run, and the errors that cost an afternoon.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..900&family=Nunito+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip-link" href="#content">Skip to content</a>
+
+<header class="topbar">
+  <div class="brand">
+    <img src="https://www.professional.ucsb.edu/sites/default/files/2025-05/Logo_PaCE_2025_Full.png" alt="UCSB PaCE logo">
+    <img src="https://otl.ucsb.edu/sites/default/files/images/ai-cop-spring-symposium-2026_logo.png" alt="UCSB AI Community of Practice logo">
+    <div class="sep"></div>
+    <div class="tag">Data &rarr; Reports
+      <small>Use an organizational gateway</small>
+    </div>
+  </div>
+  <div class="pills">
+    <button class="menu-toggle" id="menuToggle" aria-expanded="false">&#9776; Contents</button>
+    <a class="pill ghost" href="index.html">Home</a>
+    <a class="pill link" href="sandbox.html">At UCSB &rarr;</a>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav aria-label="Table of contents">
+      <p class="navgroup">What you need</p>
+      <a href="#need">A gateway you control</a>
+      <a href="#no-gateway" class="sub">No gateway yet?</a>
+      <p class="navgroup">The API</p>
+      <a href="#api">How it works</a>
+      <a href="#api-auth" class="sub">Base URL &amp; auth</a>
+      <a href="#api-chat" class="sub">Chat completions</a>
+      <a href="#api-params" class="sub">Parameters &amp; models</a>
+      <a href="#api-errors" class="sub">Status codes</a>
+      <p class="navgroup">Use it</p>
+      <a href="#quickstart">Copy-paste snippets</a>
+      <a href="#cookbook">Common-errors cookbook</a>
+      <p class="navgroup">Go deeper</p>
+      <a href="sandbox.html">At UCSB: LLM Sandbox &rarr;</a>
+      <a href="dev.html">The developer guide &rarr;</a>
+    </nav>
+  </aside>
+
+  <main id="content" tabindex="-1">
+    <p class="crumb"><a href="index.html">Home</a> <span class="sep">/</span> Developer track <span class="sep">/</span> Use a gateway</p>
+
+    <div class="hero">
+      <p class="kicker">For developers, at any institution</p>
+      <h1>Call a language model your organization controls</h1>
+      <p class="lede">The pipeline only sends text to a model in one place: through a gateway your organization runs. This page is how to find that gateway, or get one, and how to call it. The API is the same one OpenAI made popular, so your existing tools work with two changes: the base URL and the key.</p>
+    </div>
+
+    <section id="need">
+      <p class="kicker">Start here</p>
+      <h2>You need a gateway you control <a class="anchorlink" href="#need">#</a></h2>
+      <p>There is exactly one step in this whole pipeline where your data leaves your own code: the model call. That makes the question of <em>where</em> the call goes the most important decision you make. For anything sensitive, it has to go somewhere covered by agreements your institution already holds.</p>
+      <p>A consumer chatbot will not do for protected records. Read the terms of most public AI services and they keep the right to retain and train on what you send, which a university cannot agree to on a student's behalf. The answer is not to avoid AI. It is to send the text to a gateway you control.</p>
+      <div class="callout note"><span class="ti">What "a gateway" means</span>
+        An internal endpoint that speaks the same API as OpenAI, sitting in front of approved models. You get a <strong>base URL</strong> and a <strong>key</strong>. The data stays inside your boundary, and nothing is kept for training. Everything below works against any gateway built this way.
+      </div>
+
+      <h3 id="no-gateway">Don't have one yet? <a class="anchorlink" href="#no-gateway">#</a></h3>
+      <p>If your institution does not run a gateway, this is a conversation for IT or whoever owns data governance, not something to stand up alone on a personal account. The usual ways organizations provide one:</p>
+      <ul>
+        <li><strong>Azure OpenAI Service</strong>, under the institution's own tenant and data terms.</li>
+        <li><strong>An Amazon Bedrock gateway</strong>, for example the open-source Bedrock Access Gateway. UCSB's gateway runs on this.</li>
+        <li><strong>A self-hosted proxy</strong> such as LiteLLM or vLLM in front of approved models.</li>
+      </ul>
+      <p>All three hand you a base URL and a key and speak the Chat Completions API, so the code here runs against any of them. The point is an endpoint your organization controls, not just any AI you can sign up for. <span class="muted">At UCSB, that gateway is the <a href="sandbox.html">LLM Sandbox</a>.</span></p>
+    </section>
+
+    <section id="api">
+      <p class="kicker">The interface</p>
+      <h2>How the API works <a class="anchorlink" href="#api">#</a></h2>
+      <p>"OpenAI-compatible" is the useful fact here: any OpenAI SDK, and any tool that speaks the Chat Completions shape, works against your gateway once you point it at the right base URL and key. The same applies to gateways built on LiteLLM, the Bedrock Access Gateway, vLLM's OpenAI server, Azure OpenAI, and others.</p>
+
+      <h3 id="api-auth">Base URL and authentication <a class="anchorlink" href="#api-auth">#</a></h3>
+      <div class="tablewrap">
+      <table>
+        <thead><tr><th scope="col">Setting</th><th scope="col">Value</th><th scope="col">Where it comes from</th></tr></thead>
+        <tbody>
+          <tr><td>Base URL</td><td><code>https://&lt;your-gateway-host&gt;/v1</code></td><td>Your gateway admin. Ends in <code>/v1</code>, like the OpenAI API.</td></tr>
+          <tr><td>Auth header</td><td><code>Authorization: Bearer &lt;KEY&gt;</code></td><td>The standard. Some gateways use <code>x-api-key</code> instead; see the note below.</td></tr>
+          <tr><td>Model</td><td>a model id from your gateway's catalog</td><td>List the live ids with <code>GET {BASE_URL}/models</code>.</td></tr>
+          <tr><td>Content type</td><td><code>application/json</code></td><td>Standard for all requests.</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="callout note"><span class="ti">Which auth header?</span>
+        Most gateways accept the standard <code>Authorization: Bearer &lt;KEY&gt;</code> that every OpenAI SDK already sends, so you change nothing but the base URL and the key. Some accept or require an <code>x-api-key: &lt;KEY&gt;</code> header instead. If a bearer call returns 401, try <code>x-api-key</code>. Your gateway's docs say which; the <a href="sandbox.html#auth">UCSB page</a> documents LLM Sandbox, which happens to take either.
+      </div>
+
+      <h3 id="api-chat">Endpoint: Chat Completions <a class="anchorlink" href="#api-chat">#</a></h3>
+      <p><code>POST {BASE_URL}/chat/completions</code></p>
+      <p><strong>Request body</strong> (the fields most pipelines use; the rest of the OpenAI spec is accepted):</p>
+      <div class="codeblock"><pre><code>{
+  <span class="tk">"model"</span>: <span class="ts">"your-model-id"</span>,
+  <span class="tk">"max_tokens"</span>: <span class="tn">1024</span>,
+  <span class="tk">"messages"</span>: [
+    { <span class="tk">"role"</span>: <span class="ts">"system"</span>, <span class="tk">"content"</span>: <span class="ts">"You summarize free-text responses."</span> },
+    { <span class="tk">"role"</span>: <span class="ts">"user"</span>,   <span class="tk">"content"</span>: <span class="ts">"[1] First response...\n[2] Second response..."</span> },
+    { <span class="tk">"role"</span>: <span class="ts">"user"</span>,   <span class="tk">"content"</span>: <span class="ts">"List the main themes, each with the [n] that support it."</span> }
+  ]
+}</code></pre></div>
+      <p><strong>Response body</strong> (OpenAI shape: read <code>choices[0].message.content</code> and <code>usage</code>):</p>
+      <div class="codeblock"><pre><code>{
+  <span class="tk">"choices"</span>: [
+    { <span class="tk">"index"</span>: <span class="tn">0</span>,
+      <span class="tk">"message"</span>: { <span class="tk">"role"</span>: <span class="ts">"assistant"</span>, <span class="tk">"content"</span>: <span class="ts">"Theme 1: ... [1][4]. Theme 2: ... [2]."</span> },
+      <span class="tk">"finish_reason"</span>: <span class="ts">"stop"</span> }
+  ],
+  <span class="tk">"usage"</span>: { <span class="tk">"prompt_tokens"</span>: <span class="tn">1060</span>, <span class="tk">"completion_tokens"</span>: <span class="tn">254</span>, <span class="tk">"total_tokens"</span>: <span class="tn">1314</span> }
+}</code></pre></div>
+      <p class="muted">The <code>usage</code> object is how you meter cost. On a token-metered gateway, <code>total_tokens</code> is the number that matters; a short summarization runs around 1.3K tokens.</p>
+
+      <h3 id="api-params">Common parameters and models <a class="anchorlink" href="#api-params">#</a></h3>
+      <div class="tablewrap">
+      <table>
+        <thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Notes</th></tr></thead>
+        <tbody>
+          <tr><td><code>model</code></td><td>string</td><td>Required. An id from your gateway's catalog.</td></tr>
+          <tr><td><code>messages</code></td><td>array</td><td>Required. <code>{role, content}</code> objects; roles are <code>system</code>, <code>user</code>, <code>assistant</code>.</td></tr>
+          <tr><td><code>max_tokens</code></td><td>integer</td><td>Caps the completion length. A keyword line plus two short paragraphs fits in 1024.</td></tr>
+          <tr><td><code>temperature</code></td><td>number</td><td>Optional. Lower (0 to 0.4) for steady, repeatable summaries.</td></tr>
+          <tr><td><code>stream</code></td><td>boolean</td><td>Optional. Keep it <code>false</code> for batch work; set <code>true</code> only for a live, typing-as-it-goes UI.</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="callout note"><span class="ti">Picking a model</span>
+        Turning a few free-text responses into a short, cited summary is a small job. A cheap, fast model (a Haiku-class or Nova-class model, for instance) is the right default. Save the large models for genuinely hard reasoning; here they cost more tokens for no gain.
+      </div>
+
+      <h3 id="api-errors">Status codes <a class="anchorlink" href="#api-errors">#</a></h3>
+      <p>Because it is OpenAI-compatible, errors arrive as HTTP status codes with a JSON body. Handle them the way you would the OpenAI API; the <a href="#cookbook">cookbook</a> below has the fixes.</p>
+      <div class="tablewrap">
+      <table>
+        <thead><tr><th scope="col">Status</th><th scope="col">Meaning</th><th scope="col">What to do</th></tr></thead>
+        <tbody>
+          <tr><td><code>401 / 403</code></td><td>Key missing, wrong, or wrong header</td><td>Check the key and the auth header. Don't retry.</td></tr>
+          <tr><td><code>404</code></td><td>Unknown model or wrong path</td><td>Verify the model id and that the base URL ends in <code>/v1</code>.</td></tr>
+          <tr><td><code>429</code></td><td>Rate or quota limit</td><td>Back off and retry. A cache keeps you under it.</td></tr>
+          <tr><td><code>5xx</code></td><td>Gateway or upstream error</td><td>Retry a few times, then skip that record so one failure does not stop the batch.</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </section>
+
+    <section id="quickstart">
+      <p class="kicker">Copy, paste, adapt</p>
+      <h2>Snippets that run <a class="anchorlink" href="#quickstart">#</a></h2>
+      <p>The same call in four flavors. Each takes a list of free-text responses and returns a short, cited summary. The base URL, key, and model come from the environment, never hard-coded.</p>
+      <div class="callout note"><span class="ti">Auth, in code</span>
+        These use the standard bearer token (the SDK sends it from <code>api_key</code>; the raw examples set the <code>Authorization</code> header). If your gateway wants <code>x-api-key</code> instead, swap that one header.
+      </div>
+
+      <div class="codewrap" data-codewrap>
+        <div class="tabs">
+          <button class="active" data-tab="py-sdk">Python &middot; OpenAI SDK</button>
+          <button data-tab="py-req">Python &middot; requests</button>
+          <button data-tab="node">Node &middot; fetch</button>
+          <button data-tab="curl">cURL</button>
+          <span class="spacer"></span>
+          <button class="copybtn" data-copy>Copy</button>
+        </div>
+
+        <pre data-panel="py-sdk"><code><span class="tc"># pip install openai</span>
+<span class="tk">import</span> os
+<span class="tk">from</span> openai <span class="tk">import</span> OpenAI
+
+client = OpenAI(
+    base_url=os.environ[<span class="ts">"LLM_BASE_URL"</span>],   <span class="tc"># https://&lt;host&gt;/v1</span>
+    api_key=os.environ[<span class="ts">"LLM_API_KEY"</span>],     <span class="tc"># sent as Authorization: Bearer</span>
+)
+
+<span class="tk">def</span> <span class="tf">summarize</span>(responses):
+    numbered = <span class="ts">"\n"</span>.join(<span class="ts">f"[{i}] {r}"</span> <span class="tk">for</span> i, r <span class="tk">in</span> enumerate(responses, <span class="tn">1</span>))
+    resp = client.chat.completions.create(
+        model=os.environ.get(<span class="ts">"LLM_MODEL"</span>, <span class="ts">"your-model-id"</span>),
+        max_tokens=<span class="tn">1024</span>,
+        messages=[
+            {<span class="ts">"role"</span>: <span class="ts">"system"</span>, <span class="ts">"content"</span>: <span class="ts">"You summarize free-text responses."</span>},
+            {<span class="ts">"role"</span>: <span class="ts">"user"</span>,   <span class="ts">"content"</span>: numbered},
+            {<span class="ts">"role"</span>: <span class="ts">"user"</span>,   <span class="ts">"content"</span>: <span class="ts">"List the main themes, each with the [n] that support it."</span>},
+        ],
+    )
+    print(<span class="ts">"tokens:"</span>, resp.usage.total_tokens)
+    <span class="tk">return</span> resp.choices[<span class="tn">0</span>].message.content</code></pre>
+
+        <pre data-panel="py-req" hidden><code><span class="tc"># pip install requests, no SDK, pure HTTP</span>
+<span class="tk">import</span> os, requests
+
+<span class="tk">def</span> <span class="tf">summarize</span>(responses):
+    numbered = <span class="ts">"\n"</span>.join(<span class="ts">f"[{i}] {r}"</span> <span class="tk">for</span> i, r <span class="tk">in</span> enumerate(responses, <span class="tn">1</span>))
+    r = requests.post(
+        os.environ[<span class="ts">"LLM_BASE_URL"</span>] + <span class="ts">"/chat/completions"</span>,
+        headers={
+            <span class="ts">"Authorization"</span>: <span class="ts">"Bearer "</span> + os.environ[<span class="ts">"LLM_API_KEY"</span>],
+            <span class="ts">"Content-Type"</span>: <span class="ts">"application/json"</span>,
+        },
+        json={
+            <span class="ts">"model"</span>: os.environ.get(<span class="ts">"LLM_MODEL"</span>, <span class="ts">"your-model-id"</span>),
+            <span class="ts">"max_tokens"</span>: <span class="tn">1024</span>,
+            <span class="ts">"messages"</span>: [
+                {<span class="ts">"role"</span>: <span class="ts">"system"</span>, <span class="ts">"content"</span>: <span class="ts">"You summarize free-text responses."</span>},
+                {<span class="ts">"role"</span>: <span class="ts">"user"</span>,   <span class="ts">"content"</span>: numbered},
+                {<span class="ts">"role"</span>: <span class="ts">"user"</span>,   <span class="ts">"content"</span>: <span class="ts">"List the main themes, each with the [n] that support it."</span>},
+            ],
+        },
+        timeout=<span class="tn">60</span>,
+    )
+    r.raise_for_status()
+    <span class="tk">return</span> r.json()[<span class="ts">"choices"</span>][<span class="tn">0</span>][<span class="ts">"message"</span>][<span class="ts">"content"</span>]</code></pre>
+
+        <pre data-panel="node" hidden><code><span class="tc">// Node 18+ has fetch built in. No dependencies.</span>
+<span class="tk">async function</span> <span class="tf">summarize</span>(responses) {
+  <span class="tk">const</span> numbered = responses.map((r, i) =&gt; <span class="ts">`[${i + 1}] ${r}`</span>).join(<span class="ts">"\n"</span>);
+  <span class="tk">const</span> res = <span class="tk">await</span> fetch(process.env.LLM_BASE_URL + <span class="ts">"/chat/completions"</span>, {
+    method: <span class="ts">"POST"</span>,
+    headers: {
+      <span class="ts">"Authorization"</span>: <span class="ts">"Bearer "</span> + process.env.LLM_API_KEY,
+      <span class="ts">"Content-Type"</span>: <span class="ts">"application/json"</span>,
+    },
+    body: JSON.stringify({
+      model: process.env.LLM_MODEL ?? <span class="ts">"your-model-id"</span>,
+      max_tokens: <span class="tn">1024</span>,
+      messages: [
+        { role: <span class="ts">"system"</span>, content: <span class="ts">"You summarize free-text responses."</span> },
+        { role: <span class="ts">"user"</span>,   content: numbered },
+        { role: <span class="ts">"user"</span>,   content: <span class="ts">"List the main themes, each with the [n] that support it."</span> },
+      ],
+    }),
+  });
+  <span class="tk">if</span> (!res.ok) <span class="tk">throw new</span> Error(<span class="ts">`Gateway ${res.status}`</span>);
+  <span class="tk">return</span> (<span class="tk">await</span> res.json()).choices[<span class="tn">0</span>].message.content;
+}</code></pre>
+
+        <pre data-panel="curl" hidden><code><span class="tc"># Smoke-test the gateway from any POSIX shell (macOS, Linux, Git Bash).</span>
+curl <span class="ts">"$LLM_BASE_URL/chat/completions"</span> \
+  -H <span class="ts">"Authorization: Bearer $LLM_API_KEY"</span> \
+  -H <span class="ts">"Content-Type: application/json"</span> \
+  -d <span class="ts">'{
+    "model": "your-model-id",
+    "max_tokens": 1024,
+    "messages": [
+      {"role": "system", "content": "You summarize free-text responses."},
+      {"role": "user",   "content": "[1] First response.\n[2] Second response."},
+      {"role": "user",   "content": "List the main themes, each with the [n] that support it."}
+    ]
+  }'</span></code></pre>
+      </div>
+      <div class="callout note"><span class="ti">On Windows</span>
+        The cURL tab uses POSIX quoting and <code>$VAR</code> expansion. In Windows <code>cmd</code> or PowerShell the syntax differs; use Git Bash or WSL, or one of the Python or Node snippets.
+      </div>
+    </section>
+
+    <section id="cookbook">
+      <p class="kicker">When it does not work</p>
+      <h2>Common-errors cookbook <a class="anchorlink" href="#cookbook">#</a></h2>
+      <p>Most failures against an OpenAI-compatible gateway are auth or path problems, not your code. The real ones, with the fix:</p>
+      <div class="tablewrap">
+      <table>
+        <thead><tr><th scope="col">Symptom</th><th scope="col">Likely cause</th><th scope="col">Fix</th></tr></thead>
+        <tbody>
+          <tr><td>401 / 403 on every request.</td><td>Key missing, wrong, or expired, or the gateway wants a different auth header than you are sending.</td><td>Check the key. If a bearer token 401s, try an <code>x-api-key</code> header (or the reverse). Your gateway's docs say which. Don't retry a 401.</td></tr>
+          <tr><td>Works with curl but not the SDK, or the reverse.</td><td>The two send different headers, or a strict gateway or WAF rejects an unexpected one (the SDK adds its own <code>User-Agent</code>).</td><td>Match the header your gateway documents. If a WAF is in the way, a plain <code>requests</code> or <code>curl</code> call with only the headers you set is the cleanest test.</td></tr>
+          <tr><td>404 on <code>POST /chat/completions</code>.</td><td>The base URL is missing <code>/v1</code>, or the path is doubled (the base URL already ends in <code>/chat/completions</code>).</td><td>Base URL ends in <code>/v1</code>. The SDK appends <code>/chat/completions</code> for you; in raw HTTP you append it once, so never put it in the env var.</td></tr>
+          <tr><td>404 <code>model_not_found</code> though auth works.</td><td>The model id is not in this gateway's catalog, or it is misspelled.</td><td>List the live ids with <code>GET {BASE_URL}/models</code> and set <code>LLM_MODEL</code>; do not hard-code.</td></tr>
+          <tr><td><code>OpenAIError: the api_key client option must be set</code>.</td><td><code>api_key</code> is <code>None</code> and no <code>OPENAI_API_KEY</code> is set.</td><td>Pass a non-empty <code>api_key</code> (the real key, or a placeholder if your gateway reads a different header).</td></tr>
+          <tr><td><code>stream: true</code> hangs or returns nothing usable.</td><td>Streaming returns server-sent-event chunks that use <code>delta</code>, not one <code>message</code> body; some proxies buffer them.</td><td>Keep <code>stream: false</code> for batch work and read <code>choices[0].message.content</code>. For a live UI, iterate the SSE <code>delta</code>.</td></tr>
+          <tr><td>Intermittent 429 or 5xx mid-batch.</td><td>429 is a rate or quota limit; 5xx is a gateway or upstream error. Neither is an auth or syntax problem.</td><td>Back off and retry on 429 / 5xx; do not retry 401 / 403 / 404. A warm cache cuts how often you hit 429.</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <div class="callout good"><span class="ti">Next</span>
+        That is the whole interface. For the campus specifics, getting a key, the live model catalog, the facts we verified, see <a href="sandbox.html">the UCSB LLM Sandbox page</a>. To put this call inside the full pipeline, with caching and the rest, go to <a href="dev.html">the developer guide</a>.
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<footer>
+  <p><strong>From Data to Reports</strong>, a field guide by Jonathan Engeln Lambinet-Lacson at UCSB Professional &amp; Continuing Education. The pattern works with any organization's OpenAI-compatible gateway. <a href="https://www.youtube.com/watch?v=wz-T6y6iLHI" target="_blank" rel="noopener">What is LLM Sandbox?</a></p>
+  <p class="tribute">AI insight powered by LLM Sandbox, with thanks to Yaheya &amp; the LLM Sandbox team.</p>
+  <p class="muted">Always verify data-governance terms and your data's <a href="https://cio.ucsb.edu/artificial-intelligence" target="_blank" rel="noopener">UCSB protection level</a> before sending real records.</p>
+</footer>
+
+<div id="askbot">
+  <button class="ask-bot" id="askbot-toggle" aria-expanded="false" aria-controls="askbot-panel">
+    <span class="ico" aria-hidden="true">&#128172;</span><span class="label">Ask the assistant</span><span class="dot" aria-hidden="true"></span>
+  </button>
+  <div class="askbot-panel" id="askbot-panel" role="dialog" aria-modal="true" aria-label="Ask the assistant" hidden>
+    <div class="askbot-head">
+      <strong>Ask the assistant</strong>
+      <div class="ha">
+        <a href="https://llmsandbox.cloud.ucsb.edu/bot/01KVEPQV2NF2PVSBVMNW53NYA5" target="_blank" rel="noopener" title="Open the full assistant in a new tab" aria-label="Open the full assistant in a new tab">&#8599;</a>
+        <button type="button" id="askbot-close" aria-label="Close chat">&#10005;</button>
+      </div>
+    </div>
+    <div class="askbot-msgs" id="askbot-msgs" aria-live="polite" aria-atomic="false">
+      <div class="askbot-msg bot">Hi. Ask me anything about calling an organizational gateway: what you need, the API, the snippets, or an error you are hitting.</div>
+    </div>
+    <form class="askbot-form" id="askbot-form">
+      <input id="askbot-input" type="text" placeholder="Ask a question..." autocomplete="off" aria-label="Your question">
+      <button type="submit" id="askbot-send" aria-label="Send">&#10148;</button>
+    </form>
+    <div class="askbot-foot">Powered by LLM Sandbox, grounded on this site</div>
+  </div>
+</div>
+
+<script>
+  window.PAGE_REVS = {need:1, api:1, quickstart:1, cookbook:1};
+  window.PAGE_REV_DATE = "Jun 22, 2026";
+  window.ASKBOT_SUGGESTIONS = ["What is an organizational gateway?", "Bearer or x-api-key?", "How do I list the models?"];
+</script>
+<script src="app.js" defer></script>
+</body>
+</html>

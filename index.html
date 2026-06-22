@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FERPA Data to Reports | Choose your path</title>
+<title>From Data to Reports | A UCSB PaCE field guide</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="alternate icon" href="favicon.svg">
 <link rel="apple-touch-icon" href="favicon.svg">
-<meta name="description" content="A transferable pipeline for turning any FERPA-protected dataset into clean, AI-summarized reports, built on UCSB's LLM Sandbox. Pick your path: the concept, how to use the Sandbox, or the whole pipeline.">
+<meta name="description" content="A field guide from UCSB PaCE: a disciplined way to turn your data into reports. Scripts do the repeatable work, a language model is used only where it earns its place, and a person approves what ships. Two paths: one for developers, one with no code at all.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Nunito+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..900&family=Nunito+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -21,87 +21,72 @@
     <img src="https://www.professional.ucsb.edu/sites/default/files/2025-05/Logo_PaCE_2025_Full.png" alt="UCSB PaCE logo">
     <img src="https://otl.ucsb.edu/sites/default/files/images/ai-cop-spring-symposium-2026_logo.png" alt="UCSB AI Community of Practice logo">
     <div class="sep"></div>
-    <div class="tag">FERPA Data &rarr; Reports
-      <small>A transferable pipeline, built on LLM Sandbox</small>
+    <div class="tag">Data &rarr; Reports
+      <small>A field guide from UCSB PaCE</small>
     </div>
   </div>
   <div class="pills">
-    <span class="pill gold">Choose your path</span>
-    <a class="pill link" href="guide.html">Full guide &rarr;</a>
+    <a class="pill ghost" href="about.html">About</a>
+    <a class="pill link" href="#start">Start &rarr;</a>
   </div>
 </header>
 
-<div class="wrap">
-  <main id="content" tabindex="-1">
+<main id="content" tabindex="-1">
+<div class="lander">
 
-    <div class="hero">
-      <p class="kicker">FERPA data &rarr; shareable reports</p>
-      <h1>One pipeline. Any protected dataset.</h1>
-      <p class="lede">A real student-evaluation pipeline turned raw survey exports into per-instructor PDF reports with AI insight. Its <strong>shape</strong> transfers to any sensitive education record: advising notes, transcripts, financial-aid files, conduct records. It runs on UCSB's <strong>LLM Sandbox</strong>, an OpenAI-compatible gateway that keeps the data inside UCSB.</p>
-      <div class="rail" aria-hidden="true">
-        <span class="node"><b></b>Ingest</span><span class="link"></span>
-        <span class="node"><b></b>Standardize</span><span class="link"></span>
-        <span class="node"><b></b>Reconcile</span><span class="link"></span>
-        <span class="node gate"><b></b>AI insight</span><span class="link"></span>
-        <span class="node"><b></b>Render</span><span class="link"></span>
-        <span class="node"><b></b>Distribute</span>
-      </div>
+  <section class="lander-hero">
+    <p class="eyebrow">A field guide from UCSB PaCE</p>
+    <h1>Turn your data into reports worth reading.</h1>
+    <p class="story">This started at UCSB Professional &amp; Continuing Education with course evaluations: thousands of raw survey rows that had to become per-instructor reports. We did not hand it to an AI and hope. We applied continuous-improvement principles, revised the process until it was solid, wrote scripts for the repeatable work, and brought in a language model only where it made a difference, like turning free-text comments into a fair, cited summary. A person approved what shipped, and run on protected records, nothing ever left UCSB. <strong>The same process fits almost any data you have, open or sensitive,</strong> whether or not you write code.</p>
+  </section>
+
+  <section id="start">
+    <div class="duo">
+
+      <a class="duo-card nocode" href="nocode.html">
+        <span class="tag">No code needed</span>
+        <h2>Do it in Google Colab</h2>
+        <p class="lede2">Run the whole pipeline in your browser. Google Colab, with an AI helper, turns plain instructions into the scripts that do the work, and you read and approve each step before it runs.</p>
+        <ul>
+          <li>Nothing to install, it runs in a browser tab</li>
+          <li>An AI helper writes the scripts; you stay in control</li>
+          <li>Brand new to Colab? We start from zero</li>
+        </ul>
+        <span class="go">Start the no-code path</span>
+      </a>
+
+      <a class="duo-card dev" href="dev.html">
+        <span class="tag">For developers</span>
+        <h2>Build it with code</h2>
+        <p class="lede2">The pipeline stage by stage, with code you can lift. What the scripts handle, where a language model earns its place, and how to call one your organization controls, with a person approving the result.</p>
+        <ul>
+          <li>The six stages, with working code</li>
+          <li>Where AI helps, and where plain code is better</li>
+          <li>Call any organizational gateway, or UCSB's</li>
+          <li>Caching, real costs, and the error fixes</li>
+        </ul>
+        <span class="go">Open the developer guide</span>
+      </a>
+
     </div>
 
-    <section id="paths">
-      <p class="kicker">Three ways in</p>
-      <h2>Pick what you came for</h2>
-      <p class="lede">The full story teaches three things at once: the transferable idea, how to drive the Sandbox, and the end-to-end build. Most readers want one of them first. Start there; the paths link to each other.</p>
+    <div class="secondary">
+      <a href="colab-intro.html">
+        <span class="s-tag">First time?</span>
+        <span class="s-title">New to Google Colab? Start here</span>
+      </a>
+      <a href="about.html">
+        <span class="s-tag">Who &amp; why</span>
+        <span class="s-title">About this guide and its author</span>
+      </a>
+    </div>
+  </section>
 
-      <div class="tracks">
-        <article class="track concept">
-          <p class="tlabel">The what &amp; why</p>
-          <h3>Understand the pattern</h3>
-          <p class="who">For decision-makers and anyone who wants the transferable idea, the six-stage pattern, the continuous-improvement loop, and the FERPA principles, without keys or code.</p>
-          <div class="meta"><span>no code</span><span>~5 min read</span><span>the concept</span></div>
-          <a class="go" href="concept.html">Read the concept</a>
-        </article>
-
-        <article class="track sandbox">
-          <p class="tlabel">Use the gateway</p>
-          <h3>Use the LLM Sandbox</h3>
-          <p class="who">For developers (at UCSB or anywhere) who just need to call an OpenAI-compatible gateway: getting a key, the auth gotchas, copy-paste snippets that run, and a common-errors cookbook.</p>
-          <div class="meta"><span>keys + code</span><span>curl / Python / Node</span><span>error fixes</span></div>
-          <a class="go" href="sandbox.html">Use the Sandbox</a>
-        </article>
-
-        <article class="track guide">
-          <p class="tlabel">The whole pipeline</p>
-          <h3>Build the full pipeline</h3>
-          <p class="who">For implementers building the end-to-end FERPA-data-to-report machine: caching for near-zero cost, token economics, the no-code Google Colab path, and a worked example you can lift.</p>
-          <div class="meta"><span>end to end</span><span>no-code path</span><span>worked example</span></div>
-          <a class="go" href="guide.html">Open the full guide</a>
-        </article>
-      </div>
-    </section>
-
-    <section id="about">
-      <div class="grid2">
-        <div class="card">
-          <h4>Why a gateway, not a chatbot</h4>
-          <p class="muted">FERPA-protected text should not be pasted into a public AI tool. LLM Sandbox is a UCSB-controlled, OpenAI-compatible gateway: the data stays inside the institution, nothing is retained for training, and a human still approves every report.</p>
-        </div>
-        <div class="card">
-          <h4>Built on the pattern it teaches</h4>
-          <p class="muted">This site, its words, diagrams, and the assistant in the corner, was generated with LLM Sandbox under human review. The same small model the pipeline uses for analysis helped write these pages. See <a href="guide.html#how-made">How this was made</a>.</p>
-        </div>
-      </div>
-      <div class="callout note">
-        <span class="ti">New here?</span>
-        Start with <a href="concept.html">the concept</a> for the idea, jump to <a href="sandbox.html">the Sandbox edition</a> if you just need to call the API, or open <a href="guide.html">the full guide</a> to build the whole thing. Not sure? Ask the assistant in the corner.
-      </div>
-    </section>
-
-  </main>
 </div>
+</main>
 
 <footer>
-  <p><strong>From FERPA Data to Reports</strong>, a transferable build guide derived from a real student-evaluation pipeline. Built on UCSB's LLM Sandbox, an OpenAI-compatible, token-metered UCSB gateway. <a href="https://www.youtube.com/watch?v=wz-T6y6iLHI" target="_blank" rel="noopener">What is LLM Sandbox?</a></p>
+  <p><strong>From Data to Reports</strong>, a field guide from UCSB Professional &amp; Continuing Education, built around a real student-evaluation pipeline. It runs on UCSB's LLM Sandbox, an OpenAI-compatible, token-metered campus gateway, and the same pattern works with any organization's gateway. <a href="https://www.youtube.com/watch?v=wz-T6y6iLHI" target="_blank" rel="noopener">What is LLM Sandbox?</a></p>
   <p class="tribute">AI insight powered by LLM Sandbox, with thanks to Yaheya &amp; the LLM Sandbox team.</p>
   <p class="muted">This guide describes a responsible architecture for handling protected records; it is not legal advice and certifies no specific tool as "FERPA-compliant." Always verify data-governance terms and your data's <a href="https://cio.ucsb.edu/artificial-intelligence" target="_blank" rel="noopener">UCSB protection level</a> before sending real records.</p>
 </footer>
@@ -119,7 +104,7 @@
       </div>
     </div>
     <div class="askbot-msgs" id="askbot-msgs" aria-live="polite" aria-atomic="false">
-      <div class="askbot-msg bot">Hi. Not sure which path to take? Tell me what you are trying to do, the concept, calling the LLM Sandbox API, or building the whole pipeline, and I will point you to the right page.</div>
+      <div class="askbot-msg bot">Hi. Tell me what you want to do with your data and I will point you to the right path: the no-code Colab route, the developer guide, or a quick Colab primer if you are brand new.</div>
     </div>
     <form class="askbot-form" id="askbot-form">
       <input id="askbot-input" type="text" placeholder="Ask a question..." autocomplete="off" aria-label="Your question">
@@ -131,8 +116,8 @@
 
 <script>
   window.PAGE_REVS = {};
-  window.PAGE_REV_DATE = "Jun 21, 2026";
-  window.ASKBOT_SUGGESTIONS = ["Which path should I pick?", "What is LLM Sandbox?", "Do I need to know how to code?"];
+  window.PAGE_REV_DATE = "Jun 22, 2026";
+  window.ASKBOT_SUGGESTIONS = ["Which path should I pick?", "How does AI help shape my data?", "Do I need to know how to code?"];
 </script>
 <script src="app.js" defer></script>
 </body>

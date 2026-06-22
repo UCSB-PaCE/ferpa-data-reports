@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Use the LLM Sandbox: Keys, Auth, Snippets &amp; Errors | FERPA Data to Reports</title>
+<title>At UCSB: the LLM Sandbox | Data to Reports</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="alternate icon" href="favicon.svg">
 <link rel="apple-touch-icon" href="favicon.svg">
-<meta name="description" content="A standalone, practical guide to calling UCSB's LLM Sandbox, an OpenAI-compatible LLM gateway: getting a key, the auth (Bearer or x-api-key, both work), copy-paste snippets verified to run (curl / Python / Node), and a common-errors cookbook.">
+<meta name="description" content="The UCSB specifics for the developer track: getting an LLM Sandbox key (two routes), the live model catalog, and the facts we verified against the campus gateway. The generic API mechanics live on the gateway page.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Nunito+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..900&family=Nunito+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -21,309 +21,108 @@
     <img src="https://www.professional.ucsb.edu/sites/default/files/2025-05/Logo_PaCE_2025_Full.png" alt="UCSB PaCE logo">
     <img src="https://otl.ucsb.edu/sites/default/files/images/ai-cop-spring-symposium-2026_logo.png" alt="UCSB AI Community of Practice logo">
     <div class="sep"></div>
-    <div class="tag">FERPA Data &rarr; Reports
-      <small>Use the LLM Sandbox</small>
+    <div class="tag">Data &rarr; Reports
+      <small>At UCSB: the LLM Sandbox</small>
     </div>
   </div>
   <div class="pills">
     <button class="menu-toggle" id="menuToggle" aria-expanded="false">&#9776; Contents</button>
-    <a class="pill ghost" href="index.html">All paths</a>
-    <a class="pill link" href="guide.html">Full guide &rarr;</a>
+    <a class="pill ghost" href="index.html">Home</a>
+    <a class="pill link" href="gateway.html">Generic API &rarr;</a>
   </div>
 </header>
 
 <div class="shell">
   <aside class="sidebar" id="sidebar">
     <nav aria-label="Table of contents">
-      <p class="navgroup">Get set up</p>
-      <a href="#get-key">Get your key</a>
-      <p class="navgroup">The API</p>
-      <a href="#sandbox-api">API reference</a>
-      <a href="#sandbox-api-auth" class="sub">Base URL &amp; auth</a>
-      <a href="#sandbox-api-chat" class="sub">Chat completions</a>
-      <a href="#sandbox-api-params" class="sub">Parameters &amp; models</a>
-      <a href="#sandbox-api-errors" class="sub">Errors &amp; retries</a>
-      <p class="navgroup">Use it</p>
-      <a href="#quickstart">Copy-paste snippets</a>
-      <a href="#cookbook">Common-errors cookbook</a>
+      <p class="navgroup">Get a key</p>
+      <a href="#get-key">Two ways to get one</a>
+      <a href="#bot-route" class="sub">Publish a bot (now)</a>
+      <a href="#dev-route" class="sub">Dev console (preview)</a>
+      <p class="navgroup">What we verified</p>
+      <a href="#auth">Base URL &amp; auth</a>
+      <a href="#models">The live model catalog</a>
       <p class="navgroup">Go deeper</p>
-      <a href="concept.html">The concept &rarr;</a>
-      <a href="guide.html">The full pipeline &rarr;</a>
+      <a href="gateway.html">The generic API &rarr;</a>
+      <a href="dev.html">The developer guide &rarr;</a>
+      <a href="nocode.html">The no-code path &rarr;</a>
     </nav>
   </aside>
 
   <main id="content" tabindex="-1">
-    <p class="crumb"><a href="index.html">Choose your path</a> <span class="sep">/</span> Use the LLM Sandbox</p>
+    <p class="crumb"><a href="index.html">Home</a> <span class="sep">/</span> Developer track <span class="sep">/</span> At UCSB</p>
 
     <div class="hero">
-      <p class="kicker">Use the gateway</p>
-      <h1>Use the LLM Sandbox</h1>
-      <p class="lede">A standalone guide to calling UCSB's <strong>LLM Sandbox</strong>, an OpenAI-compatible LLM gateway. Get a key, send it the easy way, and copy snippets that actually run. Decoupled from FERPA and this pipeline, so any developer can use it.</p>
-      <div class="chips">
-        <span class="chip"><b>OpenAI-compatible</b> Chat Completions</span>
-        <span class="chip"><b>Bearer</b> or <b>x-api-key</b></span>
-        <span class="chip">curl / Python / Node</span>
-        <span class="chip"><b>verified</b> live</span>
-      </div>
+      <p class="kicker">For people at UCSB</p>
+      <h1>The UCSB LLM Sandbox</h1>
+      <p class="lede">LLM Sandbox is the gateway UCSB runs and vets, an OpenAI-compatible endpoint in front of cloud models, metered in tokens rather than dollars. This page is only what is different at UCSB: how to get a key, and the facts we checked against the live gateway. The call itself is the same as any gateway, so the API, snippets, and error fixes live on <a href="gateway.html">the gateway page</a>.</p>
     </div>
 
-<section id="get-key">
-      <p class="kicker">Before you write (or generate) a single line</p>
-      <h2>Get your LLM Sandbox key (UCSB) <a class="anchorlink" href="#get-key">#</a></h2>
-      <p>Everything here needs two things from UCSB's LLM Sandbox: a <strong>base URL</strong> and an <strong>API key</strong>. There is no cost, this is the campus gateway. Here is how to get them.</p>
+    <section id="get-key">
+      <p class="kicker">Credentials</p>
+      <h2>Two ways to get a key <a class="anchorlink" href="#get-key">#</a></h2>
+      <p>Everything needs two values: a <strong>base URL</strong> and an <strong>API key</strong>. There is no cost; this is the campus gateway. There are two routes to them, for two different jobs.</p>
 
-      <h3>Publish a bot and use its API (available now)</h3>
-      <p>Build a bot in <strong>LLM Sandbox</strong> (<a href="https://llmsandbox.cloud.ucsb.edu" target="_blank" rel="noopener">llmsandbox.cloud.ucsb.edu</a>), give it instructions and, if you like, knowledge (files or a URL). Then from <strong>Settings &rarr; My Bots</strong> open the bot's three-dots menu and choose <strong>API Publish Settings</strong>.</p>
+      <h3 id="bot-route">Publish a bot and use its API (available now) <a class="anchorlink" href="#bot-route">#</a></h3>
+      <p>Build a bot in <strong>LLM Sandbox</strong> (<a href="https://llmsandbox.cloud.ucsb.edu" target="_blank" rel="noopener">llmsandbox.cloud.ucsb.edu</a>), give it instructions and, if you want, knowledge. Then open <strong>Settings &rarr; My Bots</strong>, click the bot's three-dots menu, and choose <strong>API Publish Settings</strong>.</p>
       <figure class="shotfig">
-        <img class="shot" src="img/bot-api-menu.png" alt="My Bots list with a bot's three-dots menu open and API Publish Settings highlighted">
+        <img class="shot" src="img/bot-api-menu.png" alt="The My Bots list with a bot's three-dots menu open and API Publish Settings highlighted">
         <figcaption>Settings &rarr; My Bots &rarr; the bot's three-dots menu &rarr; API Publish Settings.</figcaption>
       </figure>
-      <p>Publishing deploys a small REST API for that bot and gives you <strong>both</strong> an <strong>API Endpoint</strong> (the URL) and an <strong>API Key</strong> on one screen, each with a copy button, so you do not have to hunt for the URL separately. Copy both; the key stays hidden until you click <strong>Show</strong>. This route is open to anyone with LLM Sandbox access, and it is exactly the endpoint plus key that powers the "Ask the assistant" widget on this page.</p>
+      <p>Publishing gives you an <strong>API Endpoint</strong> and an <strong>API Key</strong> on one screen, each with a copy button. This route is open to anyone with LLM Sandbox access, and it is what powers the "Ask the assistant" widget on this site. Note that a bot API talks to the <em>bot you configured</em>, so it has its own shape, not the raw Chat Completions call in the snippets. Reach for it when you want a hosted assistant.</p>
       <figure class="shotfig">
-        <img class="shot" src="img/bot-api-settings.png" alt="API Publish Settings screen showing the API Endpoint URL and an API Key that is hidden until Show, each with a copy button">
-        <figcaption>The publish screen hands you the API Endpoint (URL) and the API Key together. Both have copy buttons; reveal the key with Show.</figcaption>
+        <img class="shot" src="img/bot-api-settings.png" alt="API Publish Settings screen showing the API Endpoint URL and an API Key hidden until Show, each with a copy button">
+        <figcaption>The publish screen hands you the endpoint and the key together. Reveal the key with Show.</figcaption>
       </figure>
       <div class="callout warn"><span class="ti">Treat the key like a password</span>
-        Anyone with your key can call the API as you, and the usage counts against your quota. Store it in a secrets manager (<a href="guide.html#colab">Colab Secrets</a>, an environment variable, or a vault), <strong>never</strong> in a cell, a commit, or a public page. If a key might have leaked, revoke it and generate a new one.
-      </div>
-      <div class="callout note"><span class="ti">Bot API vs raw model calls</span>
-        A published bot API talks to a <em>bot you configured</em> (its own prompt and knowledge), so it is a different shape from the raw, OpenAI-compatible model calls in the <a href="#sandbox-api">code snippets</a> below. Reach for the bot API when you want a hosted assistant; reach for the direct key below when you want to call the model yourself.
+        Anyone with it can call the API as you, against your quota. Store it in a secrets manager (Colab Secrets, an environment variable, a vault), never in a cell, a commit, or a screenshot. If one might have leaked, revoke it and generate a new one.
       </div>
 
-      <h3>Get a direct key and your base URL (developer preview)</h3>
-      <p>For the raw, OpenAI-compatible calls the pipeline code uses, LLM Sandbox has a <strong>developer console</strong> at <a href="https://llmdev.cloud.ucsb.edu" target="_blank" rel="noopener">llmdev.cloud.ucsb.edu</a>. Under the menu (top left) &rarr; <strong>Settings &rarr; My API Keys</strong> you can see your <strong>Base URL</strong> (paste it as the <code>base_url</code> in any OpenAI-compatible client, or as <code>LLM_SANDBOX_BASE_URL</code> in Colab Secrets) and a <strong>Generate new key</strong> button for a direct, account-level key. This is the key style the pipeline code and the Colab notebook here use.</p>
-      <div class="callout note"><span class="ti">Currently in preview</span>
-        The developer console is in preview for people on the LLM Sandbox dev program, and it will roll out more broadly over time. If you do not have access to it yet, ask the LLM Sandbox team, and use the bot route above in the meantime.
-      </div>
+      <h3 id="dev-route">Get a direct key from the dev console (preview) <a class="anchorlink" href="#dev-route">#</a></h3>
+      <p>For the raw, OpenAI-compatible calls the pipeline uses, the developer console at <a href="https://llmdev.cloud.ucsb.edu" target="_blank" rel="noopener">llmdev.cloud.ucsb.edu</a> has the direct keys. Open the menu (top left), then <strong>Settings &rarr; My API Keys</strong>. The page shows your <strong>Base URL</strong> (it ends in <code>/v1</code>) and a <strong>Generate new key</strong> button. The key is shown only once, so copy it right away.</p>
       <figure class="shotfig">
-        <img class="shot" src="img/ls-apikeys.png" alt="LLM Sandbox developer console, My API Keys page: the Base URL field and a Generate new key button, with numbered callouts">
-        <figcaption>In the developer console (preview): Settings &rarr; My API Keys shows your Base URL plus Generate new key. The key is shown only once, copy it right away.</figcaption>
+        <img class="shot" src="img/ls-apikeys.png" alt="LLM Sandbox developer console, My API Keys page: the Base URL field and a Generate new key button">
+        <figcaption>Dev console (preview): Settings &rarr; My API Keys shows your Base URL and Generate new key.</figcaption>
       </figure>
-      <div class="takeaway">Two values, the base URL and a key, unlock everything here. Grab them once, store the key as a Secret, and you never touch it again.</div>
+      <div class="callout note"><span class="ti">Currently in preview</span>
+        The developer console is open to people on the LLM Sandbox dev program and will roll out more widely over time. If you do not have access yet, ask the LLM Sandbox team and use the bot route above in the meantime.
+      </div>
     </section>
 
-<section id="sandbox-api">
-      <p class="kicker">The centerpiece</p>
-      <h2>LLM Sandbox API reference <a class="anchorlink" href="#sandbox-api">#</a></h2>
-      <p>UCSB's LLM Sandbox exposes an <strong>OpenAI-compatible Chat Completions API</strong> in front of cloud foundation models (Anthropic Claude on Amazon Bedrock, among others). "OpenAI-compatible" is the key fact: <strong>any OpenAI SDK or any tool that speaks the Chat Completions shape works against it</strong>, you only change the base URL and the auth header. Everything in this section generalizes to any gateway built on the same convention (LiteLLM, Bedrock Access Gateway, vLLM's OpenAI server, Azure OpenAI, etc.).</p>
-
-      <h3 id="sandbox-api-auth">Base URL &amp; authentication <a class="anchorlink" href="#sandbox-api-auth">#</a></h3>
-      <table>
-        <thead><tr><th scope="col">Setting</th><th scope="col">Value</th><th scope="col">Where it comes from</th></tr></thead>
-        <tbody>
-          <tr><td>Base URL</td><td><code>https://&lt;your-llm-sandbox-host&gt;/v1</code></td><td>Your gateway admin (at UCSB, the LLM Sandbox team). Ends in <code>/v1</code> like the OpenAI API.</td></tr>
-          <tr><td>Auth header</td><td><code>Authorization: Bearer &lt;KEY&gt;</code> <span class="muted">or</span> <code>x-api-key: &lt;KEY&gt;</code></td><td>Either one authenticates. OpenAI SDKs send the bearer automatically; <code>x-api-key</code> is handy for raw HTTP.</td></tr>
-          <tr><td>Model</td><td><code>claude-v4.5-haiku</code></td><td>One of many. List the live catalog with <code>GET {BASE_URL}/models</code> (see below).</td></tr>
-          <tr><td>Content type</td><td><code>application/json</code></td><td>Standard for all requests.</td></tr>
-        </tbody>
-      </table>
-      <div class="callout good"><span class="ti">Good news: your key works two ways</span>
-        LLM Sandbox accepts your key as a standard <code>Authorization: Bearer &lt;KEY&gt;</code> (exactly what the OpenAI SDKs already send) <em>or</em> as an <code>x-api-key: &lt;KEY&gt;</code> header. Either one authenticates, so a normal OpenAI client works with just a <code>base_url</code> and <code>api_key</code>, no header surgery. The raw HTTP snippets use <code>x-api-key</code> because it is explicit; the bearer is equally valid. <span class="muted">(Verified against the live gateway, Jun 2026.)</span>
+    <section id="auth">
+      <p class="kicker">Checked against the live gateway, June 2026</p>
+      <h2>Base URL and auth <a class="anchorlink" href="#auth">#</a></h2>
+      <p>We generated a key, ran calls, and revoked it. Here is what is true of the LLM Sandbox <code>/v1</code> gateway today, so you do not have to rediscover it.</p>
+      <ul>
+        <li><strong>Base URL ends in <code>/v1</code>.</strong> It is an AWS API Gateway in front of Amazon Bedrock models.</li>
+        <li><strong>Either auth header works.</strong> The key authenticates as <code>Authorization: Bearer &lt;KEY&gt;</code> (what OpenAI SDKs already send) <em>or</em> as <code>x-api-key: &lt;KEY&gt;</code>. A standard OpenAI client works with no header changes.</li>
+        <li><strong>The call returns the standard OpenAI shape</strong>, with <code>choices[0].message.content</code> and a <code>usage</code> token count. A short summary runs about 1.3K tokens.</li>
+      </ul>
+      <div class="callout good"><span class="ti">So the generic snippets just work</span>
+        Because either header authenticates, every snippet on <a href="gateway.html#quickstart">the gateway page</a> runs against LLM Sandbox unchanged. Set <code>LLM_BASE_URL</code> to your dev-console base URL and <code>LLM_API_KEY</code> to your key.
       </div>
-
-      <h3 id="sandbox-api-chat">Endpoint: Chat Completions <a class="anchorlink" href="#sandbox-api-chat">#</a></h3>
-      <p><code>POST {BASE_URL}/chat/completions</code></p>
-      <p><strong>Request body</strong> (the fields this pipeline uses; others from the OpenAI spec are accepted):</p>
-      <div class="codeblock"><pre><code>{
-  <span class="tk">"model"</span>: <span class="ts">"claude-v4.5-haiku"</span>,
-  <span class="tk">"max_tokens"</span>: <span class="tn">1024</span>,
-  <span class="tk">"messages"</span>: [
-    { <span class="tk">"role"</span>: <span class="ts">"system"</span>, <span class="tk">"content"</span>: <span class="ts">"You are a helpful assistant specialized in analyzing feedback."</span> },
-    { <span class="tk">"role"</span>: <span class="ts">"user"</span>,   <span class="tk">"content"</span>: <span class="ts">"[1] Great instructor...\n[2] Office hours were hard to reach..."</span> },
-    { <span class="tk">"role"</span>: <span class="ts">"user"</span>,   <span class="tk">"content"</span>: <span class="ts">"Generate a keyword summary and a cited insight..."</span> }
-  ]
-}</code></pre></div>
-      <p><strong>Response body</strong> (OpenAI shape, read <code>choices[0].message.content</code> and <code>usage</code>):</p>
-      <div class="codeblock"><pre><code>{
-  <span class="tk">"id"</span>: <span class="ts">"chatcmpl-..."</span>,
-  <span class="tk">"object"</span>: <span class="ts">"chat.completion"</span>,
-  <span class="tk">"model"</span>: <span class="ts">"claude-v4.5-haiku"</span>,
-  <span class="tk">"choices"</span>: [
-    { <span class="tk">"index"</span>: <span class="tn">0</span>,
-      <span class="tk">"message"</span>: { <span class="tk">"role"</span>: <span class="ts">"assistant"</span>,
-                   <span class="tk">"content"</span>: <span class="ts">"Keyword Summary: Clarity (Green), Office Hours (Orange);Feedback Insight: ..."</span> },
-      <span class="tk">"finish_reason"</span>: <span class="ts">"stop"</span> }
-  ],
-  <span class="tk">"usage"</span>: { <span class="tk">"prompt_tokens"</span>: <span class="tn">1060</span>, <span class="tk">"completion_tokens"</span>: <span class="tn">254</span>, <span class="tk">"total_tokens"</span>: <span class="tn">1314</span> }
-}</code></pre></div>
-      <p class="muted">The <code>usage</code> object is how you meter cost. On LLM Sandbox the budget is <strong>tokens</strong>, not dollars, <code>total_tokens</code> is the number that matters. A typical analysis is ≈ 1,060 in + 254 out ≈ <strong>1.3K tokens</strong>.</p>
-
-      <h3 id="sandbox-api-params">Common parameters &amp; models <a class="anchorlink" href="#sandbox-api-params">#</a></h3>
-      <table>
-        <thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Notes</th></tr></thead>
-        <tbody>
-          <tr><td><code>model</code></td><td>string</td><td>Required. A model ID from the gateway's catalog.</td></tr>
-          <tr><td><code>messages</code></td><td>array</td><td>Required. <code>{role, content}</code> objects; roles are <code>system</code>, <code>user</code>, <code>assistant</code>.</td></tr>
-          <tr><td><code>max_tokens</code></td><td>integer</td><td>Cap on the completion length. this pipeline uses <code>1024</code>, enough for a keyword line + two short paragraphs.</td></tr>
-          <tr><td><code>temperature</code></td><td>number</td><td>Optional. Lower (0 to 0.4) for consistent, reproducible summaries; the cache makes determinism cheap.</td></tr>
-          <tr><td><code>stream</code></td><td>boolean</td><td>Optional. For batch report generation you almost always want <code>false</code>. For a live chat UI, set <code>true</code> and read the server-sent-event token chunks as they arrive.</td></tr>
-        </tbody>
-      </table>
-      <div class="callout note"><span class="ti">Picking a model</span>
-        Summarizing short free-text into a few keywords and a paragraph is a <strong>small, cheap-model job</strong>. A Haiku-class model is the right default: fast, low token cost, and more than capable. Reserve larger models for genuinely harder reasoning, they cost more tokens for no benefit here.
-      </div>
-      <div class="callout good"><span class="ti">The live model catalog (verified Jun 2026)</span>
-        <code>GET {BASE_URL}/models</code> on UCSB's gateway returns a multi-provider list. Anthropic: <code>claude-v4.6-sonnet</code>, <code>claude-v4.6-opus</code>, <code>claude-v4.5-haiku</code>, <code>claude-v3.7-sonnet</code>, <code>claude-v3.5-haiku</code>, <code>claude-v3-opus</code>. Amazon: <code>amazon-nova-pro</code>, <code>-lite</code>, <code>-micro</code>. Also <code>llama-4-maverick-17b-instruct</code>, <code>llama-4-scout-17b-instruct</code>, <code>llama3-3-70b-instruct</code>, <code>mistral-large-2</code>, <code>mixtral-8x7b-instruct</code>, <code>deepseek-r1</code>, <code>qwen3-32b</code>, and OpenAI-named aliases like <code>gpt-4o</code>. Always pull the current list from <code>/models</code>; the catalog grows over time.
-      </div>
-
-      <h3 id="sandbox-api-errors">Errors &amp; retries <a class="anchorlink" href="#sandbox-api-errors">#</a></h3>
-      <p>Because it's OpenAI-compatible, errors come back as HTTP status codes with a JSON body. Handle them the way you'd handle the OpenAI API:</p>
-      <table>
-        <thead><tr><th scope="col">Status</th><th scope="col">Meaning</th><th scope="col">What to do</th></tr></thead>
-        <tbody>
-          <tr><td><code>401 / 403</code></td><td>Key missing, wrong, or revoked</td><td>Send a current key as <code>Authorization: Bearer</code> or <code>x-api-key</code>. Don't retry.</td></tr>
-          <tr><td><code>404</code></td><td>Unknown model or wrong path</td><td>Verify the model ID and that the base URL ends in <code>/v1</code>.</td></tr>
-          <tr><td><code>429</code></td><td>Rate / quota limit</td><td>Back off and retry with exponential delay. Caching reduces how often you hit this.</td></tr>
-          <tr><td><code>5xx</code></td><td>Gateway / upstream error</td><td>Retry a few times with backoff; then log and skip that record (don't fail the whole run).</td></tr>
-        </tbody>
-      </table>
-      <p class="muted">The production rule here: a failed analysis returns an <code>"Error in analysis: ..."</code> string and is <strong>not</strong> cached, so the next run retries it cleanly. One bad record never blocks the rest of the batch.</p>
-
-      <div class="takeaway">If you can call the OpenAI API, you can call LLM Sandbox. Point your client at the base URL, pass your key (as Bearer or <code>x-api-key</code>), and every OpenAI tool, SDK, and snippet just works.</div>
     </section>
 
-<section id="quickstart">
-      <p class="kicker">Copy, paste, adapt</p>
-      <h2>System-agnostic snippets <a class="anchorlink" href="#quickstart">#</a></h2>
-      <p>Here is the <strong>same call</strong> in four flavors. Each takes a list of free-text comments and returns a keyword summary + cited insight. The base URL, key, and model always come from the environment / a secrets store, <strong>never hard-code them</strong>.</p>
-
-            <div class="callout good"><span class="ti">No header surgery needed</span>
-        Your key authenticates as either <code>Authorization: Bearer &lt;KEY&gt;</code> (what the OpenAI SDK sends automatically) or <code>x-api-key: &lt;KEY&gt;</code>, so a normal OpenAI client just works. These snippets use <code>x-api-key</code> because it is explicit in raw HTTP. If a call fails, it is almost always a row in the <a href="#cookbook">cookbook</a> below.
-      </div>
-
-      <div class="codewrap" data-codewrap>
-        <div class="tabs">
-          <button class="active" data-tab="py-sdk">Python · OpenAI SDK</button>
-          <button data-tab="py-req">Python · requests</button>
-          <button data-tab="node">Node · fetch</button>
-          <button data-tab="curl">cURL</button>
-          <span class="spacer"></span>
-          <button class="copybtn" data-copy>Copy</button>
-        </div>
-
-        <pre data-panel="py-sdk"><code><span class="tc"># pip install openai</span>
-<span class="tk">import</span> os
-<span class="tk">from</span> openai <span class="tk">import</span> OpenAI
-
-client = OpenAI(
-    base_url=os.environ[<span class="ts">"LLM_SANDBOX_BASE_URL"</span>],   <span class="tc"># https://&lt;host&gt;/v1</span>
-    api_key=os.environ[<span class="ts">"LLM_SANDBOX_API_KEY"</span>],     <span class="tc"># the SDK sends it as Bearer; the gateway accepts it</span>
-)
-
-<span class="tk">def</span> <span class="tf">analyze</span>(comments):
-    numbered = <span class="ts">"\n"</span>.join(<span class="ts">f"[{i}] {c}"</span> <span class="tk">for</span> i, c <span class="tk">in</span> enumerate(comments, <span class="tn">1</span>))
-    resp = client.chat.completions.create(
-        model=os.environ.get(<span class="ts">"LLM_SANDBOX_MODEL"</span>, <span class="ts">"claude-v4.5-haiku"</span>),
-        max_tokens=<span class="tn">1024</span>,
-        messages=[
-            {<span class="ts">"role"</span>: <span class="ts">"system"</span>, <span class="ts">"content"</span>: SYSTEM_PROMPT},
-            {<span class="ts">"role"</span>: <span class="ts">"user"</span>,   <span class="ts">"content"</span>: numbered},
-            {<span class="ts">"role"</span>: <span class="ts">"user"</span>,   <span class="ts">"content"</span>: TASK_PROMPT},
-        ],
-    )
-    print(<span class="ts">"tokens used:"</span>, resp.usage.total_tokens)   <span class="tc"># your real budget</span>
-    <span class="tk">return</span> resp.choices[<span class="tn">0</span>].message.content</code></pre>
-
-        <pre data-panel="py-req" hidden><code><span class="tc"># pip install requests, no SDK, pure HTTP</span>
-<span class="tk">import</span> os, requests
-
-<span class="tk">def</span> <span class="tf">analyze</span>(comments):
-    numbered = <span class="ts">"\n"</span>.join(<span class="ts">f"[{i}] {c}"</span> <span class="tk">for</span> i, c <span class="tk">in</span> enumerate(comments, <span class="tn">1</span>))
-    r = requests.post(
-        os.environ[<span class="ts">"LLM_SANDBOX_BASE_URL"</span>] + <span class="ts">"/chat/completions"</span>,
-        headers={
-            <span class="ts">"x-api-key"</span>: os.environ[<span class="ts">"LLM_SANDBOX_API_KEY"</span>],
-            <span class="ts">"Content-Type"</span>: <span class="ts">"application/json"</span>,
-        },
-        json={
-            <span class="ts">"model"</span>: os.environ.get(<span class="ts">"LLM_SANDBOX_MODEL"</span>, <span class="ts">"claude-v4.5-haiku"</span>),
-            <span class="ts">"max_tokens"</span>: <span class="tn">1024</span>,
-            <span class="ts">"messages"</span>: [
-                {<span class="ts">"role"</span>: <span class="ts">"system"</span>, <span class="ts">"content"</span>: SYSTEM_PROMPT},
-                {<span class="ts">"role"</span>: <span class="ts">"user"</span>,   <span class="ts">"content"</span>: numbered},
-                {<span class="ts">"role"</span>: <span class="ts">"user"</span>,   <span class="ts">"content"</span>: TASK_PROMPT},
-            ],
-        },
-        timeout=<span class="tn">60</span>,
-    )
-    r.raise_for_status()
-    data = r.json()
-    <span class="tk">return</span> data[<span class="ts">"choices"</span>][<span class="tn">0</span>][<span class="ts">"message"</span>][<span class="ts">"content"</span>]</code></pre>
-
-        <pre data-panel="node" hidden><code><span class="tc">// Node 18+ has fetch built in. No dependencies.</span>
-<span class="tk">async function</span> <span class="tf">analyze</span>(comments) {
-  <span class="tk">const</span> numbered = comments.map((c, i) =&gt; <span class="ts">`[${i + 1}] ${c}`</span>).join(<span class="ts">"\n"</span>);
-  <span class="tk">const</span> res = <span class="tk">await</span> fetch(process.env.LLM_SANDBOX_BASE_URL + <span class="ts">"/chat/completions"</span>, {
-    method: <span class="ts">"POST"</span>,
-    headers: {
-      <span class="ts">"x-api-key"</span>: process.env.LLM_SANDBOX_API_KEY,
-      <span class="ts">"Content-Type"</span>: <span class="ts">"application/json"</span>,
-    },
-    body: JSON.stringify({
-      model: process.env.LLM_SANDBOX_MODEL ?? <span class="ts">"claude-v4.5-haiku"</span>,
-      max_tokens: <span class="tn">1024</span>,
-      messages: [
-        { role: <span class="ts">"system"</span>, content: SYSTEM_PROMPT },
-        { role: <span class="ts">"user"</span>,   content: numbered },
-        { role: <span class="ts">"user"</span>,   content: TASK_PROMPT },
-      ],
-    }),
-  });
-  <span class="tk">if</span> (!res.ok) <span class="tk">throw new</span> Error(<span class="ts">`Sandbox ${res.status}`</span>);
-  <span class="tk">const</span> data = <span class="tk">await</span> res.json();
-  <span class="tk">return</span> data.choices[<span class="tn">0</span>].message.content;
-}</code></pre>
-
-        <pre data-panel="curl" hidden><code><span class="tc"># Smoke-test the gateway from any terminal.</span>
-curl <span class="ts">"$LLM_SANDBOX_BASE_URL/chat/completions"</span> \
-  -H <span class="ts">"x-api-key: $LLM_SANDBOX_API_KEY"</span> \
-  -H <span class="ts">"Content-Type: application/json"</span> \
-  -d <span class="ts">'{
-    "model": "claude-v4.5-haiku",
-    "max_tokens": 1024,
-    "messages": [
-      {"role": "system", "content": "You are a helpful assistant specialized in analyzing feedback."},
-      {"role": "user",   "content": "[1] Great instructor.\n[2] Office hours hard to reach."},
-      {"role": "user",   "content": "Give a keyword summary and a cited insight."}
-    ]
-  }'</span></code></pre>
-      </div>
-
-            <div class="callout note"><span class="ti">On Windows</span>
-        The cURL tab uses POSIX single-quoting and <code>$VAR</code> expansion (macOS, Linux, Git Bash). In Windows <code>cmd</code> or PowerShell the quoting and variables differ; use Git Bash or WSL, or reach for the Python or Node snippet instead.
-      </div>
-      <div class="callout note"><span class="ti">The two prompts</span>
-        These snippets reference <code>SYSTEM_PROMPT</code> and <code>TASK_PROMPT</code>. Those are this pipeline's feedback-summarization prompts; you supply your own for your task. The <a href="guide.html#quickstart">full guide</a> shows the exact citation-grounded prompts you can lift verbatim.
-      </div>
-      <div class="takeaway">Verified runnable: every snippet here was checked against the OpenAI Python SDK (1.102) and Node 22, and the call was confirmed live against UCSB's gateway. Change one thing, the base URL, and your existing OpenAI tooling works.</div>
-    </section>
-
-    <!-- ─────────────────────────── COOKBOOK ─────────────────────────── -->
-    <section id="cookbook">
-      <p class="kicker">When it does not work</p>
-      <h2>Common-errors cookbook <a class="anchorlink" href="#cookbook">#</a></h2>
-      <p>Most failures calling an OpenAI-compatible gateway are auth or path issues, not your code. These are the real ones, with the fix. The snippets above are verified runnable, so if a call fails it is almost always a row below.</p>
+    <section id="models">
+      <p class="kicker">What you can call</p>
+      <h2>The live model catalog <a class="anchorlink" href="#models">#</a></h2>
+      <p>Run <code>GET {BASE_URL}/models</code> with your key to list the current ids. As of June 2026 the catalog spans several providers:</p>
       <div class="tablewrap">
       <table>
-        <thead><tr><th scope="col">Symptom</th><th scope="col">Likely cause</th><th scope="col">Fix</th></tr></thead>
+        <thead><tr><th scope="col">Provider</th><th scope="col">Model ids</th></tr></thead>
         <tbody>
-        <tr><td>401 / 403 on every request.</td><td>The key is missing, wrong, or revoked. (LLM Sandbox accepts the key as either <code>Authorization: Bearer</code> or <code>x-api-key</code>, so this is not a bearer-vs-header problem.)</td><td>Send a current key in either header. Generate a fresh one under Settings &rarr; My API Keys if unsure. Do not retry a 401.</td></tr>
-        <tr><td>It works in the dev-console chat, but your API call returns 401.</td><td>The console login and the <code>/v1</code> API use different credentials. Your browser session does not authenticate API calls.</td><td>Create a key under Settings &rarr; My API Keys and send it as <code>Authorization: Bearer</code> or <code>x-api-key</code>.</td></tr>
-        <tr><td>404 on <code>POST /chat/completions</code>.</td><td>The base URL is missing <code>/v1</code>, or the path is doubled (the base URL already ends in <code>/chat/completions</code>).</td><td>Base URL ends in <code>/v1</code>. The SDK appends <code>/chat/completions</code> for you; in requests / fetch / curl you append it once, so never put <code>/chat/completions</code> in the env var.</td></tr>
-        <tr><td>404 <code>model_not_found</code> even though auth works.</td><td>The model id is not in this gateway's catalog, or it is misspelled.</td><td>List the live ids with <code>GET {BASE_URL}/models</code> (verified working). Real ids include <code>claude-v4.5-haiku</code>, <code>claude-v4.6-sonnet</code>, <code>amazon-nova-pro</code>, and <code>gpt-4o</code>. Set it via <code>LLM_SANDBOX_MODEL</code>; do not hard-code.</td></tr>
-        <tr><td><code>OpenAIError: the api_key client option must be set</code> at startup.</td><td><code>api_key</code> is <code>None</code> and no <code>OPENAI_API_KEY</code> is set. In Colab, <code>userdata.get()</code> returns <code>None</code> for a missing or disabled Secret.</td><td>Pass a non-empty <code>api_key</code>. In Colab, add and enable all three Secrets (base URL, key, model).</td></tr>
-        <tr><td><code>stream: true</code> hangs or returns nothing readable from <code>choices</code>.</td><td>Streaming returns server-sent-event chunks that use <code>delta</code>, not a single <code>message</code> body; some proxies also buffer SSE.</td><td>For batch reports keep <code>stream: false</code> and read <code>choices[0].message.content</code>. For a live UI, iterate the SSE <code>delta</code> and confirm nothing in the path buffers.</td></tr>
-        <tr><td>Intermittent 429 or 5xx in the middle of a batch.</td><td>429 is a rate or token-quota limit; 5xx is a gateway or upstream error. Neither is an auth or syntax problem.</td><td>Back off and retry on 429 / 5xx; do not retry 401 / 403 / 404. A warm cache cuts how often you hit 429.</td></tr>
-      </tbody>
+          <tr><td>Anthropic (Claude)</td><td><code>claude-v4.6-sonnet</code>, <code>claude-v4.6-opus</code>, <code>claude-v4.5-haiku</code>, <code>claude-v3.7-sonnet</code>, <code>claude-v3.5-haiku</code>, <code>claude-v3-opus</code></td></tr>
+          <tr><td>Amazon (Nova)</td><td><code>amazon-nova-pro</code>, <code>amazon-nova-lite</code>, <code>amazon-nova-micro</code></td></tr>
+          <tr><td>Meta (Llama)</td><td><code>llama-4-maverick-17b-instruct</code>, <code>llama-4-scout-17b-instruct</code>, <code>llama3-3-70b-instruct</code></td></tr>
+          <tr><td>Mistral &amp; others</td><td><code>mistral-large-2</code>, <code>mistral-large</code>, <code>mixtral-8x7b-instruct</code>, <code>mistral-7b-instruct</code>, <code>deepseek-r1</code>, <code>qwen3-32b</code></td></tr>
+          <tr><td>OpenAI-named aliases</td><td><code>gpt-4o</code>, <code>gpt-4-turbo</code>, <code>gpt-4</code>, <code>gpt-3.5-turbo</code></td></tr>
+        </tbody>
       </table>
       </div>
+      <p class="muted">For turning a few comments into a short, cited summary, a small model like <code>claude-v4.5-haiku</code> or <code>amazon-nova-lite</code> is the right default. The list grows over time, so read it from <code>/models</code> rather than hard-coding.</p>
 
-      <div class="callout good"><span class="ti">Verified against the live gateway (Jun 2026)</span>
-        Checked directly on UCSB's LLM Sandbox: the Base URL ends in <code>/v1</code>; the key authenticates as <strong>either</strong> <code>Authorization: Bearer</code> <strong>or</strong> <code>x-api-key</code>; <code>GET {BASE_URL}/models</code> returns the live catalog (Claude v4.6 / v4.5, Amazon Nova, Llama 4, Mistral, DeepSeek, Qwen, and <code>gpt-4o</code> aliases); and a <code>claude-v4.5-haiku</code> chat completion returns the standard OpenAI shape. Two things still depend on your setup: whether <code>max_tokens</code> is required, and whether a long streaming response passes through unbuffered. Confirm those for your case.
-      </div>
-
-      <div class="callout note"><span class="ti">Building the whole thing?</span>
-        This edition is just how to call the gateway. To see it inside the FERPA-to-report pipeline, with caching, the no-code Colab path, and a worked example, open <a href="guide.html">the full guide</a>. For the why behind it, read <a href="concept.html">the concept</a>.
+      <div class="callout good"><span class="ti">Next</span>
+        You have a key and you know what is true at UCSB. For the call itself and the error fixes, go to <a href="gateway.html">the gateway page</a>. To build the whole pipeline, see <a href="dev.html">the developer guide</a>, or skip the code entirely with <a href="nocode.html">the no-code path</a>.
       </div>
     </section>
 
@@ -331,9 +130,9 @@ curl <span class="ts">"$LLM_SANDBOX_BASE_URL/chat/completions"</span> \
 </div>
 
 <footer>
-  <p><strong>From FERPA Data to Reports</strong>, a transferable build guide derived from a real student-evaluation pipeline. Built on UCSB's LLM Sandbox, an OpenAI-compatible, token-metered UCSB gateway. <a href="https://www.youtube.com/watch?v=wz-T6y6iLHI" target="_blank" rel="noopener">What is LLM Sandbox?</a></p>
+  <p><strong>From Data to Reports</strong>, a field guide by Jonathan Engeln Lambinet-Lacson at UCSB Professional &amp; Continuing Education. Built on UCSB's LLM Sandbox, an OpenAI-compatible, token-metered campus gateway. <a href="https://www.youtube.com/watch?v=wz-T6y6iLHI" target="_blank" rel="noopener">What is LLM Sandbox?</a></p>
   <p class="tribute">AI insight powered by LLM Sandbox, with thanks to Yaheya &amp; the LLM Sandbox team.</p>
-  <p class="muted">This guide describes a responsible architecture for handling protected records; it is not legal advice and certifies no specific tool as "FERPA-compliant." Always verify data-governance terms and your data's <a href="https://cio.ucsb.edu/artificial-intelligence" target="_blank" rel="noopener">UCSB protection level</a> before sending real records.</p>
+  <p class="muted">Always verify data-governance terms and your data's <a href="https://cio.ucsb.edu/artificial-intelligence" target="_blank" rel="noopener">UCSB protection level</a> before sending real records.</p>
 </footer>
 
 <div id="askbot">
@@ -349,7 +148,7 @@ curl <span class="ts">"$LLM_SANDBOX_BASE_URL/chat/completions"</span> \
       </div>
     </div>
     <div class="askbot-msgs" id="askbot-msgs" aria-live="polite" aria-atomic="false">
-      <div class="askbot-msg bot">Hi. Ask me anything about calling the LLM Sandbox API: getting a key, sending it (Bearer or x-api-key), the snippets, or a specific error you are hitting.</div>
+      <div class="askbot-msg bot">Hi. Ask me about the UCSB LLM Sandbox: getting a key, which header to use, or the model catalog.</div>
     </div>
     <form class="askbot-form" id="askbot-form">
       <input id="askbot-input" type="text" placeholder="Ask a question..." autocomplete="off" aria-label="Your question">
@@ -360,9 +159,9 @@ curl <span class="ts">"$LLM_SANDBOX_BASE_URL/chat/completions"</span> \
 </div>
 
 <script>
-  window.PAGE_REVS = {"get-key":3, "sandbox-api":4, quickstart:3, cookbook:1};
-  window.PAGE_REV_DATE = "Jun 21, 2026";
-  window.ASKBOT_SUGGESTIONS = ["How do I send my API key?", "Which models can I use?", "Why do I get a 401 with a valid key?"];
+  window.PAGE_REVS = {"get-key":1, auth:1, models:1};
+  window.PAGE_REV_DATE = "Jun 22, 2026";
+  window.ASKBOT_SUGGESTIONS = ["How do I get an LLM Sandbox key?", "Bearer or x-api-key at UCSB?", "Which models can I use?"];
 </script>
 <script src="app.js" defer></script>
 </body>

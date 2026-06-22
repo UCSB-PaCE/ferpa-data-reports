@@ -17,11 +17,14 @@ UCSB's **LLM Sandbox** API, with a no-code Google Colab path for non-technical u
 
 ## How it is built and deployed
 
-This is **plain static HTML**, no build step. The site is **four pages sharing one
-`styles.css` and one `app.js`**: `index.html` (the goal chooser, served at the root),
-`concept.html`, `sandbox.html`, and `guide.html` (the comprehensive guide). Per-page data
-(the "revised N×" badge counts/date and the chat's suggested questions) is set in a small
-inline `<script>` that runs before `app.js`. There is **no test suite, no linter, and no
+This is **plain static HTML**, no build step. The site is **seven pages sharing one
+`styles.css` and one `app.js`**. `index.html` is the landing (origin-story hook + two
+tracks). The split is by audience: a **no-code track** (`nocode.html`, `colab-intro.html`)
+and a **developer track** (`dev.html` the build, `gateway.html` the generic API,
+`sandbox.html` the UCSB specifics), plus `about.html`. Display face is **Fraunces** (serif);
+labels are **JetBrains Mono**; body is **Nunito Sans**. Per-page data (the "revised N×"
+badge counts/date and the chat's suggested questions) is set in a small inline `<script>`
+that runs before `app.js`. There is **no test suite, no linter, and no
 package manager** (no `package.json`, no CI workflow); "verify" means looking at the page
 (and running axe-core for accessibility), not running a unit-test runner.
 To publish: commit and `git push origin main`; GitHub Pages auto-deploys in ~30-60s.
@@ -42,11 +45,14 @@ python -m http.server 8000      # then open http://localhost:8000/
 
 | Path | Purpose |
 |------|---------|
-| `index.html` | The **goal chooser** (root URL): a short hero + three track cards routing readers to the editions. |
-| `concept.html` | **Concept edition**: the transferable 6-stage pattern, the continuous-improvement loop, FERPA principles. No keys, no code. |
-| `sandbox.html` | **Sandbox edition** (flagship): get an LLM Sandbox key, the API reference, verified copy-paste snippets, and the **common-errors cookbook**. |
-| `guide.html` | **Full guide** (the original single page, renamed): all sections end to end, cross-linked to the editions. Sections: overview, 6-stage pattern, CI loop, FERPA, get-key, API reference, snippets, SQLite caching, token economics, Colab + Secrets + Gemini, advising worked example, VS Code, principles, "How this was made". |
-| `styles.css`, `app.js` | The **shared design system** + behaviors (tabbed code, copy buttons, scrollspy, mobile nav, chat widget, "revised N×" badge renderer) used by all four pages. Edit these once; every page updates. |
+| `index.html` | **Landing** (root URL): a calm hero with the origin-story hook, then two track cards (no-code / developer) + About and "New to Colab?" entrances. |
+| `nocode.html` | **No-code track**: the explanatory Google Colab walkthrough (an AI helper writes each step; you approve). Written for smart, mildly-technical readers. |
+| `colab-intro.html` | **"New to Google Colab?"** five-minute primer (cells, run, Secrets, Files). |
+| `dev.html` | **Developer guide**: the six pipeline stages with code, each tagged by role (`script` / `AI` / `human` via the `.role` badge), caching, token economics, the continuous-improvement loop, principles + checklist. |
+| `gateway.html` | **Generic gateway** (developer track): "use any organization-controlled LLM gateway", what you need / no-gateway guidance, the OpenAI-compatible API, neutral snippets (curl/Python/Node), and a common-errors cookbook. Product-agnostic. |
+| `sandbox.html` | **UCSB specifics** (developer track): get an LLM Sandbox key (two routes), the live model catalog, and the facts verified against the campus `/v1` gateway (either `Bearer` or `x-api-key` works). Links to `gateway.html` for the mechanics. |
+| `about.html` | The author (Jonathan Engeln Lambinet-Lacson, email + LinkedIn), the project, and "how this was made". |
+| `styles.css`, `app.js` | The **shared design system** + behaviors (tabbed code, copy buttons, scrollspy, mobile nav, chat widget, "revised N×" badge renderer) used by every page. Edit these once; every page updates. |
 | `img/` | Annotated screenshots (PNG). `_annot.py` is the annotation helper (crop / box / numbered badge / legend). |
 | `knowledge/ferpa-data-reports.md` | The chat assistant's curated knowledge file (one of its two sources; see below). |
 | `sample-data/` | Synthetic `advising_notes_sample.csv` / `.xlsx` (KPI columns; no real records). |
@@ -78,7 +84,8 @@ rate-limits, then forwards to the **published bot API** (bedrock-claude-chat: as
 
 - **No em dashes anywhere.** Use commas, parentheses, or "to". This is a hard rule across
   all PaCE content.
-- **The word "messy" appears only in the advising worked example**, nowhere else.
+- **The word "messy" is retired** from the copy (it lived in the old advising example,
+  which no longer exists as a section). Use "raw", "inconsistent", or "rarely clean".
 - **Product naming:** the generally-available product is **LLM Sandbox**
   (`llmsandbox.cloud.ucsb.edu`); always call it that. The **developer console**
   `llmdev.cloud.ucsb.edu` is dev/alpha and **in preview, not open to everyone yet**. Frame

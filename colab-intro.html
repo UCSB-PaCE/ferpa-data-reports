@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>New to Google Colab? Start here | Data to Reports</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="alternate icon" href="favicon.svg">
+<link rel="apple-touch-icon" href="favicon.svg">
+<meta name="description" content="A five-minute, plain-language introduction to Google Colab for complete beginners: what it is, how to open one, what cells are, how to run them, and the two panels (Secrets and Files) the no-code path uses.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..900&family=Nunito+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip-link" href="#content">Skip to content</a>
+
+<header class="topbar">
+  <div class="brand">
+    <img src="https://www.professional.ucsb.edu/sites/default/files/2025-05/Logo_PaCE_2025_Full.png" alt="UCSB PaCE logo">
+    <img src="https://otl.ucsb.edu/sites/default/files/images/ai-cop-spring-symposium-2026_logo.png" alt="UCSB AI Community of Practice logo">
+    <div class="sep"></div>
+    <div class="tag">Data &rarr; Reports
+      <small>New to Google Colab?</small>
+    </div>
+  </div>
+  <div class="pills">
+    <a class="pill ghost" href="index.html">Home</a>
+    <a class="pill link" href="nocode.html">The no-code path &rarr;</a>
+  </div>
+</header>
+
+<main id="content" tabindex="-1">
+<div class="lander">
+
+  <section class="lander-hero">
+    <p class="eyebrow">A five-minute primer</p>
+    <h1>New to Google Colab? Start here.</h1>
+    <p class="story">Colab is a free tool from Google that lets you run code in your browser, with nothing to install. The no-code path uses it because the AI helper inside it can write the code for you. You only need to know a few things first, and they take about five minutes. Nothing here can break anything.</p>
+  </section>
+
+  <section id="what">
+    <p class="kicker">First, the big picture</p>
+    <h2>What Colab actually is</h2>
+    <p>Think of a Colab notebook as a document that can also run. It mixes two kinds of blocks: <strong>text</strong> (notes, headings) and <strong>code</strong> (small programs). You read down the page, and when you reach a code block you press a button to run it. Whatever it produces, a number, a table, a chart, appears right underneath.</p>
+    <p>It runs on a computer Google lends you for the session, so your own laptop does nothing but show the page. When you close the tab, that borrowed computer goes away. Your notebook, and anything you saved to your Google Drive, stays.</p>
+    <div class="callout note"><span class="ti">You cannot break it</span>
+      Worst case, you start over with a fresh notebook. You are not installing anything, and you are not changing your computer. Experiment freely.
+    </div>
+  </section>
+
+  <section id="open">
+    <p class="kicker">Step one</p>
+    <h2>Open a notebook</h2>
+    <p>Go to <a href="https://colab.research.google.com" target="_blank" rel="noopener">colab.research.google.com</a> and sign in with a Google account. Choose <strong>New notebook</strong> (or open the one this guide gives you on the <a href="nocode.html">no-code path</a>). You will see a mostly empty page with one empty code block, called a <strong>cell</strong>, waiting for you.</p>
+  </section>
+
+  <section id="cells">
+    <p class="kicker">Step two</p>
+    <h2>Cells, and how to run them</h2>
+    <p>A <strong>cell</strong> is one of those blocks. A code cell has a small <strong>play button</strong> on its left. Click it, or press <strong>Shift and Enter together</strong>, to run that cell. A spinner turns while it works, then the result appears below it. Run cells top to bottom, in order, the way you would read a recipe.</p>
+    <figure class="shotfig">
+      <img class="shot" src="img/colab-cells.png" alt="A Google Colab notebook showing a code cell with its play button on the left and the output appearing below it">
+      <figcaption>A code cell. The play button on the left runs it; output appears underneath.</figcaption>
+    </figure>
+    <p>Two menu items are worth knowing from the start. <strong>Runtime &rarr; Run all</strong> runs every cell from the top, which is how you run the whole pipeline at once. <strong>Runtime &rarr; Restart session</strong> gives you a clean slate if something gets confused. That is genuinely all the notebook mechanics you need.</p>
+  </section>
+
+  <section id="secrets">
+    <p class="kicker">Step three</p>
+    <h2>The Secrets panel (for your key)</h2>
+    <p>The pipeline needs an API key, and a key is like a password, so you do not paste it into a cell where it would be visible and saved. Colab has a safe place for it. On the left edge there is a <strong>key icon</strong>; click it to open <strong>Secrets</strong>. You add your key once, give it a name, and turn on "Notebook access." The code then reads it by name, and the key itself never shows up in the notebook.</p>
+    <figure class="shotfig">
+      <img class="shot" src="img/colab-secrets.png" alt="The Colab Secrets panel, opened from the key icon, with a named secret and a Notebook access toggle">
+      <figcaption>The key icon opens Secrets. Add your key here, never in a cell.</figcaption>
+    </figure>
+  </section>
+
+  <section id="files">
+    <p class="kicker">Step four</p>
+    <h2>The Files panel (for your data)</h2>
+    <p>To work on your own spreadsheet, you give Colab the file. On the left edge there is a <strong>folder icon</strong>; click it to open <strong>Files</strong>, then use the upload button to add your CSV or spreadsheet for the session. Like the borrowed computer, uploaded files disappear when the session ends, which for protected data is a feature, not a bug.</p>
+    <figure class="shotfig">
+      <img class="shot" src="img/colab-files.png" alt="The Colab Files panel, opened from the folder icon, with an upload button">
+      <figcaption>The folder icon opens Files. Upload your data for the session here.</figcaption>
+    </figure>
+    <div class="callout warn"><span class="ti">A word on protected data</span>
+      The moment you upload a file with real records, you are responsible for it. Use approved accounts and storage, and check your data's protection level before you start. The pipeline is built to keep that data safe, but the first upload is on you.
+    </div>
+  </section>
+
+  <section id="ready">
+    <p class="kicker">That is the whole primer</p>
+    <h2>You are ready</h2>
+    <p>Open a notebook, run cells top to bottom, keep your key in Secrets, and upload data in Files. That is everything the no-code path assumes you know. The AI helper handles the actual code.</p>
+    <p style="margin-top:var(--s5);"><a href="nocode.html"><strong>Continue to the no-code path &rarr;</strong></a></p>
+  </section>
+
+</div>
+</main>
+
+<footer>
+  <p><strong>From Data to Reports</strong>, a field guide by Jonathan Engeln Lambinet-Lacson at UCSB Professional &amp; Continuing Education. <a href="https://www.youtube.com/watch?v=wz-T6y6iLHI" target="_blank" rel="noopener">What is LLM Sandbox?</a></p>
+  <p class="tribute">AI insight powered by LLM Sandbox, with thanks to Yaheya &amp; the LLM Sandbox team.</p>
+  <p class="muted">Always verify data-governance terms and your data's <a href="https://cio.ucsb.edu/artificial-intelligence" target="_blank" rel="noopener">UCSB protection level</a> before sending real records.</p>
+</footer>
+
+<div id="askbot">
+  <button class="ask-bot" id="askbot-toggle" aria-expanded="false" aria-controls="askbot-panel">
+    <span class="ico" aria-hidden="true">&#128172;</span><span class="label">Ask the assistant</span><span class="dot" aria-hidden="true"></span>
+  </button>
+  <div class="askbot-panel" id="askbot-panel" role="dialog" aria-modal="true" aria-label="Ask the assistant" hidden>
+    <div class="askbot-head">
+      <strong>Ask the assistant</strong>
+      <div class="ha">
+        <a href="https://llmsandbox.cloud.ucsb.edu/bot/01KVEPQV2NF2PVSBVMNW53NYA5" target="_blank" rel="noopener" title="Open the full assistant in a new tab" aria-label="Open the full assistant in a new tab">&#8599;</a>
+        <button type="button" id="askbot-close" aria-label="Close chat">&#10005;</button>
+      </div>
+    </div>
+    <div class="askbot-msgs" id="askbot-msgs" aria-live="polite" aria-atomic="false">
+      <div class="askbot-msg bot">Hi. New to Colab? Ask me anything: what a cell is, how to run it, or where your key and data go.</div>
+    </div>
+    <form class="askbot-form" id="askbot-form">
+      <input id="askbot-input" type="text" placeholder="Ask a question..." autocomplete="off" aria-label="Your question">
+      <button type="submit" id="askbot-send" aria-label="Send">&#10148;</button>
+    </form>
+    <div class="askbot-foot">Powered by LLM Sandbox, grounded on this site</div>
+  </div>
+</div>
+
+<script>
+  window.PAGE_REVS = {};
+  window.PAGE_REV_DATE = "Jun 22, 2026";
+  window.ASKBOT_SUGGESTIONS = ["What is a Colab cell?", "How do I run a cell?", "Where do I put my key?"];
+</script>
+<script src="app.js" defer></script>
+</body>
+</html>

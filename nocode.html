@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The no-code path: do it in Google Colab | Data to Reports</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="alternate icon" href="favicon.svg">
+<link rel="apple-touch-icon" href="favicon.svg">
+<meta name="description" content="Run the whole data-to-reports pipeline in Google Colab with no coding. An AI helper writes each step, you read and approve it, and the one model call summarizes your free text. Plain language, start to finish.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..900&family=Nunito+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip-link" href="#content">Skip to content</a>
+
+<header class="topbar">
+  <div class="brand">
+    <img src="https://www.professional.ucsb.edu/sites/default/files/2025-05/Logo_PaCE_2025_Full.png" alt="UCSB PaCE logo">
+    <img src="https://otl.ucsb.edu/sites/default/files/images/ai-cop-spring-symposium-2026_logo.png" alt="UCSB AI Community of Practice logo">
+    <div class="sep"></div>
+    <div class="tag">Data &rarr; Reports
+      <small>The no-code path</small>
+    </div>
+  </div>
+  <div class="pills">
+    <button class="menu-toggle" id="menuToggle" aria-expanded="false">&#9776; Contents</button>
+    <a class="pill ghost" href="index.html">Home</a>
+    <a class="pill link" href="colab-intro.html">New to Colab?</a>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav aria-label="Table of contents">
+      <p class="navgroup">Before you start</p>
+      <a href="#what">What you will do</a>
+      <a href="#need">What you need</a>
+      <p class="navgroup">The walkthrough</p>
+      <a href="#open">1 &middot; Open the notebook</a>
+      <a href="#key">2 &middot; Add your key</a>
+      <a href="#helper">3 &middot; Meet your AI helper</a>
+      <a href="#data">4 &middot; Bring in your data</a>
+      <a href="#clean">5 &middot; Shape the data</a>
+      <a href="#insight">6 &middot; The one AI step</a>
+      <a href="#report">7 &middot; Make the report</a>
+      <p class="navgroup">After</p>
+      <a href="#champion">You can do this now</a>
+      <a href="#files">Notebook &amp; sample data</a>
+    </nav>
+  </aside>
+
+  <main id="content" tabindex="-1">
+    <p class="crumb"><a href="index.html">Home</a> <span class="sep">/</span> No-code path</p>
+
+    <div class="hero">
+      <p class="kicker">No code needed</p>
+      <h1>Do it in Google Colab</h1>
+      <p class="lede">You can run this whole pipeline without writing code. You work in Google Colab, an AI helper writes each step for you, and you read it and press run. The result is the same report a developer would build. This page walks the whole thing, slowly, in plain language. Brand new to Colab? Take the <a href="colab-intro.html">five-minute primer</a> first.</p>
+    </div>
+
+    <section id="what">
+      <p class="kicker">The shape of it</p>
+      <h2>What you will do <a class="anchorlink" href="#what">#</a></h2>
+      <p>Three roles do the work, and it helps to keep them straight, because it is what makes this safe to do with real data.</p>
+      <ul>
+        <li><strong>An AI helper writes the code.</strong> You describe what you want in plain words; it writes the small program. You never type code yourself.</li>
+        <li><strong>You approve every step.</strong> Nothing runs until you read it and press the button. You are the person in charge, the whole way through.</li>
+        <li><strong>A model summarizes the free text, once.</strong> In a single step, your written comments go to a model that turns them into a short, cited summary. That is the only place your data meets AI, and it goes to a gateway your institution controls.</li>
+      </ul>
+      <div class="callout note"><span class="ti">Two different AIs, do not mix them up</span>
+        The <em>helper</em> that writes code (Gemini, built into Colab) is one thing. The <em>model</em> that summarizes your comments (through your organization's gateway) is another. Keep real records out of the code helper's chat; the records belong only in the summarizing step, which runs through the approved gateway.
+      </div>
+    </section>
+
+    <section id="need">
+      <p class="kicker">A short list</p>
+      <h2>What you need <a class="anchorlink" href="#need">#</a></h2>
+      <ul>
+        <li>A <strong>Google account</strong>, to use Colab.</li>
+        <li>A <strong>base URL and key</strong> for a language-model gateway your organization controls. At UCSB, that is the <a href="sandbox.html#get-key">LLM Sandbox</a>; get one there. Not at UCSB? See <a href="gateway.html#no-gateway">what a gateway is and how to get one</a>.</li>
+        <li>Your <strong>data</strong>, as a spreadsheet or CSV. A <a href="#files">synthetic sample</a> is provided so you can practice with no real records.</li>
+      </ul>
+    </section>
+
+    <section id="open">
+      <p class="kicker">Step 1</p>
+      <h2>Open the notebook <a class="anchorlink" href="#open">#</a></h2>
+      <p>The fastest start is the ready-made notebook for this guide; the <a href="#files">link is at the bottom</a>. Open it in Colab and it arrives with every step already laid out. If you would rather build it yourself, open a blank notebook at <a href="https://colab.research.google.com" target="_blank" rel="noopener">colab.research.google.com</a> and follow along; the AI helper will fill in each cell.</p>
+    </section>
+
+    <section id="key">
+      <p class="kicker">Step 2</p>
+      <h2>Add your key, safely <a class="anchorlink" href="#key">#</a></h2>
+      <p>Your key is like a password, so it goes in Colab's <strong>Secrets</strong> panel, not in a cell. Click the <strong>key icon</strong> on the left edge and add three secrets, turning on "Notebook access" for each:</p>
+      <ul>
+        <li><code>LLM_BASE_URL</code>, your gateway's base URL (it ends in <code>/v1</code>)</li>
+        <li><code>LLM_API_KEY</code>, your key</li>
+        <li><code>LLM_MODEL</code>, a model id (for example <code>claude-v4.5-haiku</code> at UCSB)</li>
+      </ul>
+      <figure class="shotfig">
+        <img class="shot" src="img/colab-secrets.png" alt="The Colab Secrets panel with named secrets and the Notebook access toggle turned on">
+        <figcaption>Add your three secrets here. The code reads them by name, so the key never appears in the notebook.</figcaption>
+      </figure>
+    </section>
+
+    <section id="helper">
+      <p class="kicker">Step 3</p>
+      <h2>Meet your AI helper <a class="anchorlink" href="#helper">#</a></h2>
+      <p>Colab has a built-in AI assistant (Gemini). It is how a non-coder writes code: you tell it what you want, and it writes the cell. You will see a "Generate" prompt and a way to ask it to fix or change a cell. You stay in charge, you read what it wrote and decide whether to run it.</p>
+      <figure class="shotfig">
+        <img class="shot" src="img/colab-gemini.png" alt="The Gemini AI assistant inside Google Colab, ready to generate code from a plain-language prompt">
+        <figcaption>The AI helper inside Colab. Describe a step in plain words and it writes the cell.</figcaption>
+      </figure>
+      <div class="callout warn"><span class="ti">Check it is allowed for your data</span>
+        Before you lean on the Colab helper at an institution, confirm it is approved for the kind of data you are handling. You are asking it to write code, so you can use it without ever showing it a real record. Keep it that way.
+      </div>
+    </section>
+
+    <section id="data">
+      <p class="kicker">Step 4</p>
+      <h2>Bring in your data <a class="anchorlink" href="#data">#</a></h2>
+      <p>Click the <strong>folder icon</strong> on the left to open <strong>Files</strong>, and upload your spreadsheet for the session. It is removed when you close the notebook, which for protected data is exactly what you want.</p>
+      <figure class="shotfig">
+        <img class="shot" src="img/colab-files.png" alt="The Colab Files panel with an upload button for adding a data file for the session">
+        <figcaption>Upload your CSV or spreadsheet in the Files panel. It lasts only for the session.</figcaption>
+      </figure>
+    </section>
+
+    <section id="clean">
+      <p class="kicker">Step 5</p>
+      <h2>Shape the data <a class="anchorlink" href="#clean">#</a></h2>
+      <p>This is where the AI helper earns its keep. Real spreadsheets are rarely clean: odd column names, blank rows, inconsistent labels. Tell the helper, in plain words, what you have and what you want. Something like: <em>"Read advising_notes.csv. Rename the advisor column to subject and the notes column to text. Drop empty rows. Show me the first five."</em> It writes the cell; you press run and look at the result.</p>
+      <figure class="shotfig">
+        <img class="shot" src="img/colab-gemini-edit.png" alt="The Colab AI helper editing a code cell after a plain-language request to clean a dataset">
+        <figcaption>Ask in plain words; the helper writes and edits the cell. You read it and run it.</figcaption>
+      </figure>
+      <p>If the result looks wrong, tell it what is off and it tries again. This back-and-forth is the whole skill, and it is one a smart person picks up in an afternoon.</p>
+    </section>
+
+    <section id="insight">
+      <p class="kicker">Step 6</p>
+      <h2>The one AI step: insight <a class="anchorlink" href="#insight">#</a></h2>
+      <p>Now the single step where your data meets a model. The notebook sends just the free-text comments, numbered, to your gateway, and asks for a short summary that cites the comments it used. Names and other identifiers never go; only the text does. The summary comes back grounded in real quotes, so it cannot invent a complaint nobody made.</p>
+      <div class="callout good"><span class="ti">This is the responsible part, made simple</span>
+        The comments go to the gateway your institution approved, not to a public chatbot, and not to the code helper. Nothing is kept for training. And you still read the summary before it goes anywhere.
+      </div>
+      <p>The model also costs almost nothing here, and the notebook remembers each answer, so running it again is free. If you want to understand that step in depth, the <a href="dev.html#insight">developer guide</a> shows exactly what is sent.</p>
+    </section>
+
+    <section id="report">
+      <p class="kicker">Step 7</p>
+      <h2>Make the report <a class="anchorlink" href="#report">#</a></h2>
+      <p>Ask the helper for the charts you want from the numeric columns (a bar chart of scores by question, say), and to lay the charts and the summary into a clean report you can download. Then the most important step, the one no AI does for you: you read the finished report and decide whether to share it. A person approving the result is the rule that keeps the whole thing trustworthy.</p>
+      <div class="takeaway">An AI wrote the code, a model summarized the text, and you approved what shipped. That division is the point, and you just ran all three.</div>
+    </section>
+
+    <section id="champion">
+      <p class="kicker">Where this leaves you</p>
+      <h2>You can do this now <a class="anchorlink" href="#champion">#</a></h2>
+      <p>You did not learn to code. You learned something more useful: how to direct an AI to do the coding, how to keep protected data inside safe walls, and how to stay the person in charge. Point this at your next pile of data and you will move faster the second time. That is the whole idea, more people who can turn their own data into something worth reading.</p>
+    </section>
+
+    <section id="files">
+      <p class="kicker">Take these with you</p>
+      <h2>The notebook and a sample to practice on <a class="anchorlink" href="#files">#</a></h2>
+      <div class="grid2">
+        <div class="card">
+          <h4>Companion notebook</h4>
+          <p class="muted">Every step above, ready to open in Colab.</p>
+          <p style="margin-bottom:0;"><a href="https://github.com/UCSB-PaCE/ferpa-data-reports/blob/main/ferpa_pipeline_colab.ipynb" target="_blank" rel="noopener">ferpa_pipeline_colab.ipynb</a></p>
+        </div>
+        <div class="card">
+          <h4>Synthetic sample data</h4>
+          <p class="muted">Made-up advising notes, no real records, so you can practice safely.</p>
+          <p style="margin-bottom:0;"><a href="https://github.com/UCSB-PaCE/ferpa-data-reports/tree/main/sample-data" target="_blank" rel="noopener">sample-data/</a></p>
+        </div>
+      </div>
+      <div class="callout note"><span class="ti">Want to see under the hood?</span>
+        The <a href="dev.html">developer guide</a> shows the same pipeline as code, and the <a href="gateway.html">gateway page</a> shows the model call. You do not need either to finish the no-code path, but they are there when you are curious.
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<footer>
+  <p><strong>From Data to Reports</strong>, a field guide by Jonathan Engeln Lambinet-Lacson at UCSB Professional &amp; Continuing Education, built around a real student-evaluation pipeline. <a href="https://www.youtube.com/watch?v=wz-T6y6iLHI" target="_blank" rel="noopener">What is LLM Sandbox?</a></p>
+  <p class="tribute">AI insight powered by LLM Sandbox, with thanks to Yaheya &amp; the LLM Sandbox team.</p>
+  <p class="muted">Always verify data-governance terms and your data's <a href="https://cio.ucsb.edu/artificial-intelligence" target="_blank" rel="noopener">UCSB protection level</a> before sending real records.</p>
+</footer>
+
+<div id="askbot">
+  <button class="ask-bot" id="askbot-toggle" aria-expanded="false" aria-controls="askbot-panel">
+    <span class="ico" aria-hidden="true">&#128172;</span><span class="label">Ask the assistant</span><span class="dot" aria-hidden="true"></span>
+  </button>
+  <div class="askbot-panel" id="askbot-panel" role="dialog" aria-modal="true" aria-label="Ask the assistant" hidden>
+    <div class="askbot-head">
+      <strong>Ask the assistant</strong>
+      <div class="ha">
+        <a href="https://llmsandbox.cloud.ucsb.edu/bot/01KVEPQV2NF2PVSBVMNW53NYA5" target="_blank" rel="noopener" title="Open the full assistant in a new tab" aria-label="Open the full assistant in a new tab">&#8599;</a>
+        <button type="button" id="askbot-close" aria-label="Close chat">&#10005;</button>
+      </div>
+    </div>
+    <div class="askbot-msgs" id="askbot-msgs" aria-live="polite" aria-atomic="false">
+      <div class="askbot-msg bot">Hi. Doing the no-code path? Ask me anything: a step you are stuck on, where your key goes, or what the AI helper should write.</div>
+    </div>
+    <form class="askbot-form" id="askbot-form">
+      <input id="askbot-input" type="text" placeholder="Ask a question..." autocomplete="off" aria-label="Your question">
+      <button type="submit" id="askbot-send" aria-label="Send">&#10148;</button>
+    </form>
+    <div class="askbot-foot">Powered by LLM Sandbox, grounded on this site</div>
+  </div>
+</div>
+
+<script>
+  window.PAGE_REVS = {what:1, helper:1, clean:1, insight:1, report:1};
+  window.PAGE_REV_DATE = "Jun 22, 2026";
+  window.ASKBOT_SUGGESTIONS = ["Do I need to know how to code?", "Where does my data actually go?", "How do I clean a raw spreadsheet?"];
+</script>
+<script src="app.js" defer></script>
+</body>
+</html>

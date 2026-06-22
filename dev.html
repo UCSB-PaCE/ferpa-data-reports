@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Build it with code: the developer guide | Data to Reports</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="alternate icon" href="favicon.svg">
+<link rel="apple-touch-icon" href="favicon.svg">
+<meta name="description" content="The developer guide: turn data into reports as a pipeline of six stages. Scripts do the repeatable work, a model runs in only one stage, and a person approves what ships. With code, caching, costs, and the continuous-improvement loop.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..900&family=Nunito+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip-link" href="#content">Skip to content</a>
+
+<header class="topbar">
+  <div class="brand">
+    <img src="https://www.professional.ucsb.edu/sites/default/files/2025-05/Logo_PaCE_2025_Full.png" alt="UCSB PaCE logo">
+    <img src="https://otl.ucsb.edu/sites/default/files/images/ai-cop-spring-symposium-2026_logo.png" alt="UCSB AI Community of Practice logo">
+    <div class="sep"></div>
+    <div class="tag">Data &rarr; Reports
+      <small>The developer guide</small>
+    </div>
+  </div>
+  <div class="pills">
+    <button class="menu-toggle" id="menuToggle" aria-expanded="false">&#9776; Contents</button>
+    <a class="pill ghost" href="index.html">Home</a>
+    <a class="pill link" href="nocode.html">No-code path &rarr;</a>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav aria-label="Table of contents">
+      <p class="navgroup">The shape</p>
+      <a href="#pattern">Six stages, three roles</a>
+      <a href="#data">What "your data" can be</a>
+      <p class="navgroup">Build each stage</p>
+      <a href="#ingest">1 &middot; Ingest</a>
+      <a href="#standardize">2 &middot; Standardize</a>
+      <a href="#reconcile">3 &middot; Reconcile</a>
+      <a href="#insight">4 &middot; AI insight</a>
+      <a href="#render">5 &middot; Render</a>
+      <a href="#distribute">6 &middot; Distribute</a>
+      <p class="navgroup">Make it cheap and honest</p>
+      <a href="#caching">Cache the AI work</a>
+      <a href="#economics">What it costs</a>
+      <a href="#loop">Improve each run</a>
+      <a href="#principles">Principles &amp; checklist</a>
+      <p class="navgroup">The model call</p>
+      <a href="gateway.html">Call a gateway &rarr;</a>
+      <a href="sandbox.html">At UCSB &rarr;</a>
+    </nav>
+  </aside>
+
+  <main id="content" tabindex="-1">
+    <p class="crumb"><a href="index.html">Home</a> <span class="sep">/</span> Developer track <span class="sep">/</span> Build it with code</p>
+
+    <div class="hero">
+      <p class="kicker">For developers</p>
+      <h1>Build it with code</h1>
+      <p class="lede">The job is a pipeline of six stages. Five of them are plain, testable scripts. One calls a model, and a person signs off before anything ships. This page builds each stage with code you can lift, and points to the <a href="gateway.html">gateway page</a> for the model call itself.</p>
+    </div>
+
+    <section id="pattern">
+      <p class="kicker">The idea that transfers</p>
+      <h2>Six stages, three roles <a class="anchorlink" href="#pattern">#</a></h2>
+      <p>Underneath any version of this is the same six-stage spine. What makes it trustworthy is that each stage has a clear owner: a script, a model, or a person. The model runs in exactly one place.</p>
+
+      <div class="flow">
+        <div class="stage"><span class="role script">script</span><span class="n">1</span><strong>Ingest</strong><span>Read whatever export you were handed.</span></div>
+        <div class="stage"><span class="role script">script</span><span class="n">2</span><strong>Standardize</strong><span>Rename, validate, coerce. Never touch the source.</span></div>
+        <div class="stage"><span class="role script">script</span><span class="n">3</span><strong>Reconcile</strong><span>Match rows to a person or group.</span></div>
+        <div class="stage ai"><span class="role ai">AI</span><span class="n">4</span><strong>Insight</strong><span>Summarize free text, with citations. Cached.</span></div>
+        <div class="stage"><span class="role script">script</span><span class="n">5</span><strong>Render</strong><span>Build the report from columns plus insight.</span></div>
+        <div class="stage"><span class="role human">human</span><span class="n">6</span><strong>Distribute</strong><span>A person approves, then it ships.</span></div>
+      </div>
+      <div class="rolekey">
+        <span><span class="role script">script</span> deterministic code you can read and re-run</span>
+        <span><span class="role ai">AI</span> a live model call, only here</span>
+        <span><span class="role human">human</span> a person decides</span>
+      </div>
+
+      <div class="callout note"><span class="ti">Two different jobs for AI, keep them straight</span>
+        The model <em>runs</em> in one stage. Everything else is plain code. That said, AI is also useful while you <em>write</em> that code: hand it a raw export and ask it to draft the loader and the cleaning script for your exact format. That is the no-coder's entire workflow, and it speeds up the rest of us. The distinction matters: a script you can read and re-run is not the same thing as a model deciding live. Let AI help you build the scripts, and keep the live model call to the one stage that needs judgment.
+      </div>
+    </section>
+
+    <section id="data">
+      <p class="kicker">Re-point the same machine</p>
+      <h2>What "your data" can be <a class="anchorlink" href="#data">#</a></h2>
+      <p>The pattern fits any record with some structured fields, some free text a human wrote, and a natural subject to report on. A few examples of the same machine, aimed somewhere new:</p>
+      <div class="tablewrap">
+      <table>
+        <thead><tr><th scope="col">Domain</th><th scope="col">The subject</th><th scope="col">Free text the model summarizes</th></tr></thead>
+        <tbody>
+          <tr><td>Course evaluations <span class="badge-inline">origin</span></td><td>Instructor / course</td><td>Open-ended student comments</td></tr>
+          <tr><td>Academic advising</td><td>Student / advisor / program</td><td>Session notes and follow-ups</td></tr>
+          <tr><td>Field placements</td><td>Student placement</td><td>Supervisor narrative feedback</td></tr>
+          <tr><td>Program assessment</td><td>Cohort / outcome</td><td>Reflective free-response</td></tr>
+          <tr><td>Open survey data</td><td>Question / segment</td><td>Free-text responses</td></tr>
+          <tr><td>Scholarship review</td><td>Applicant / committee</td><td>Reviewer rationale</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="takeaway">Structured columns drive the charts. Free text drives the model. Reconciliation ties them to a subject. A cache makes it cheap. A template makes it shareable. Everything else is dataset-specific glue.</div>
+    </section>
+
+    <section id="ingest">
+      <p class="kicker">Stage 1 <span class="role script">script</span></p>
+      <h2>Ingest <a class="anchorlink" href="#ingest">#</a></h2>
+      <p>Read whatever you were handed, a CSV, a spreadsheet, a system export, into a dataframe. Real exports are inconsistent, so this is the stage most worth handing to an AI assistant first: paste a sample and ask it to write the read-and-clean code for that exact mess. You run it, read it, and keep it as a script.</p>
+      <div class="codeblock"><pre><code><span class="tk">import</span> pandas <span class="tk">as</span> pd
+
+df = pd.read_csv(<span class="ts">"export.csv"</span>)        <span class="tc"># or pd.read_excel(...), or a SIS dump</span>
+print(df.shape, df.columns.tolist())   <span class="tc"># see what you actually got</span></code></pre></div>
+    </section>
+
+    <section id="standardize">
+      <p class="kicker">Stage 2 <span class="role script">script</span></p>
+      <h2>Standardize <a class="anchorlink" href="#standardize">#</a></h2>
+      <p>Rename columns to names your code expects, validate types, and coerce scales. Work on a copy and leave the source export read-only, so you can always re-derive and never corrupt the original.</p>
+      <div class="codeblock"><pre><code>clean = df.rename(columns={<span class="ts">"Instructor Name"</span>: <span class="ts">"subject"</span>, <span class="ts">"Comments"</span>: <span class="ts">"text"</span>})
+clean[<span class="ts">"text"</span>] = clean[<span class="ts">"text"</span>].fillna(<span class="ts">""</span>).str.strip()
+clean = clean[clean[<span class="ts">"text"</span>] != <span class="ts">""</span>]      <span class="tc"># drop empty responses</span></code></pre></div>
+    </section>
+
+    <section id="reconcile">
+      <p class="kicker">Stage 3 <span class="role script">script</span></p>
+      <h2>Reconcile identity <a class="anchorlink" href="#reconcile">#</a></h2>
+      <p>Tie each row to a real subject, a person, a course, a cohort, against a roster of truth. Fuzzy matching handles typos and aliases; a score threshold keeps it from guessing.</p>
+      <div class="codeblock"><pre><code><span class="tk">from</span> thefuzz <span class="tk">import</span> process
+
+<span class="tk">def</span> <span class="tf">match</span>(name, roster):
+    best, score = process.extractOne(name, roster)
+    <span class="tk">return</span> best <span class="tk">if</span> score &gt;= <span class="tn">90</span> <span class="tk">else</span> <span class="tk">None</span>   <span class="tc"># unmatched rows get reviewed, not guessed</span></code></pre></div>
+    </section>
+
+    <section id="insight">
+      <p class="kicker">Stage 4 <span class="role ai">AI</span> <span class="muted">(cached)</span></p>
+      <h2>AI insight <a class="anchorlink" href="#insight">#</a></h2>
+      <p>This is the only stage where a model runs. Send just the free text, numbered, and ask for a short summary that cites the comments it draws on. The call itself, base URL, key, snippets, lives on <a href="gateway.html">the gateway page</a>; what matters here is what you send and that you cache the result.</p>
+      <div class="callout note"><span class="ti">Send the text, not the people</span>
+        Names, ids, and grades stay in your structured layer. Number the comments so the summary can cite <code>[1]</code> and <code>[3]</code> without the model ever seeing who wrote them. The citations are reattached to the verbatim text on your side, after the model answers.
+      </div>
+      <div class="codeblock"><pre><code><span class="tc"># summarize() is the gateway call from the gateway page</span>
+key = (subject, period, prompt_version)
+insight = cache.get(key)
+<span class="tk">if</span> insight <span class="tk">is</span> <span class="tk">None</span>:
+    insight = summarize(texts)     <span class="tc"># the one billed call</span>
+    cache[key] = insight           <span class="tc"># pay for it once</span></code></pre></div>
+    </section>
+
+    <section id="render">
+      <p class="kicker">Stage 5 <span class="role script">script</span></p>
+      <h2>Render the report <a class="anchorlink" href="#render">#</a></h2>
+      <p>Combine the structured columns (which become charts) with the cached insight (the words) into a per-subject report. Use whatever you know: an HTML template, a charting library, a PDF tool like reportlab. The format is glue; the content is already made.</p>
+      <div class="codeblock"><pre><code>build_report(
+    subject=subject,
+    charts=charts_from(clean),     <span class="tc"># structured columns -> charts</span>
+    insight=insight,               <span class="tc"># the cached, cited summary</span>
+)</code></pre></div>
+    </section>
+
+    <section id="distribute">
+      <p class="kicker">Stage 6 <span class="role human">human</span></p>
+      <h2>Distribute <a class="anchorlink" href="#distribute">#</a></h2>
+      <p>Nothing ships on its own. A person reads the report and approves it; then a script uploads, emails, or files it. The model never has release authority. That one rule is both your quality control and your compliance control, and it is the cheapest safeguard you have.</p>
+      <div class="takeaway">Five scripts, one model call, one human gate. If you can point to who owns each stage, you can defend the whole pipeline.</div>
+    </section>
+
+    <section id="caching">
+      <p class="kicker">Where the lean lives</p>
+      <h2>Cache the AI work <a class="anchorlink" href="#caching">#</a></h2>
+      <p>The model call is the only thing that costs money, so cache it hard. Key the cache by what makes an analysis identical: the subject, the period, and a prompt version. A re-run then costs nothing, which is what makes the improvement loop below free to use.</p>
+      <div class="codeblock"><pre><code><span class="tk">import</span> sqlite3
+
+<span class="tk">def</span> <span class="tf">get_or_analyze</span>(con, subject, period, texts, version=<span class="ts">"v1"</span>):
+    row = con.execute(
+        <span class="ts">"SELECT insight FROM cache WHERE subject=? AND period=? AND version=?"</span>,
+        (subject, period, version)).fetchone()
+    <span class="tk">if</span> row:
+        <span class="tk">return</span> row[<span class="tn">0</span>]                       <span class="tc"># warm: 0 tokens</span>
+    insight = summarize(texts)             <span class="tc"># cold: the one billed call</span>
+    con.execute(<span class="ts">"INSERT INTO cache VALUES (?,?,?,?)"</span>, (subject, period, version, insight))
+    con.commit()
+    <span class="tk">return</span> insight</code></pre></div>
+      <p class="muted">Bump <code>version</code> when you change the prompt and the cache warms again on the next run. Do not cache failed analyses; let them retry cleanly next time.</p>
+    </section>
+
+    <section id="economics">
+      <p class="kicker">What it actually costs</p>
+      <h2>Token economics <a class="anchorlink" href="#economics">#</a></h2>
+      <p>On a token-metered gateway the budget is tokens, not dollars. The numbers are small and the cache makes the steady state nearly free.</p>
+      <div class="tablewrap">
+      <table>
+        <thead><tr><th scope="col">Action</th><th scope="col">Tokens</th></tr></thead>
+        <tbody>
+          <tr><td>Re-run a cached subject</td><td><strong>0</strong></td></tr>
+          <tr><td>One new analysis</td><td>~1.3K (about 1,060 in + 254 out)</td></tr>
+          <tr><td>A full first cycle for a department</td><td>tens of thousands, once</td></tr>
+          <tr><td>Every cycle after</td><td>near zero, only what changed</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </section>
+
+    <section id="loop">
+      <p class="kicker">The method, not a trick</p>
+      <h2>Improve each run <a class="anchorlink" href="#loop">#</a></h2>
+      <p>This is the part that produced the pipeline. The outer loop ships a report every cycle. A faster inner loop, observe, diagnose, improve, verify, keeps making the outer loop leaner and more reliable. Because the cache makes re-runs free, you can replay a fix as often as you like at no token cost.</p>
+      <div class="diagram panel">
+        <div class="ci-layout">
+          <div class="ci-stage" role="img" aria-label="Concentric diagram: an outer operational loop (ingest, standardize, reconcile, AI insight, render, distribute) around an inner four-step improvement cycle, observe, diagnose, improve, verify, rotating around a central self-healing hub.">
+            <div class="ci-ring outer" aria-hidden="true"></div>
+            <div class="ci-ring inner" aria-hidden="true"></div>
+            <div class="ci-orbit o" aria-hidden="true"><span class="ci-dot o"></span></div>
+            <div class="ci-orbit i" aria-hidden="true"><span class="ci-dot i"></span></div>
+            <div class="ci-hub" aria-hidden="true"><strong>Self-healing</strong><span>lean &middot; continuous</span></div>
+            <div class="ci-node top"><span class="t">Observe</span><span class="l">Read the run &amp; the code</span></div>
+            <div class="ci-node right"><span class="t">Diagnose</span><span class="l">Find the root cause</span></div>
+            <div class="ci-node bottom"><span class="t">Improve</span><span class="l">One small change</span></div>
+            <div class="ci-node left"><span class="t">Verify</span><span class="l">Replay &amp; re-cache</span></div>
+          </div>
+          <div>
+            <div class="ci-legend">
+              <div class="row"><span class="sw out" aria-hidden="true"></span>Outer loop: the pipeline that ships the report</div>
+              <div class="row"><span class="sw inn" aria-hidden="true"></span>Inner loop: the improvement that keeps it lean</div>
+            </div>
+            <p>The cheapest improvement engine you have is a process that can explain its own last run back to you. Logging row counts, unmatched names, and token use turns each run into something you can learn from, and reading logs and code is exactly the kind of bounded job the same model is good at.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="principles">
+      <p class="kicker">Carry these, forget the rest</p>
+      <h2>Three principles and a checklist <a class="anchorlink" href="#principles">#</a></h2>
+      <div class="grid2">
+        <div class="card"><h4>Build on top, never mutate</h4><p class="muted">The source export is read-only. Every stage produces a new clean layer. You can always re-derive; you can never un-corrupt a source you edited in place.</p></div>
+        <div class="card"><h4>Cache the expensive work</h4><p class="muted">Pay for new analysis only, never repeated analysis. A good cache key makes "re-run everything" free and the improvement loop usable.</p></div>
+        <div class="card"><h4>Keep the person at the gate</h4><p class="muted">A model drafts; a human approves. Releasing a report is a human decision, every time. That line is what makes the rest defensible.</p></div>
+      </div>
+
+      <h3>Before you run it on real records</h3>
+      <div class="tablewrap">
+      <table>
+        <thead><tr><th scope="col">Done?</th><th scope="col">Check</th></tr></thead>
+        <tbody>
+          <tr><td><span aria-hidden="true">&#9744;</span><span class="sr-only">Unchecked</span></td><td>The gateway is approved by the right office for this class of data</td></tr>
+          <tr><td><span aria-hidden="true">&#9744;</span><span class="sr-only">Unchecked</span></td><td>Prompts and completions are not retained for training</td></tr>
+          <tr><td><span aria-hidden="true">&#9744;</span><span class="sr-only">Unchecked</span></td><td>Only free text leaves your system; identifiers stay in the structured layer</td></tr>
+          <tr><td><span aria-hidden="true">&#9744;</span><span class="sr-only">Unchecked</span></td><td>The key is in a secrets store, never in a cell or a commit</td></tr>
+          <tr><td><span aria-hidden="true">&#9744;</span><span class="sr-only">Unchecked</span></td><td>Insight cites its sources, and a person approves every report</td></tr>
+          <tr><td><span aria-hidden="true">&#9744;</span><span class="sr-only">Unchecked</span></td><td>A dry run on synthetic data passed end to end</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <div class="callout good"><span class="ti">Next</span>
+        For the model call itself, see <a href="gateway.html">the gateway page</a> (and <a href="sandbox.html">the UCSB specifics</a>). Prefer to do this without writing code? The <a href="nocode.html">no-code path</a> runs the same pipeline in Google Colab.
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<footer>
+  <p><strong>From Data to Reports</strong>, a field guide by Jonathan Engeln Lambinet-Lacson at UCSB Professional &amp; Continuing Education, built around a real student-evaluation pipeline. <a href="https://www.youtube.com/watch?v=wz-T6y6iLHI" target="_blank" rel="noopener">What is LLM Sandbox?</a></p>
+  <p class="tribute">AI insight powered by LLM Sandbox, with thanks to Yaheya &amp; the LLM Sandbox team.</p>
+  <p class="muted">Always verify data-governance terms and your data's <a href="https://cio.ucsb.edu/artificial-intelligence" target="_blank" rel="noopener">UCSB protection level</a> before sending real records.</p>
+</footer>
+
+<div id="askbot">
+  <button class="ask-bot" id="askbot-toggle" aria-expanded="false" aria-controls="askbot-panel">
+    <span class="ico" aria-hidden="true">&#128172;</span><span class="label">Ask the assistant</span><span class="dot" aria-hidden="true"></span>
+  </button>
+  <div class="askbot-panel" id="askbot-panel" role="dialog" aria-modal="true" aria-label="Ask the assistant" hidden>
+    <div class="askbot-head">
+      <strong>Ask the assistant</strong>
+      <div class="ha">
+        <a href="https://llmsandbox.cloud.ucsb.edu/bot/01KVEPQV2NF2PVSBVMNW53NYA5" target="_blank" rel="noopener" title="Open the full assistant in a new tab" aria-label="Open the full assistant in a new tab">&#8599;</a>
+        <button type="button" id="askbot-close" aria-label="Close chat">&#10005;</button>
+      </div>
+    </div>
+    <div class="askbot-msgs" id="askbot-msgs" aria-live="polite" aria-atomic="false">
+      <div class="askbot-msg bot">Hi. Ask me about building the pipeline: a stage, the caching, the costs, or where the model fits in.</div>
+    </div>
+    <form class="askbot-form" id="askbot-form">
+      <input id="askbot-input" type="text" placeholder="Ask a question..." autocomplete="off" aria-label="Your question">
+      <button type="submit" id="askbot-send" aria-label="Send">&#10148;</button>
+    </form>
+    <div class="askbot-foot">Powered by LLM Sandbox, grounded on this site</div>
+  </div>
+</div>
+
+<script>
+  window.PAGE_REVS = {pattern:1, ingest:1, insight:1, caching:1, loop:1, principles:1};
+  window.PAGE_REV_DATE = "Jun 22, 2026";
+  window.ASKBOT_SUGGESTIONS = ["What are the six stages?", "Where does AI actually run?", "How does caching make re-runs free?"];
+</script>
+<script src="app.js" defer></script>
+</body>
+</html>

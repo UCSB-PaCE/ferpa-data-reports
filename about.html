@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About this guide and its author | Data to Reports</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="alternate icon" href="favicon.svg">
+<link rel="apple-touch-icon" href="favicon.svg">
+<meta name="description" content="Who built this field guide and why: Jonathan Engeln Lambinet-Lacson at UCSB Professional & Continuing Education. How it was made, how to reach him, and the open-source repository.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..900&family=Nunito+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip-link" href="#content">Skip to content</a>
+
+<header class="topbar">
+  <div class="brand">
+    <img src="https://www.professional.ucsb.edu/sites/default/files/2025-05/Logo_PaCE_2025_Full.png" alt="UCSB PaCE logo">
+    <img src="https://otl.ucsb.edu/sites/default/files/images/ai-cop-spring-symposium-2026_logo.png" alt="UCSB AI Community of Practice logo">
+    <div class="sep"></div>
+    <div class="tag">Data &rarr; Reports
+      <small>A field guide from UCSB PaCE</small>
+    </div>
+  </div>
+  <div class="pills">
+    <a class="pill ghost" href="index.html">Home</a>
+    <a class="pill link" href="index.html#start">Start &rarr;</a>
+  </div>
+</header>
+
+<main id="content" tabindex="-1">
+<div class="lander">
+
+  <section class="lander-hero">
+    <p class="eyebrow">About</p>
+    <h1>About this guide.</h1>
+    <p class="story">This is a working write-up of something built at UCSB Professional &amp; Continuing Education and then generalized: a repeatable way to turn data into reports, with a person in charge and AI used only where it helps. It is meant to be copied. Take the parts that fit your work and leave the rest.</p>
+  </section>
+
+  <section id="author">
+    <p class="kicker">Who made it</p>
+    <h2>Jonathan Engeln Lambinet-Lacson</h2>
+    <p>I work at UCSB Professional &amp; Continuing Education, where this pipeline started as a way to turn confidential course evaluations into reports our instructors could actually use. The interesting part was never a single clever trick. It was treating the work as a process to improve: writing scripts for the parts a computer should own, bringing in a language model only where it earned its place, and keeping a person at the gate the whole time. Once it was solid, the shape turned out to fit almost any data, so I wrote it down.</p>
+    <p>My hope for this guide is simple. Plenty of smart people at a university are one good walkthrough away from doing this themselves. If the no-code path turns a few of them into people who can take their own data and produce a trustworthy report, it did its job.</p>
+
+    <div class="grid2" style="margin-top:var(--s5);">
+      <div class="card">
+        <h4>Reach out</h4>
+        <p class="muted">Questions, corrections, or you built something with this? I would like to hear about it.</p>
+        <p style="margin-bottom:0;">
+          <a href="mailto:j_engeln@ucsb.edu">j_engeln@ucsb.edu</a><br>
+          <a href="https://www.linkedin.com/in/jonathan-engeln/" target="_blank" rel="noopener">linkedin.com/in/jonathan-engeln</a>
+        </p>
+      </div>
+      <div class="card">
+        <h4>The source</h4>
+        <p class="muted">The whole site is a public repository. Fork it, file an issue, or lift a snippet.</p>
+        <p style="margin-bottom:0;">
+          <a href="https://github.com/UCSB-PaCE/ferpa-data-reports" target="_blank" rel="noopener">github.com/UCSB-PaCE/ferpa-data-reports</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="how-made">
+    <p class="kicker">Full transparency</p>
+    <h2>How this guide was made</h2>
+    <p>This site is itself an example of the thing it describes. I set the goal and the guardrails and approved every change; a language model, working through UCSB's LLM Sandbox, did the drafting and a lot of the heavy lifting. The same human-at-the-gate rule the pipeline uses is the rule that produced these pages. If you find something off, that is the check working, tell me and I will fix it.</p>
+
+    <h3>The assistant in the corner</h3>
+    <p>The "Ask the assistant" button opens a small chat backed by a bot published on UCSB's LLM Sandbox, grounded only on this site. It is the lesson applied to itself: a small, cheap model, a tight scope, retrieval limited to this content, and citations on. Its configuration:</p>
+    <div class="tablewrap">
+    <table>
+      <thead><tr><th scope="col">Setting</th><th scope="col">Value</th><th scope="col">Why</th></tr></thead>
+      <tbody>
+        <tr><td>Knowledge</td><td>This site, exported as Markdown, plus the live page URLs</td><td>Reliable retrieval from a clean source</td></tr>
+        <tr><td>Instructions</td><td>Scoped to this site; cite sources; no legal advice; house style</td><td>Quality and safety in one place</td></tr>
+        <tr><td>Model</td><td>Claude Haiku (4.5) on Bedrock</td><td>Fast and cheap, the model class the pipeline itself uses</td></tr>
+        <tr><td>Temperature / grounding</td><td>0.2 / ~0.7</td><td>Low drift; blocks claims the site does not support</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h3>The key-hiding trick (for the developers reading)</h3>
+    <p>The chat widget sits on a public page, yet its API key is nowhere in the source. The browser calls a small <strong>Cloudflare Worker</strong> that holds the key as a server-side secret, allows only this origin, rate-limits, and forwards the request with the key attached. That is the standard way to put a keyed API behind a public site, and the Worker code is in the repository.</p>
+
+    <div class="callout note"><span class="ti">Not legal advice</span>
+      This guide describes a responsible architecture for handling protected records. It is not legal advice and certifies no tool as "FERPA-compliant." Confirm data-governance terms and your data's protection level with the right office before sending real records.
+    </div>
+  </section>
+
+  <p style="margin-top:var(--s6);"><a href="index.html">&larr; Back to the four paths</a></p>
+
+</div>
+</main>
+
+<footer>
+  <p><strong>From Data to Reports</strong>, a field guide by Jonathan Engeln Lambinet-Lacson at UCSB Professional &amp; Continuing Education, built around a real student-evaluation pipeline. It runs on UCSB's LLM Sandbox, an OpenAI-compatible, token-metered campus gateway, and the same pattern works with any organization's gateway. <a href="https://www.youtube.com/watch?v=wz-T6y6iLHI" target="_blank" rel="noopener">What is LLM Sandbox?</a></p>
+  <p class="tribute">AI insight powered by LLM Sandbox, with thanks to Yaheya &amp; the LLM Sandbox team.</p>
+  <p class="muted">Always verify data-governance terms and your data's <a href="https://cio.ucsb.edu/artificial-intelligence" target="_blank" rel="noopener">UCSB protection level</a> before sending real records.</p>
+</footer>
+
+<div id="askbot">
+  <button class="ask-bot" id="askbot-toggle" aria-expanded="false" aria-controls="askbot-panel">
+    <span class="ico" aria-hidden="true">&#128172;</span><span class="label">Ask the assistant</span><span class="dot" aria-hidden="true"></span>
+  </button>
+  <div class="askbot-panel" id="askbot-panel" role="dialog" aria-modal="true" aria-label="Ask the assistant" hidden>
+    <div class="askbot-head">
+      <strong>Ask the assistant</strong>
+      <div class="ha">
+        <a href="https://llmsandbox.cloud.ucsb.edu/bot/01KVEPQV2NF2PVSBVMNW53NYA5" target="_blank" rel="noopener" title="Open the full assistant in a new tab" aria-label="Open the full assistant in a new tab">&#8599;</a>
+        <button type="button" id="askbot-close" aria-label="Close chat">&#10005;</button>
+      </div>
+    </div>
+    <div class="askbot-msgs" id="askbot-msgs" aria-live="polite" aria-atomic="false">
+      <div class="askbot-msg bot">Hi. Ask me anything about this guide, the pipeline behind it, or how to reach the author.</div>
+    </div>
+    <form class="askbot-form" id="askbot-form">
+      <input id="askbot-input" type="text" placeholder="Ask a question..." autocomplete="off" aria-label="Your question">
+      <button type="submit" id="askbot-send" aria-label="Send">&#10148;</button>
+    </form>
+    <div class="askbot-foot">Powered by LLM Sandbox, grounded on this site</div>
+  </div>
+</div>
+
+<script>
+  window.PAGE_REVS = {};
+  window.PAGE_REV_DATE = "Jun 22, 2026";
+  window.ASKBOT_SUGGESTIONS = ["Who built this?", "How was the site made?", "Is the code open source?"];
+</script>
+<script src="app.js" defer></script>
+</body>
+</html>
