@@ -8,7 +8,7 @@ allowed, and an optional per-IP rate limit guards against abuse.
 ## Deploy
 
 ```bash
-cd docs-site/worker
+cd worker
 npx wrangler deploy                     # needs Cloudflare auth (token or `wrangler login`)
 npx wrangler secret put BOT_API_KEY     # paste the bot API key when prompted
 ```
