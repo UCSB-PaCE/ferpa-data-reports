@@ -278,26 +278,15 @@ pre code{font-size:inherit;}
 .ci-legend .sw.inn{background:linear-gradient(90deg,#e9c668,var(--gold));}
 
 /* ── hero ───────────────────────────────────────────────────────────────── */
-.hero{position:relative; overflow:hidden; color:#eaf3fb; border-radius:var(--r);
-  padding:clamp(28px,5vw,52px) clamp(22px,4vw,48px); margin-bottom:var(--s4);
-  background:radial-gradient(120% 150% at 82% -10%, #0e3e69 0%, #07273f 58%, var(--navy-ink) 100%);}
-/* faint blueprint grid,the "instrument" atmosphere */
-.hero::before{content:""; position:absolute; inset:0; pointer-events:none; opacity:.5;
-  background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);
-  background-size:34px 34px; mask-image:radial-gradient(120% 120% at 80% 0%, #000 30%, transparent 78%);}
-.hero > *{position:relative;}
-.hero .kicker{color:#ffd86b;}
-.hero .kicker::before{box-shadow:0 0 0 3px rgba(254,188,17,.28);}
-.hero h1{color:#fff;}
-.hero .lede{color:#bfe0f5;}
-.hero .chips{display:flex; flex-wrap:wrap; gap:8px; margin-top:var(--s5);}
-.hero .chip{background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.18); color:#dcefff;
-  padding:6px 12px; border-radius:var(--r-pill); font-family:var(--mono); font-size:.74rem; font-weight:600;}
-.hero .chip b{color:var(--gold); font-weight:700;}
-/* hero rail (light-on-dark variant) */
-.hero .rail .node{color:#dcefff;}
-.hero .rail .link{background:linear-gradient(90deg,rgba(255,255,255,.32),rgba(255,255,255,.12));}
+/* calm, light hero on every content page (matches the landing) */
+.hero{padding:0 0 var(--s4); margin-bottom:var(--s2); max-width:66ch;}
+.hero .kicker{color:var(--sea);}
+.hero h1{color:var(--navy); font-size:clamp(2.1rem,4.4vw,3.3rem); line-height:1.05; letter-spacing:-.02em; max-width:20ch; margin:0 0 var(--s4);}
+.hero .lede{color:#33536e; max-width:60ch;}
+.hero .chips{display:flex; flex-wrap:wrap; gap:8px; margin-top:var(--s4);}
+.hero .chip{background:var(--soft-blue); border:1px solid #cfe0ee; color:var(--navy);
+  padding:6px 12px; border-radius:var(--r-pill); font-family:var(--mono); font-size:.72rem; font-weight:600;}
+.hero .chip b{color:var(--gold-deep); font-weight:700;}
 
 /* ── goal chooser (index) ───────────────────────────────────────────────── */
 .tracks{display:grid; grid-template-columns:repeat(auto-fit,minmax(270px,1fr)); gap:var(--s4); margin:var(--s6) 0;}

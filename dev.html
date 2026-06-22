@@ -45,7 +45,7 @@
       <a href="#insight">4 &middot; AI insight</a>
       <a href="#render">5 &middot; Render</a>
       <a href="#distribute">6 &middot; Distribute</a>
-      <a href="#bonus">Where else AI helps</a>
+      <a href="#bonus">How much AI is in here</a>
       <p class="navgroup">Make it cheap and honest</p>
       <a href="#caching">Cache the AI work</a>
       <a href="#economics">What it costs</a>
@@ -63,30 +63,30 @@
     <div class="hero">
       <p class="kicker">For developers</p>
       <h1>Build it with code</h1>
-      <p class="lede">The job is a pipeline of six stages. In a steady run, one stage calls a model on your data and a person signs off; the rest is plain, testable code. But AI does more than that one call. It helps write the intake scripts, repair reconciliation when it breaks, and improve the whole thing each cycle. This page builds each stage with code you can lift, and points to the <a href="gateway.html">gateway page</a> for the model call itself.</p>
+      <p class="lede">The job is a pipeline of six stages. Scripts do the steady work, but the model is wired into the run itself: when a file does not fit, it writes a fresh intake layer; when an identity will not match, it writes the lookup; and it turns free text into a cited summary. A person approves what ships. This page builds each stage with code you can lift, and points to the <a href="gateway.html">gateway page</a> for the model call.</p>
     </div>
 
     <section id="pattern">
       <p class="kicker">The idea that transfers</p>
       <h2>Six stages, three roles <a class="anchorlink" href="#pattern">#</a></h2>
-      <p>Underneath any version of this is the same six-stage spine. What makes it trustworthy is that each stage has a clear runtime owner: a script, a model, or a person. The live call on your data lands in one stage, so you always know where your records go. That is the run. AI also helps you build and repair that run, which is <a href="#bonus">where else it earns its place</a>.</p>
+      <p>Underneath any version of this is the same six-stage spine. Scripts handle the repeatable work. The model is called at runtime wherever the pipeline has to adapt or judge, so a changed file or a stubborn match heals instead of breaking, and a person approves the result. That mix, AI where it earns its place and plain code everywhere else, is what makes it both capable and safe.</p>
 
       <div class="flow">
-        <div class="stage"><span class="role script">script</span><span class="n">1</span><strong>Ingest</strong><span>Read whatever export you were handed.</span></div>
+        <div class="stage"><span class="role script">script</span> <span class="role ai">+ AI</span><span class="n">1</span><strong>Ingest</strong><span>Read the file. Wrong shape? The model writes a new intake layer.</span></div>
         <div class="stage"><span class="role script">script</span><span class="n">2</span><strong>Standardize</strong><span>Rename, validate, coerce. Never touch the source.</span></div>
-        <div class="stage"><span class="role script">script</span><span class="n">3</span><strong>Reconcile</strong><span>Match rows to a person or group.</span></div>
-        <div class="stage ai"><span class="role ai">AI</span><span class="n">4</span><strong>Insight</strong><span>Summarize free text, with citations. Cached.</span></div>
+        <div class="stage"><span class="role script">script</span> <span class="role ai">+ AI</span><span class="n">3</span><strong>Reconcile</strong><span>Match rows. The model resolves the ones a script cannot.</span></div>
+        <div class="stage ai"><span class="role ai">AI</span><span class="n">4</span><strong>Insight</strong><span>Summarize the free text, with citations. Cached.</span></div>
         <div class="stage"><span class="role script">script</span><span class="n">5</span><strong>Render</strong><span>Build the report from columns plus insight.</span></div>
         <div class="stage"><span class="role human">human</span><span class="n">6</span><strong>Distribute</strong><span>A person approves, then it ships.</span></div>
       </div>
       <div class="rolekey">
-        <span><span class="role script">script</span> deterministic code you can read and re-run</span>
-        <span><span class="role ai">AI</span> a live model call, only here</span>
+        <span><span class="role script">script</span> deterministic code</span>
+        <span><span class="role ai">AI</span> the model is called here at runtime, to adapt or to judge</span>
         <span><span class="role human">human</span> a person decides</span>
       </div>
 
-      <div class="callout note"><span class="ti">Two modes for AI, keep them straight</span>
-        One is the <strong>live call</strong>: each run, your data's free text goes to a model in stage 4, and nowhere else. The other is AI as a <strong>builder and fixer</strong>, and it turns up all over, drafting your intake scripts, writing a lookup when reconciliation fails, reading a run to suggest the next change. The difference is what keeps this safe: the live call is a model deciding on your data, pinned to one stage you can point to; the builder work is a model writing code you read, test, and keep. AI earns its place in both. See <a href="#bonus">where else AI helps</a>.
+      <div class="callout note"><span class="ti">This is a self-healing pipeline</span>
+        The model is part of the run, not just a tool you used to build it. When a file arrives in the wrong shape, the pipeline asks the model to read the structure and write a fresh intake layer, so a format change adapts instead of breaking. The same move resolves an identity a script cannot, and stage 4 summarizes the free text. Scripts do everything repeatable; the model steps in to adapt or judge; a person approves. It adds up to more model than you might think, see <a href="#bonus">how much AI is really in here</a>.
       </div>
     </section>
 
@@ -111,13 +111,17 @@
     </section>
 
     <section id="ingest">
-      <p class="kicker">Stage 1 <span class="role script">script</span></p>
+      <p class="kicker">Stage 1 <span class="role script">script</span> <span class="role ai">+ AI</span></p>
       <h2>Ingest <a class="anchorlink" href="#ingest">#</a></h2>
-      <p>Read whatever you were handed, a CSV, a spreadsheet, a system export, into a dataframe. Real exports are inconsistent, so this is the stage most worth handing to an AI assistant first: paste a sample and ask it to write the read-and-clean code for that exact mess. You run it, read it, and keep it as a script.</p>
+      <p>Read whatever you were handed into a dataframe. The catch is that the next file is never quite the same: a renamed column, a different export format, an extra header row. Instead of breaking on it, the pipeline checks the shape, and when it does not fit, calls the model to write a fresh intake layer for that file. A format change becomes an adaptation, not an outage. This is the self-healing part, and it is the model doing real work inside the run, not just helping you build it.</p>
       <div class="codeblock"><pre><code><span class="tk">import</span> pandas <span class="tk">as</span> pd
 
-df = pd.read_csv(<span class="ts">"export.csv"</span>)        <span class="tc"># or pd.read_excel(...), or a SIS dump</span>
-print(df.shape, df.columns.tolist())   <span class="tc"># see what you actually got</span></code></pre></div>
+df = pd.read_csv(<span class="ts">"export.csv"</span>)               <span class="tc"># or read_excel, or a SIS dump</span>
+
+<span class="tk">if not</span> <span class="tf">fits_expected_schema</span>(df):            <span class="tc"># columns are off, format changed...</span>
+    layer = <span class="tf">write_intake_layer</span>(schema_of(df))   <span class="tc"># the model writes the fix...</span>
+    df = layer(df)                           <span class="tc"># ...as a script you read and keep</span></code></pre></div>
+      <p class="muted">The model sees the <em>shape</em>, the column names and types, not your records, and what it returns is a script you review and save. The next time that format shows up, the layer already exists and no model call is needed.</p>
     </section>
 
     <section id="standardize">
@@ -132,7 +136,7 @@ clean = clean[clean[<span class="ts">"text"</span>] != <span class="ts">""</span
     <section id="reconcile">
       <p class="kicker">Stage 3 <span class="role script">script</span></p>
       <h2>Reconcile identity <a class="anchorlink" href="#reconcile">#</a></h2>
-      <p>Tie each row to a real subject, a person, a course, a cohort, against a roster of truth. Fuzzy matching handles typos and aliases; a score threshold keeps it from guessing. When a row will not match, that is a good place to ask the model for help: have it draft the lookup that resolves the identity, an LDAP query against your directory, say, so no one is hand-matching hundreds of names. <span class="muted">More of these in <a href="#bonus">where else AI helps</a>.</span></p>
+      <p>Tie each row to a real subject, a person, a course, a cohort, against a roster of truth. Fuzzy matching handles typos and aliases; a score threshold keeps it from guessing. When a row will not match, that is a good place to ask the model for help: have it draft the lookup that resolves the identity, an LDAP query against your directory, say, so no one is hand-matching hundreds of names. <span class="muted">More of these in <a href="#bonus">how much AI is in here</a>.</span></p>
       <div class="codeblock"><pre><code><span class="tk">from</span> thefuzz <span class="tk">import</span> process
 
 <span class="tk">def</span> <span class="tf">match</span>(name, roster):
@@ -143,7 +147,7 @@ clean = clean[clean[<span class="ts">"text"</span>] != <span class="ts">""</span
     <section id="insight">
       <p class="kicker">Stage 4 <span class="role ai">AI</span> <span class="muted">(cached)</span></p>
       <h2>AI insight <a class="anchorlink" href="#insight">#</a></h2>
-      <p>This is the only stage where a model runs <em>on your data</em>, each cycle. Send just the free text, numbered, and ask for a short summary that cites the comments it draws on. The call itself, base URL, key, snippets, lives on <a href="gateway.html">the gateway page</a>; what matters here is what you send and that you cache the result.</p>
+      <p>This is the one stage where the model reads your records' actual text. The intake and reconcile calls work on shapes and identifiers; here the free text itself goes to the model. Send it numbered, and ask for a short summary that cites the comments it draws on. The call itself, base URL, key, snippets, lives on <a href="gateway.html">the gateway page</a>; what matters here is what you send and that you cache the result.</p>
       <div class="callout note"><span class="ti">Send the text, not the people</span>
         Names, ids, and grades stay in your structured layer. Number the comments so the summary can cite <code>[1]</code> and <code>[3]</code> without the model ever seeing who wrote them. The citations are reattached to the verbatim text on your side, after the model answers.
       </div>
@@ -170,20 +174,21 @@ insight = cache.get(key)
       <p class="kicker">Stage 6 <span class="role human">human</span></p>
       <h2>Distribute <a class="anchorlink" href="#distribute">#</a></h2>
       <p>Nothing ships on its own. A person reads the report and approves it; then a script uploads, emails, or files it. The model never has release authority. That one rule is both your quality control and your compliance control, and it is the cheapest safeguard you have.</p>
-      <div class="takeaway">Five scripts, one live model call, one human gate. AI helps write and repair the scripts too, but it decides on your records in only one stage, which is what makes the pipeline easy to defend.</div>
+      <div class="takeaway">Plain scripts where the work repeats, a model call wherever the run must adapt or judge, a person at the gate. That mix is the design, and it is why a changed file adapts instead of breaking the run.</div>
     </section>
 
     <section id="bonus">
-      <p class="kicker">The part we are proud of</p>
-      <h2>Where else AI helps <a class="anchorlink" href="#bonus">#</a></h2>
-      <p>Stage 4 is the only place a model touches your data on a run. But the model is a coding partner everywhere else, and that is where a lot of the leverage is. Three places it pays off most:</p>
+      <p class="kicker">Count them up</p>
+      <h2>How much AI is really in here <a class="anchorlink" href="#bonus">#</a></h2>
+      <p>It is more model than "one call." The pipeline reaches for it at runtime wherever it has to adapt or judge, and again between cycles to get better. Where it earns its place:</p>
       <div class="grid2">
-        <div class="card"><h4>Intake scripts <span class="role ai">AI helps</span></h4><p class="muted">Every source has its own quirks. Hand the model a sample and it drafts a modular reader and cleaner for that exact format, which is most of stages 1 and 2. You read it and keep it.</p></div>
-        <div class="card"><h4>Reconciliation fallbacks <span class="role ai">AI helps</span></h4><p class="muted">When fuzzy matching cannot resolve an identity, the model writes the lookup that does, an LDAP query against your directory, for instance, so unmatched rows get resolved instead of dropped.</p></div>
-        <div class="card"><h4>The improvement loop <span class="role ai">AI helps</span></h4><p class="muted">The model reads a run's logs and code and proposes the next small, testable change. A system that can explain its own last run is the cheapest improver you have.</p></div>
+        <div class="card"><h4>Adapt the intake <span class="role ai">runtime</span></h4><p class="muted">A file in the wrong shape triggers a model call that writes a fresh intake layer, so the run heals instead of breaking (stage 1).</p></div>
+        <div class="card"><h4>Resolve hard matches <span class="role ai">runtime</span></h4><p class="muted">When fuzzy matching fails, the model writes the lookup that resolves the identity, an LDAP query against your directory, say (stage 3).</p></div>
+        <div class="card"><h4>Summarize the text <span class="role ai">runtime</span></h4><p class="muted">The one call that reads your records: free text in, a short cited summary out (stage 4).</p></div>
+        <div class="card"><h4>Improve the process <span class="role ai">each cycle</span></h4><p class="muted">The model reads a run's logs and code and proposes the next small, testable change.</p></div>
       </div>
       <div class="callout good"><span class="ti">The line that keeps it safe</span>
-        In all three, the model writes code that <em>you</em> read, test, and keep. That is a different thing from the live call in stage 4, where the model decides on your data. Both are AI earning its place; only one runs on your records, and only in one stage.
+        Only the stage-4 summary sends your records' text to the model. The intake and reconcile calls ask it to write code, an intake layer, a lookup, which then runs on your side against your own data. A person approves every report. That is how AI ends up woven through the run without you losing hold of the records.
       </div>
     </section>
 
