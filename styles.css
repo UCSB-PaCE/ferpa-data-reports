@@ -505,6 +505,17 @@ a.uc-card:hover{transform:translateY(-3px); box-shadow:var(--shadow); border-col
 .uc-tools span{font-family:var(--mono); font-size:.6rem; font-weight:600; letter-spacing:.04em;
   text-transform:uppercase; color:var(--muted); background:var(--soft-blue); border:1px solid #cfe0ee;
   border-radius:999px; padding:3px 8px;}
+/* acknowledgment block (AI@Work) */
+.ack{display:flex; gap:var(--s5); align-items:center; background:var(--white); border:1px solid var(--line);
+  border-radius:14px; padding:var(--s4) var(--s5) var(--s4) calc(var(--s5) + 4px); margin:var(--s5) 0;
+  position:relative; overflow:hidden;}
+.ack::before{content:""; position:absolute; inset:0 auto 0 0; width:4px; background:var(--gold);}
+.ack-logo{height:52px; width:auto; flex:none;}
+.ack-body p{margin:0; color:#33536e;}
+.ack-body strong{color:var(--navy);}
+.ack-body .ack-link{margin-top:7px;}
+.ack-link a{font-family:var(--mono); font-size:.8rem; font-weight:600;}
+@media (max-width:640px){ .ack{flex-direction:column; align-items:flex-start; gap:var(--s3);} .ack-logo{height:44px;} }
 
 /* live pipeline: protected record -> stages -> FERPA gate -> report */
 .pipe{display:flex; align-items:flex-start; margin-top:clamp(30px,4.5vw,56px); gap:0; overflow-x:auto; padding-bottom:6px;}
