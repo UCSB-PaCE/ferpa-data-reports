@@ -68,7 +68,7 @@
           <p>A script computes every average, response rate, and breakdown (per instructor, per course, per segment) and absorbs the export's shifting shape. Math stays in code, where it is exact and repeatable, never in the model.</p>
           <details class="prompt">
             <summary>Prompt to paste (no-code path)</summary>
-            <div class="codeblock"><pre><code>Read course_evals_sample.csv. Standardize the column names, drop empty rows, and number each comment so it can be cited later. Then make a table of the average overall_rating and the percent who would recommend, per instructor. Show me the first five rows and the table.</code></pre></div>
+            <div class="codeblock"><pre><code>Write a Colab cell that reads course_evals_sample.csv, standardizes the column names, drops empty rows, and numbers each comment so it can be cited later. In the same cell, build a per-instructor table of the average overall_rating and the percent who would recommend. Show the first five rows and the table.</code></pre></div>
           </details>
         </div>
       </li>
@@ -80,7 +80,7 @@
           <p>The model reads the numbered free-text comments and writes a fair, balanced summary where every claim links back to the comment it came from. Numbered comments in, cited summary out. It never sees who wrote what.</p>
           <details class="prompt">
             <summary>Prompt to paste (no-code path)</summary>
-            <div class="codeblock"><pre><code>For each instructor, take their numbered comments and write a fair, three-sentence summary that cites the comment numbers it draws from, like [2] or [5]. Send the comments to our LLM Sandbox gateway, not a public chatbot, and do not include any names.</code></pre></div>
+            <div class="codeblock"><pre><code>Write a cell that sends each instructor's numbered comments to the LLM Sandbox gateway (not the Colab helper) and returns a fair, three-sentence summary that cites the comment numbers it used, like [2] or [5], with no names. Keep the raw comments out of this chat.</code></pre></div>
           </details>
         </div>
       </li>
@@ -100,7 +100,7 @@
           <p>A stack of small reports (one per instructor) or a single executive summary with prioritized themes, ready to send to the people who need it.</p>
           <details class="prompt">
             <summary>Prompt to paste (no-code path)</summary>
-            <div class="codeblock"><pre><code>Build one report per instructor that puts the score table first, then the cited comment summary, and save each as its own file I can download.</code></pre></div>
+            <div class="codeblock"><pre><code>Write a cell that assembles one report per instructor (the score table first, then the cited comment summary) and saves each as its own file I can download.</code></pre></div>
           </details>
         </div>
       </li>
