@@ -516,6 +516,25 @@ a.uc-card:hover{transform:translateY(-3px); box-shadow:var(--shadow); border-col
 .ack-body .ack-link{margin-top:7px;}
 .ack-link a{font-family:var(--mono); font-size:.8rem; font-weight:600;}
 @media (max-width:640px){ .ack{flex-direction:column; align-items:flex-start; gap:var(--s3);} .ack-logo{height:44px;} }
+/* gallery card call-to-action (whole card links to its detail page) */
+.uc-cta{display:inline-flex; align-items:center; gap:5px; font-family:var(--mono); font-size:.72rem;
+  font-weight:600; letter-spacing:.03em; color:var(--sea);}
+.uc-cta::after{content:"\2192";}
+a.uc-card:hover .uc-cta{text-decoration:underline;}
+/* ── use-case detail page ───────────────────────────────────────────────── */
+.crumb{font-family:var(--mono); font-size:.76rem; margin:0 0 var(--s3); color:var(--muted);}
+.detail-arc{margin:var(--s4) 0 0; max-width:62ch;}
+.uc-steps{list-style:none; padding:0; margin:var(--s5) 0 0; display:grid; gap:var(--s5);}
+.uc-steps > li{display:grid; grid-template-columns:36px 1fr; gap:var(--s4); align-items:start;}
+.uc-steps .n{font-family:var(--mono); font-weight:600; color:#fff; background:var(--navy); width:36px;
+  height:36px; border-radius:50%; display:grid; place-items:center; font-size:.9rem;}
+.uc-steps li.ai .n{background:var(--gold-deep);}
+.uc-steps li.human .n{background:var(--sea);}
+.uc-steps .role{display:block; font-family:var(--mono); font-size:.6rem; font-weight:600;
+  letter-spacing:.1em; text-transform:uppercase; color:var(--muted); margin-bottom:2px;}
+.uc-steps h3{margin:0 0 4px; font-size:1.12rem;}
+.uc-steps p{margin:0; color:#33536e;}
+.detail-samples{display:flex; flex-wrap:wrap; gap:var(--s4); margin:var(--s4) 0 0;}
 
 /* live pipeline: protected record -> stages -> FERPA gate -> report */
 .pipe{display:flex; align-items:flex-start; margin-top:clamp(30px,4.5vw,56px); gap:0; overflow-x:auto; padding-bottom:6px;}
