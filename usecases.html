@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Find your use case | Data to Reports</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="alternate icon" href="favicon.svg">
+<link rel="apple-touch-icon" href="favicon.svg">
+<meta name="description" content="A broad showcase of one pattern at work: raw rows and free text become reports worth reading. Use cases across UCSB, higher education, and any organization, most with a downloadable synthetic sample, each credited to the team that inspired it.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..900&family=Nunito+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip-link" href="#content">Skip to content</a>
+
+<header class="topbar">
+  <div class="brand">
+    <img src="https://www.professional.ucsb.edu/sites/default/files/2025-05/Logo_PaCE_2025_Full.png" alt="UCSB PaCE logo">
+    <img src="https://otl.ucsb.edu/sites/default/files/images/ai-cop-spring-symposium-2026_logo.png" alt="UCSB AI Community of Practice logo">
+    <div class="sep"></div>
+    <div class="tag">Data &rarr; Reports
+      <small>Use-case gallery</small>
+    </div>
+  </div>
+  <div class="pills">
+    <a class="pill ghost" href="index.html">Home</a>
+    <a class="pill ghost" href="about.html">About</a>
+    <a class="pill link" href="#start">Pick a path &rarr;</a>
+  </div>
+</header>
+
+<main id="content" tabindex="-1">
+<div class="lander">
+
+  <section class="lander-hero">
+    <p class="eyebrow">Find your use case</p>
+    <h1>Find your own data here.</h1>
+    <p class="story">A broad showcase of one pattern at work: scripts do the repeatable counting and shaping, a language model is brought in only for the part a script cannot do (turning free text into a fair, cited summary), and a person approves what ships. Most examples are from UCSB departments; others show how the same arc fits any campus or organization. Each card credits the team whose project inspired it.</p>
+    <div class="uc-grab">Most cards link to a <strong>downloadable synthetic sample</strong> you can open in Google Colab or a spreadsheet to try the pipeline before you point it at your own data. Every sample is made up: <strong>no real records, names, or figures</strong>.</div>
+  </section>
+
+  <section class="uc-group" id="ucsb" aria-labelledby="ucsb-h">
+    <h2 id="ucsb-h">From UCSB teams</h2>
+    <p class="uc-intro">Real projects UCSB staff built, generalized into a transferable pattern, credited to the people who created them. No real figures, synthetic sample data.</p>
+    <div class="uc-grid">
+
+      <article class="uc-card" id="surveys-and-evaluations" data-sector="UCSB">
+        <span class="uc-sector">UCSB</span>
+        <h3 class="uc-title">Surveys and evaluations</h3>
+        <p class="uc-aud">Program teams and faculty committees</p>
+        <div class="uc-arc">
+          <div class="uc-step have"><span class="uc-k">You have</span><p>Survey and evaluation exports with ratings plus free-text comments (Qualtrics, REDCap, and the like)</p></div>
+          <span class="arrow" aria-hidden="true">&darr;</span>
+          <div class="uc-step want"><span class="uc-k">You want</span><p>Cited summaries: many per-instructor and per-department reports, or one executive summary with prioritized themes</p></div>
+        </div>
+        <p class="uc-how">Scripts compute every score and absorb the export's shape; the model only turns free-text comments into fair, cited summaries that link back to each source comment, and a person signs off. The same pattern yields a stack of small reports (one per instructor) or a single committee-ready executive summary.</p>
+        <div class="uc-foot">
+          <a class="uc-sample" href="sample-data/course_evals_sample.csv" download>Evaluations sample (CSV)</a>
+          <a class="uc-sample" href="sample-data/student_feedback_survey_sample.csv" download>Survey sample (CSV)</a>
+          <p class="uc-credit">Credit: <b>Jonathan Engeln Lambinet-Lacson, Sofia Muller</b></p>
+        </div>
+      </article>
+
+      <article class="uc-card" id="helpdesk-emails" data-sector="UCSB">
+        <span class="uc-sector">UCSB</span>
+        <h3 class="uc-title">Help-desk inbox</h3>
+        <p class="uc-aud">System owners and support leads</p>
+        <div class="uc-arc">
+          <div class="uc-step have"><span class="uc-k">You have</span><p>Three years of help-desk emails from a delegate inbox</p></div>
+          <span class="arrow" aria-hidden="true">&darr;</span>
+          <div class="uc-step want"><span class="uc-k">You want</span><p>A ranked summary of recurring pain points to drive a redesign</p></div>
+        </div>
+        <p class="uc-how">Scripts pull and de-duplicate the thread history; the model only reads the free-text emails and clusters them into named, frequency-ranked pain points, each one citing the original emails so a team can act on them.</p>
+        <div class="uc-foot">
+          <a class="uc-sample" href="sample-data/helpdesk_emails_sample.csv" download>Sample data (CSV)</a>
+          <p class="uc-credit">Credit: <b>Francesca Palermino</b></p>
+        </div>
+      </article>
+
+      <article class="uc-card" id="admissions-rubric" data-sector="UCSB">
+        <span class="uc-sector">UCSB</span>
+        <h3 class="uc-title">Admissions review</h3>
+        <p class="uc-aud">Admissions committees and program coordinators</p>
+        <div class="uc-arc">
+          <div class="uc-step have"><span class="uc-k">You have</span><p>Hundreds of applications with letters of intent and faculty review notes</p></div>
+          <span class="arrow" aria-hidden="true">&darr;</span>
+          <div class="uc-step want"><span class="uc-k">You want</span><p>A criteria-based scoring rubric, overlooked-applicant flags, and an admit-success readout</p></div>
+        </div>
+        <p class="uc-how">Scripts join applications to outcome markers and compute admit rates; the model only reads each letter of intent and review note to surface the language patterns that distinguish thriving students, grounded back to the source application for a human to weigh.</p>
+        <div class="uc-foot">
+          <a class="uc-sample" href="sample-data/admissions_review_sample.csv" download>Sample data (CSV)</a>
+          <p class="uc-credit">Credit: <b>Heidi Dinnogen</b></p>
+        </div>
+      </article>
+
+      <article class="uc-card" id="shship-pdf-reports" data-sector="UCSB">
+        <span class="uc-sector">UCSB</span>
+        <h3 class="uc-title">Static PDF reports</h3>
+        <p class="uc-aud">Analytics and finance leads</p>
+        <div class="uc-arc">
+          <div class="uc-step have"><span class="uc-k">You have</span><p>Dense multi-page PDF reports from a campus partner, where only a few pages matter</p></div>
+          <span class="arrow" aria-hidden="true">&darr;</span>
+          <div class="uc-step want"><span class="uc-k">You want</span><p>Charts, trends, and the few nuggets of insight that drive a decision</p></div>
+        </div>
+        <p class="uc-how">Scripts extract the relevant tables from the PDF and build the charts; the model only writes the short trend narrative and flags the standout findings, which an analyst verifies against the source pages.</p>
+        <div class="uc-foot">
+          <p class="uc-credit">Credit: <b>Yentran Tran</b></p>
+        </div>
+      </article>
+
+      <article class="uc-card" id="advising-traffic" data-sector="UCSB">
+        <span class="uc-sector">UCSB</span>
+        <h3 class="uc-title">Advising traffic</h3>
+        <p class="uc-aud">Advising directors and student affairs</p>
+        <div class="uc-arc">
+          <div class="uc-step have"><span class="uc-k">You have</span><p>Monthly walk-in visit logs from a queue system (after PII is stripped)</p></div>
+          <span class="arrow" aria-hidden="true">&darr;</span>
+          <div class="uc-step want"><span class="uc-k">You want</span><p>A readable report of peak hours, station load, and top reasons for visits</p></div>
+        </div>
+        <p class="uc-how">Scripts strip identifiers and compute peak times and volume per station; the model only turns the reason-for-visit free text into named visit categories and a short narrative that explains the spikes for staffing decisions.</p>
+        <div class="uc-foot">
+          <a class="uc-sample" href="sample-data/advising_traffic_sample.csv" download>Sample data (CSV)</a>
+          <p class="uc-credit">Credit: <b>Michelle Stransky</b></p>
+        </div>
+      </article>
+
+      <article class="uc-card" id="reconciliation" data-sector="UCSB">
+        <span class="uc-sector">UCSB</span>
+        <h3 class="uc-title">Transaction reconciliation</h3>
+        <p class="uc-aud">Department financial analysts</p>
+        <div class="uc-arc">
+          <div class="uc-step have"><span class="uc-k">You have</span><p>Hundreds of multi-line card transactions (charges, reversals, allocations) across several reports</p></div>
+          <span class="arrow" aria-hidden="true">&darr;</span>
+          <div class="uc-step want"><span class="uc-k">You want</span><p>An exception report flagging what needs review, and optionally the whole match automated</p></div>
+        </div>
+        <p class="uc-how">Scripts do all the matching and the math, grouping the charge, reversal, and allocation lines; the model only writes the plain-language note for each flagged mismatch. The same logic can run as a scheduled Apps Script so reconciliation happens in the background, with real data never sent to the model.</p>
+        <div class="uc-foot">
+          <a class="uc-sample" href="sample-data/flex_card_reconciliation_sample.csv" download>Sample data (CSV)</a>
+          <p class="uc-credit">Credit: <b>Emi Sautot, Julia Choi</b></p>
+        </div>
+      </article>
+
+      <article class="uc-card" id="open-purchase-orders" data-sector="UCSB">
+        <span class="uc-sector">UCSB</span>
+        <h3 class="uc-title">Open purchase orders and receiving</h3>
+        <p class="uc-aud">Procurement, finance, and department staff</p>
+        <div class="uc-arc">
+          <div class="uc-step have"><span class="uc-k">You have</span><p>Purchase-order data: open POs, days open, financial exposure, missing receiving documents</p></div>
+          <span class="arrow" aria-hidden="true">&darr;</span>
+          <div class="uc-step want"><span class="uc-k">You want</span><p>A campus-wide aging dashboard with an exposure narrative, and automated department-level follow-ups</p></div>
+        </div>
+        <p class="uc-how">Scripts compute every aging bucket and exposure figure; the model only writes the executive narrative and recommended actions over those numbers. At the department level, the same data drives an automation that emails package receivers with a finance-team verification step.</p>
+        <div class="uc-foot">
+          <p class="uc-credit">Credit: <b>Darshan Etz, Yasmin Gutierrez</b></p>
+        </div>
+      </article>
+
+      <article class="uc-card" id="paid-status-trend" data-sector="UCSB">
+        <span class="uc-sector">UCSB</span>
+        <h3 class="uc-title">Paid-status trends</h3>
+        <p class="uc-aud">Registration and fee-status teams</p>
+        <div class="uc-arc">
+          <div class="uc-step have"><span class="uc-k">You have</span><p>Daily registered-and-paid counts across many years of fall terms (summary only)</p></div>
+          <span class="arrow" aria-hidden="true">&darr;</span>
+          <div class="uc-step want"><span class="uc-k">You want</span><p>Census-aligned trend charts and a read on whether students are paying slower</p></div>
+        </div>
+        <p class="uc-how">Scripts pivot the daily counts to the census date and draw the min, max, and current lines; the model only writes the short readout of what the curve means so leadership can act on it.</p>
+        <div class="uc-foot">
+          <p class="uc-credit">Credit: <b>Susan Harris</b></p>
+        </div>
+      </article>
+
+      <article class="uc-card" id="ap-sabbatical-review" data-sector="UCSB">
+        <span class="uc-sector">UCSB</span>
+        <h3 class="uc-title">Sabbatical requests</h3>
+        <p class="uc-aud">Academic personnel analysts</p>
+        <div class="uc-arc">
+          <div class="uc-step have"><span class="uc-k">You have</span><p>Faculty sabbatical request packets (free-text justifications and attachments)</p></div>
+          <span class="arrow" aria-hidden="true">&darr;</span>
+          <div class="uc-step want"><span class="uc-k">You want</span><p>A preliminary completeness check per request and a clean extract for the tracker</p></div>
+        </div>
+        <p class="uc-how">Scripts pull the packets and the required-field list; the model only reads each free-text request and returns a bulleted list of what is missing against policy, plus the fields to drop into the tracker, which the analyst reviews before acting.</p>
+        <div class="uc-foot">
+          <p class="uc-credit">Credit: <b>Shawnee Oren</b></p>
+        </div>
+      </article>
+
+      <article class="uc-card" id="codebase-docs" data-sector="UCSB">
+        <span class="uc-sector">UCSB</span>
+        <h3 class="uc-title">Undocumented codebases</h3>
+        <p class="uc-aud">IT and application developers</p>
+        <div class="uc-arc">
+          <div class="uc-step have"><span class="uc-k">You have</span><p>Legacy application source code with no technical documentation</p></div>
+          <span class="arrow" aria-hidden="true">&darr;</span>
+          <div class="uc-step want"><span class="uc-k">You want</span><p>A structured technical document: system overview, file map, and feature breakdowns</p></div>
+        </div>
+        <p class="uc-how">Scripts gather and chunk the source files; the model only synthesizes them into a readable, structured doc with traceable mappings, refined through an open-questions loop until a developer signs off.</p>
+        <div class="uc-foot">
+          <p class="uc-credit">Credit: <b>Aasritha Sakhamuri</b></p>
+        </div>
+      </article>
+
+      <article class="uc-card" id="slide-accessibility" data-sector="UCSB">
+        <span class="uc-sector">UCSB</span>
+        <h3 class="uc-title">Slide accessibility</h3>
+        <p class="uc-aud">Accessibility and media teams</p>
+        <div class="uc-arc">
+          <div class="uc-step have"><span class="uc-k">You have</span><p>Dense presentation decks of graphs and equations that need descriptive text</p></div>
+          <span class="arrow" aria-hidden="true">&darr;</span>
+          <div class="uc-step want"><span class="uc-k">You want</span><p>Per-slide, WCAG-compliant descriptions published with the talk, and a source-cited check of the deck</p></div>
+        </div>
+        <p class="uc-how">Scripts slice each deck into images and publish the output; the multimodal model only writes the screen-reader description for each slide, with a QC pass and a human spot-check. A companion review can check a deck against accessibility guidelines and cite the exact guideline behind each fix.</p>
+        <div class="uc-foot">
+          <p class="uc-credit">Credit: <b>Alina Gutierrez, Martina Ubaldo</b></p>
+        </div>
+      </article>
+
+      <article class="uc-card" id="equipment-replacement" data-sector="UCSB">
+        <span class="uc-sector">UCSB</span>
+        <h3 class="uc-title">Equipment replacement cycle</h3>
+        <p class="uc-aud">IT asset and budget owners</p>
+        <div class="uc-arc">
+          <div class="uc-step have"><span class="uc-k">You have</span><p>Asset inventory exported from a service desk as a CSV</p></div>
+          <span class="arrow" aria-hidden="true">&darr;</span>
+          <div class="uc-step want"><span class="uc-k">You want</span><p>A clean list of what needs replacing this fiscal year, with a short budget summary</p></div>
+        </div>
+        <p class="uc-how">Scripts filter by replacement cycle and compute the totals; the model only writes the budget-cycle summary that frames the list for an end-of-year request.</p>
+        <div class="uc-foot">
+          <p class="uc-credit">Credit: <b>Chad Christensen</b></p>
+        </div>
+      </article>
+
+      <article class="uc-card" id="ucpath-process-doc" data-sector="UCSB">
+        <span class="uc-sector">UCSB</span>
+        <h3 class="uc-title">Process job aids</h3>
+        <p class="uc-aud">Operations and training leads</p>
+        <div class="uc-arc">
+          <div class="uc-step have"><span class="uc-k">You have</span><p>Several separate job aids for the same workflow, each written differently</p></div>
+          <span class="arrow" aria-hidden="true">&darr;</span>
+          <div class="uc-step want"><span class="uc-k">You want</span><p>One consolidated process document with gaps and recommended improvements</p></div>
+        </div>
+        <p class="uc-how">Scripts collect the source aids; the model only merges them into one ordered process, names the gaps, and proposes improvements, then asks clarifying questions so a person can confirm before it becomes training material.</p>
+        <div class="uc-foot">
+          <p class="uc-credit">Credit: <b>Claudio Alunan</b></p>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="uc-group" id="higher-ed" aria-labelledby="highered-h">
+    <h2 id="highered-h">Across higher education</h2>
+    <p class="uc-intro">The same arc, written for any campus or institution.</p>
+    <div class="uc-grid">
+
+      <article class="uc-card" id="advising-notes" data-sector="Higher ed">
+        <span class="uc-sector">Higher ed</span>
+        <h3 class="uc-title">Advising notes</h3>
+        <p class="uc-aud">Advising teams and student success offices</p>
+        <div class="uc-arc">
+          <div class="uc-step have"><span class="uc-k">You have</span><p>A term of advisor session notes with satisfaction scores and response times</p></div>
+          <span class="arrow" aria-hidden="true">&darr;</span>
+          <div class="uc-step want"><span class="uc-k">You want</span><p>A per-advisor summary of strengths, themes, and follow-up gaps</p></div>
+        </div>
+        <p class="uc-how">Scripts compute the averages (satisfaction, response time, session length); the model only reads the free-text notes and writes a fair, cited summary of what students valued and where follow-up slipped.</p>
+        <div class="uc-foot">
+          <a class="uc-sample" href="sample-data/advising_notes_sample.csv" download>Sample data (CSV)</a>
+        </div>
+      </article>
+
+      <article class="uc-card" id="enrollment-export" data-sector="Higher ed">
+        <span class="uc-sector">Higher ed</span>
+        <h3 class="uc-title">Enrollment snapshots</h3>
+        <p class="uc-aud">Registrars and institutional research</p>
+        <div class="uc-arc">
+          <div class="uc-step have"><span class="uc-k">You have</span><p>Term-over-term enrollment exports across programs and demographics</p></div>
+          <span class="arrow" aria-hidden="true">&darr;</span>
+          <div class="uc-step want"><span class="uc-k">You want</span><p>A readable enrollment-trend brief with notable shifts called out</p></div>
+        </div>
+        <p class="uc-how">Scripts compute the period-over-period changes and segment breakdowns; the model only writes the plain-language brief that explains which shifts matter and why, for a dashboard or a board packet.</p>
+        <div class="uc-foot">
+          <a class="uc-sample" href="sample-data/enrollment_snapshot_sample.csv" download>Sample data (CSV)</a>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="uc-group" id="any-org" aria-labelledby="anyorg-h">
+    <h2 id="anyorg-h">In any organization</h2>
+    <p class="uc-intro">Nothing campus-specific. If you keep records in rows and notes in free text, this fits.</p>
+    <div class="uc-grid">
+
+      <article class="uc-card" id="meeting-notes" data-sector="Any organization">
+        <span class="uc-sector">Any organization</span>
+        <h3 class="uc-title">Meeting notes</h3>
+        <p class="uc-aud">Any team that runs recurring meetings</p>
+        <div class="uc-arc">
+          <div class="uc-step have"><span class="uc-k">You have</span><p>A folder of raw meeting notes and transcripts across a quarter</p></div>
+          <span class="arrow" aria-hidden="true">&darr;</span>
+          <div class="uc-step want"><span class="uc-k">You want</span><p>A decisions-and-actions digest with owners and open items</p></div>
+        </div>
+        <p class="uc-how">Scripts gather and order the notes by date; the model only extracts decisions, action items, and owners into a structured digest, with each item linked back to the note it came from for a quick human check.</p>
+        <div class="uc-foot">
+          <a class="uc-sample" href="sample-data/meeting_notes_sample.csv" download>Sample data (CSV)</a>
+        </div>
+      </article>
+
+      <article class="uc-card" id="grant-program-outcomes" data-sector="Any organization">
+        <span class="uc-sector">Any organization</span>
+        <h3 class="uc-title">Grant and program outcomes</h3>
+        <p class="uc-aud">Program managers and grant reporters</p>
+        <div class="uc-arc">
+          <div class="uc-step have"><span class="uc-k">You have</span><p>A roster of funded activities with metrics and free-text progress updates</p></div>
+          <span class="arrow" aria-hidden="true">&darr;</span>
+          <div class="uc-step want"><span class="uc-k">You want</span><p>A funder-ready outcomes report tying activities to results</p></div>
+        </div>
+        <p class="uc-how">Scripts roll up the metrics by goal; the model only turns the free-text progress updates into a cited narrative of outcomes against targets, which a program manager edits before submission.</p>
+        <div class="uc-foot">
+          <a class="uc-sample" href="sample-data/grant_outcomes_sample.csv" download>Sample data (CSV)</a>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="uc-group" id="more-ai" aria-labelledby="moreai-h">
+    <h2 id="moreai-h">More AI wins with campus tools</h2>
+    <p class="uc-intro">Not every win is a data-to-report pipeline. These are other things UCSB staff built with campus AI tools: automations, assistants, accessibility helpers, and process work. Similar projects are grouped and credited together.</p>
+    <div class="uc-grab">A note on data: match the tool to your data's protection level. On UCSB accounts, Google and Gemini are approved up to <strong>P4</strong>, and <strong>LLM Sandbox</strong> is a campus-run gateway option. Check the official <a href="https://cio.ucsb.edu/artificial-intelligence/genai-tools-ucsb" target="_blank" rel="noopener">GenAI tools at UCSB</a> list and <a href="https://cio.ucsb.edu/artificial-intelligence/ai-use-guidelines" target="_blank" rel="noopener">AI use guidelines</a> before using real records.</div>
+    <div class="uc-grid">
+
+      <article class="uc-card uc-win" data-sector="UCSB">
+        <span class="uc-sector">UCSB &middot; Automation</span>
+        <h3 class="uc-title">Automate a repetitive workflow</h3>
+        <p class="uc-aud">Non-coders with a manual, repetitive process</p>
+        <p class="uc-winline">Used AI to write the code (often Google Apps Script) that automates a repetitive process end to end, with a human approval gate. The same approach handled quarterly course scheduling, room bookings, graduate onboarding emails, mapping inventory into a rigid system template, and consolidating leads from many tools into one live sheet. Real data stays out of the model; the AI writes the script, you run it.</p>
+        <div class="uc-foot">
+          <p class="uc-tools"><span>Google Apps Script</span><span>Gemini</span><span>LLM Sandbox</span></p>
+          <p class="uc-credit">Credit: <b>Celine Teng, Lauren Rodriguez, India Madden, Eva Cervera, Erin Moore</b></p>
+        </div>
+      </article>
+
+      <article class="uc-card uc-win" data-sector="UCSB">
+        <span class="uc-sector">UCSB &middot; Assistant</span>
+        <h3 class="uc-title">Self-service knowledge assistant</h3>
+        <p class="uc-aud">Anyone answering the same questions from scattered docs</p>
+        <p class="uc-winline">Curated a trusted set of sources and stood up an AI assistant that answers from it with citations and a human gate, instead of fielding the same questions over and over. Teams built a resource concierge for analysts, a compliance rewriter that returns your plan with the right policies and account strings, a sponsored-projects proposal helper, a notes synthesizer so knowledge stops living in one person's head, and a distilled step-by-step guide for a notoriously confusing policy.</p>
+        <div class="uc-foot">
+          <p class="uc-tools"><span>NotebookLM</span><span>Gemini Gems</span><span>LLM Sandbox</span></p>
+          <p class="uc-credit">Credit: <b>Debi Vance, Keaton Fort, Rachel Lewis, Jackie Spier, LeeAnn Trusela</b></p>
+        </div>
+      </article>
+
+      <article class="uc-card uc-win" data-sector="UCSB">
+        <span class="uc-sector">UCSB &middot; Training</span>
+        <h3 class="uc-title">Advising training, simulated</h3>
+        <p class="uc-aud">Lean advising teams training peer advisors</p>
+        <p class="uc-winline">Turned real, redacted advising scenarios into an interactive training module with AI-avatar video, so new advisors can practice safely instead of learning on live students.</p>
+        <div class="uc-foot">
+          <p class="uc-tools"><span>LLM Sandbox</span><span>Google Vids</span></p>
+          <p class="uc-credit">Credit: <b>Abigail Salas</b></p>
+        </div>
+      </article>
+
+      <article class="uc-card uc-win" data-sector="UCSB">
+        <span class="uc-sector">UCSB &middot; Process</span>
+        <h3 class="uc-title">Right tool for the workflow</h3>
+        <p class="uc-aud">Form and workflow administrators</p>
+        <p class="uc-winline">Used AI to translate complex signature-tool forms into automated process maps and workflows in a better-fit tool, with a human finalizing, eliminating recurring routing issues.</p>
+        <div class="uc-foot">
+          <p class="uc-tools"><span>Nintex AI</span><span>Gemini</span></p>
+          <p class="uc-credit">Credit: <b>Sarah Hong</b></p>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <section id="start">
+    <h2>See your data here? Pick a path.</h2>
+    <p class="uc-intro">Same pipeline, two ways in. Start with whichever fits how you work.</p>
+    <div class="duo">
+
+      <a class="duo-card nocode" href="nocode.html">
+        <span class="tag">No code needed</span>
+        <h2>Do it in Google Colab</h2>
+        <p class="lede2">Run the whole pipeline in your browser. An AI helper turns plain instructions into the scripts that do the work, and you approve each step before it runs.</p>
+        <span class="go">Start the no-code path</span>
+      </a>
+
+      <a class="duo-card dev" href="dev.html">
+        <span class="tag">For developers</span>
+        <h2>Build it with code</h2>
+        <p class="lede2">The pipeline stage by stage, with code you can lift. What the scripts handle, where a language model earns its place, and how to call one your organization controls.</p>
+        <span class="go">Open the developer guide</span>
+      </a>
+
+    </div>
+  </section>
+
+</div>
+</main>
+
+<footer>
+  <p><strong>From Data to Reports</strong>, a field guide from UCSB Professional &amp; Continuing Education, built around a real student-evaluation pipeline. It runs on UCSB's LLM Sandbox, an OpenAI-compatible, token-metered campus gateway, and the same pattern works with any organization's gateway. <a href="https://www.youtube.com/watch?v=wz-T6y6iLHI" target="_blank" rel="noopener">What is LLM Sandbox?</a></p>
+  <p class="muted">The use cases above are generalized patterns drawn from real UCSB AI projects and from common reporting needs, credited to the teams who created them. Specifics and real figures are omitted, and every downloadable sample is synthetic. This guide describes a responsible architecture for handling protected records; it is not legal advice and certifies no specific tool as "FERPA-compliant." Always verify data-governance terms and your data's <a href="https://cio.ucsb.edu/artificial-intelligence" target="_blank" rel="noopener">UCSB protection level</a> before sending real records.</p>
+</footer>
+
+<div id="askbot">
+  <button class="ask-bot" id="askbot-toggle" aria-expanded="false" aria-controls="askbot-panel">
+    <span class="ico" aria-hidden="true">&#128172;</span><span class="label">Ask the assistant</span><span class="dot" aria-hidden="true"></span>
+  </button>
+  <div class="askbot-panel" id="askbot-panel" role="dialog" aria-modal="true" aria-label="Ask the assistant" hidden>
+    <div class="askbot-head">
+      <strong>Ask the assistant</strong>
+      <div class="ha">
+        <a href="https://llmsandbox.cloud.ucsb.edu/bot/01KVEPQV2NF2PVSBVMNW53NYA5" target="_blank" rel="noopener" title="Open the full assistant in a new tab" aria-label="Open the full assistant in a new tab">&#8599;</a>
+        <button type="button" id="askbot-close" aria-label="Close chat">&#10005;</button>
+      </div>
+    </div>
+    <div class="askbot-msgs" id="askbot-msgs" aria-live="polite" aria-atomic="false">
+      <div class="askbot-msg bot">Tell me what data you have and I will point you to the closest use case and the right path to build it.</div>
+    </div>
+    <form class="askbot-form" id="askbot-form">
+      <input id="askbot-input" type="text" placeholder="Ask a question..." autocomplete="off" aria-label="Your question">
+      <button type="submit" id="askbot-send" aria-label="Send">&#10148;</button>
+    </form>
+    <div class="askbot-foot">Powered by LLM Sandbox, grounded on this site</div>
+  </div>
+</div>
+
+<script>
+  window.PAGE_REVS = {};
+  window.PAGE_REV_DATE = "Jun 24, 2026";
+  window.ASKBOT_SUGGESTIONS = ["Which use case is closest to my data?", "How do I turn my spreadsheet into a report?", "Do I need to know how to code?"];
+</script>
+<script src="app.js" defer></script>
+</body>
+</html>

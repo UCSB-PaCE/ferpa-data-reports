@@ -69,7 +69,7 @@ a{color:var(--sea); text-decoration:none;}
 a:hover{text-decoration:underline;}
 /* a11y (WCAG 1.4.1): in-text links are distinguishable without relying on color */
 main p a, main li a, .lede a, .callout a, .takeaway a, .shotfig figcaption a,
-td a, footer a, .crumb a, .askbot-msg a{text-decoration:underline; text-underline-offset:2px;}
+td a, footer a, .crumb a, .askbot-msg a, .uc-grab a{text-decoration:underline; text-underline-offset:2px;}
 code{font-family:var(--mono); font-size:.9em;}
 img{max-width:100%;}
 hr{border:0; border-top:1px solid var(--line); margin:var(--s6) 0;}
@@ -457,6 +457,54 @@ footer .tribute{color:var(--gold-deep); font-weight:700;}
 .lander .secondary .s-tag{font-family:var(--mono); font-size:.68rem; letter-spacing:.08em; text-transform:uppercase; color:var(--sea);}
 .lander .secondary .s-title{font-family:var(--display); font-size:1.18rem; color:var(--navy); transition:color .15s;}
 .lander .secondary a:hover .s-title{color:var(--sea);}
+
+/* ── "Find your use case" gallery (landing subset + usecases.html) ───────── */
+.uc-intro{font-size:1.12rem; line-height:1.6; color:#33536e; max-width:64ch;}
+.uc-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(288px,1fr));
+  gap:clamp(14px,2vw,22px); margin:var(--s5) 0;}
+.uc-card{display:flex; flex-direction:column; background:var(--white); border:1px solid var(--line);
+  border-radius:14px; padding:var(--s5); position:relative; overflow:hidden; color:inherit;
+  scroll-margin-top:80px;
+  transition:transform .15s, box-shadow .15s, border-color .15s;}
+.uc-card::before{content:""; position:absolute; inset:0 0 auto 0; height:4px; background:var(--accent,var(--sea));}
+a.uc-card:hover{transform:translateY(-3px); box-shadow:var(--shadow); border-color:var(--line-2); text-decoration:none;}
+.uc-card[data-sector="UCSB"]{--accent:var(--navy);}
+.uc-card[data-sector="Higher ed"]{--accent:var(--sea);}
+.uc-card[data-sector="Any organization"]{--accent:var(--gold-deep);}
+.uc-sector{font-family:var(--mono); font-size:.63rem; font-weight:600; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--accent,var(--sea));}
+.uc-card h3.uc-title{font-size:1.28rem; margin:7px 0 2px; color:var(--navy);}
+.uc-aud{font-family:var(--mono); font-size:.64rem; letter-spacing:.05em; text-transform:uppercase;
+  color:var(--muted); margin:0 0 var(--s4);}
+.uc-arc{display:flex; flex-direction:column; gap:7px; margin:0 0 var(--s3);}
+.uc-k{display:block; font-family:var(--mono); font-size:.6rem; font-weight:600; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--muted); margin-bottom:1px;}
+.uc-step p{margin:0; font-size:.97rem; line-height:1.45;}
+.uc-step.want p{color:var(--navy); font-weight:700;}
+.uc-arc .arrow{align-self:start; color:var(--gold-deep); font-weight:700; line-height:.7; font-size:1.1rem;}
+.uc-how{font-size:.85rem; line-height:1.5; color:var(--muted); margin:0;
+  padding-top:var(--s3); border-top:1px dashed var(--line);}
+.uc-foot{margin-top:auto; padding-top:var(--s4); display:flex; flex-direction:column; gap:7px;}
+.uc-credit{font-family:var(--mono); font-size:.62rem; letter-spacing:.03em; color:var(--muted); margin:0;}
+.uc-credit b{color:var(--navy); font-weight:600;}
+.uc-sample{align-self:flex-start; padding:5px 0; font-family:var(--mono); font-size:.7rem;
+  font-weight:600; color:var(--sea); display:inline-flex; align-items:center; gap:6px; text-decoration:none;}
+.uc-sample::before{content:"\2193"; font-weight:700;}
+.uc-sample:hover{text-decoration:underline;}
+.uc-more{margin-top:var(--s4);}
+.uc-more a{font-family:var(--mono); font-size:.82rem; font-weight:600;}
+/* full-gallery page: one sector group per heading */
+.uc-group{padding:var(--s5) 0 0; border:0;}
+.uc-group > h2{margin-bottom:var(--s2);}
+.uc-grab{background:var(--soft-blue); border:1px solid #cfe0ee; border-radius:12px;
+  padding:var(--s4) var(--s5); margin:var(--s5) 0; font-size:.96rem;}
+.uc-grab strong{color:var(--navy);}
+/* compact "more AI wins" cards: a one-line win + campus-tool chips */
+.uc-win .uc-winline{font-size:.95rem; line-height:1.5; color:var(--ink); margin:6px 0 0;}
+.uc-tools{display:flex; flex-wrap:wrap; gap:6px; margin:0;}
+.uc-tools span{font-family:var(--mono); font-size:.6rem; font-weight:600; letter-spacing:.04em;
+  text-transform:uppercase; color:var(--muted); background:var(--soft-blue); border:1px solid #cfe0ee;
+  border-radius:999px; padding:3px 8px;}
 
 /* live pipeline: protected record -> stages -> FERPA gate -> report */
 .pipe{display:flex; align-items:flex-start; margin-top:clamp(30px,4.5vw,56px); gap:0; overflow-x:auto; padding-bottom:6px;}

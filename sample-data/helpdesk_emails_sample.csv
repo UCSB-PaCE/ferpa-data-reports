@@ -1,0 +1,31 @@
+ticket_id,date,category,resolved_hours,email_body
+HD-4821,2026-05-28,Login,55,"I cannot find where to submit a grade change after the deadline, the menu is confusing."
+HD-4822,2026-02-18,Navigation,26,The login page keeps redirecting me in a loop and never reaches my dashboard.
+HD-4823,2026-03-13,Grades,48,I was told I have access to the roster but the button is greyed out for me.
+HD-4824,2026-04-17,Permissions,58,Every time I export the report it downloads an empty file with no rows.
+HD-4825,2026-01-08,Errors,29,Where do I go to delegate access to my assistant? I cannot locate that setting.
+HD-4826,2026-01-11,Deadlines,3,The system logged me out three times while I was entering grades and I lost my work.
+HD-4827,2026-05-18,Login,30,The deadline reminder email links to a page that says I am not authorized.
+HD-4828,2026-05-08,Navigation,1,I clicked submit and got a generic error with a code I do not understand.
+HD-4829,2026-01-23,Grades,8,Searching for a student by name returns nothing even though they are enrolled.
+HD-4830,2026-02-03,Permissions,5,The navigation labels changed and I can no longer find the petitions section.
+HD-4831,2026-03-03,Errors,66,My approval is stuck pending and I cannot tell who it is waiting on.
+HD-4832,2026-02-09,Deadlines,63,The page takes forever to load during the first week of the quarter.
+HD-4833,2026-02-18,Login,17,"I cannot find where to submit a grade change after the deadline, the menu is confusing."
+HD-4834,2026-05-19,Navigation,61,The login page keeps redirecting me in a loop and never reaches my dashboard.
+HD-4835,2026-02-26,Grades,61,I was told I have access to the roster but the button is greyed out for me.
+HD-4836,2026-04-07,Permissions,13,Every time I export the report it downloads an empty file with no rows.
+HD-4837,2026-01-22,Errors,56,Where do I go to delegate access to my assistant? I cannot locate that setting.
+HD-4838,2026-03-14,Deadlines,53,The system logged me out three times while I was entering grades and I lost my work.
+HD-4839,2026-04-28,Login,7,The deadline reminder email links to a page that says I am not authorized.
+HD-4840,2026-01-02,Navigation,52,I clicked submit and got a generic error with a code I do not understand.
+HD-4841,2026-03-26,Grades,14,Searching for a student by name returns nothing even though they are enrolled.
+HD-4842,2026-02-07,Permissions,25,The navigation labels changed and I can no longer find the petitions section.
+HD-4843,2026-05-15,Errors,18,My approval is stuck pending and I cannot tell who it is waiting on.
+HD-4844,2026-04-06,Deadlines,36,The page takes forever to load during the first week of the quarter.
+HD-4845,2026-04-08,Login,10,"I cannot find where to submit a grade change after the deadline, the menu is confusing."
+HD-4846,2026-04-26,Navigation,71,The login page keeps redirecting me in a loop and never reaches my dashboard.
+HD-4847,2026-01-02,Grades,70,I was told I have access to the roster but the button is greyed out for me.
+HD-4848,2026-01-03,Permissions,31,Every time I export the report it downloads an empty file with no rows.
+HD-4849,2026-02-14,Errors,63,Where do I go to delegate access to my assistant? I cannot locate that setting.
+HD-4850,2026-04-07,Deadlines,52,The system logged me out three times while I was entering grades and I lost my work.

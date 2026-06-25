@@ -1,0 +1,31 @@
+txn_id,posting_date,vendor,amount,allocation_status,review_note
+T-90455,2026-03-02,Coastal Office Supply,613.43,allocated,
+T-90456,2026-03-05,Pacific Lab Instruments,-142.0,exception,Reversal recorded without the original charge appearing in the export.
+T-90457,2026-03-19,Harbor Catering Co,434.4,allocated,
+T-90458,2026-03-12,Mesa Print & Copy,177.38,allocated,
+T-90459,2026-03-23,Summit Software LLC,617.44,partial,Charge split across two funds; second allocation line still pending.
+T-90460,2026-03-10,Valley Logistics,119.86,partial,Charge split across two funds; second allocation line still pending.
+T-90461,2026-03-19,Coastal Office Supply,595.77,allocated,
+T-90462,2026-03-03,Pacific Lab Instruments,462.74,allocated,
+T-90463,2026-03-28,Harbor Catering Co,498.48,allocated,
+T-90464,2026-03-02,Mesa Print & Copy,370.01,partial,"Allocated amount is short by the tax line, needs a top-up entry."
+T-90465,2026-03-03,Summit Software LLC,429.47,allocated,
+T-90466,2026-03-16,Valley Logistics,279.28,allocated,
+T-90467,2026-03-27,Coastal Office Supply,243.28,allocated,
+T-90468,2026-03-24,Pacific Lab Instruments,288.87,partial,"Allocated amount is short by the tax line, needs a top-up entry."
+T-90469,2026-03-25,Harbor Catering Co,590.0,partial,"Allocated amount is short by the tax line, needs a top-up entry."
+T-90470,2026-03-19,Mesa Print & Copy,531.61,allocated,
+T-90471,2026-03-03,Summit Software LLC,170.7,allocated,
+T-90472,2026-03-20,Valley Logistics,169.68,exception,Amount exceeds the approved limit for this card holder.
+T-90473,2026-03-11,Coastal Office Supply,325.46,allocated,
+T-90474,2026-03-09,Pacific Lab Instruments,238.7,allocated,
+T-90475,2026-03-09,Harbor Catering Co,388.81,allocated,
+T-90476,2026-03-08,Mesa Print & Copy,136.84,allocated,
+T-90477,2026-03-23,Summit Software LLC,489.58,allocated,
+T-90478,2026-03-26,Valley Logistics,323.29,partial,Charge split across two funds; second allocation line still pending.
+T-90479,2026-03-23,Coastal Office Supply,155.83,allocated,
+T-90480,2026-03-16,Pacific Lab Instruments,379.73,allocated,
+T-90481,2026-03-11,Harbor Catering Co,481.97,allocated,
+T-90482,2026-03-09,Mesa Print & Copy,186.51,partial,Charge split across two funds; second allocation line still pending.
+T-90483,2026-03-04,Summit Software LLC,137.79,allocated,
+T-90484,2026-03-09,Valley Logistics,477.41,allocated,
