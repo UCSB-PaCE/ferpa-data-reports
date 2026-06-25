@@ -1,0 +1,29 @@
+po_number,vendor,days_open,exposure,missing_doc,status
+PO-558000,Coastal Office Supply,90,10786,invoice,open
+PO-558001,Pacific Lab Instruments,174,4064,invoice,open
+PO-558002,Mesa Print & Copy,218,36019,receiving confirmation,open
+PO-558003,Summit Software LLC,101,39093,none,closing
+PO-558004,Valley Logistics,240,34155,packing slip,open
+PO-558005,Harbor Scientific,17,6532,receiving confirmation,open
+PO-558006,Cypress IT Services,115,5478,receiving confirmation,open
+PO-558007,Anacapa Furnishings,31,37013,packing slip,open
+PO-558008,Coastal Office Supply,23,37957,packing slip,open
+PO-558009,Pacific Lab Instruments,250,15530,none,closing
+PO-558010,Mesa Print & Copy,168,39107,receiving confirmation,open
+PO-558011,Summit Software LLC,155,39274,packing slip,open
+PO-558012,Valley Logistics,20,15388,packing slip,open
+PO-558013,Harbor Scientific,150,9627,receiving confirmation,open
+PO-558014,Cypress IT Services,115,10353,packing slip,open
+PO-558015,Anacapa Furnishings,38,38315,packing slip,open
+PO-558016,Coastal Office Supply,151,45595,packing slip,open
+PO-558017,Pacific Lab Instruments,34,39015,none,closing
+PO-558018,Mesa Print & Copy,171,13212,none,closing
+PO-558019,Summit Software LLC,32,36796,invoice,open
+PO-558020,Valley Logistics,24,37886,packing slip,open
+PO-558021,Harbor Scientific,166,14397,receiving confirmation,open
+PO-558022,Cypress IT Services,182,35746,none,closing
+PO-558023,Anacapa Furnishings,206,21487,packing slip,open
+PO-558024,Coastal Office Supply,157,30599,invoice,open
+PO-558025,Pacific Lab Instruments,84,17180,invoice,open
+PO-558026,Mesa Print & Copy,186,16897,receiving confirmation,open
+PO-558027,Summit Software LLC,155,20577,invoice,open

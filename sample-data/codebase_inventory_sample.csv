@@ -1,0 +1,21 @@
+file_path,language,lines,purpose_guess
+src/auth/login.py,Python,763,"Handles user login, password checks, and session tokens."
+src/billing/invoice.py,Python,465,Builds and validates invoice records before posting to the ledger.
+src/reports/export_pdf.py,Python,407,Generates the quarterly report as a downloadable PDF.
+src/db/records.py,Python,739,Database access layer for the student records table.
+src/jobs/nightly_reminders.py,Python,429,Nightly cron job that emails overdue reminders.
+src/api/routes.py,Python,276,Defines the HTTP API routes and request handlers.
+src/util/dates.py,Python,194,Date parsing and fiscal-period helpers used across modules.
+src/ui/dashboard.js,JavaScript,124,Renders the dashboard charts in the browser.
+src/import/sis_loader.py,Python,220,Loads the student information system export into the database.
+src/mail/templates.py,Python,194,Holds the email templates and the send helper.
+legacy/old_report.pl,Perl,277,"Legacy report exporter; original author has left, purpose unclear."
+src/cache/store.py,Python,714,Thin wrapper around the cache with get and set helpers.
+src/auth/login.py,Python,278,"Handles user login, password checks, and session tokens."
+src/billing/invoice.py,Python,52,Builds and validates invoice records before posting to the ledger.
+src/reports/export_pdf.py,Python,536,Generates the quarterly report as a downloadable PDF.
+src/db/records.py,Python,643,Database access layer for the student records table.
+src/jobs/nightly_reminders.py,Python,226,Nightly cron job that emails overdue reminders.
+src/api/routes.py,Python,309,Defines the HTTP API routes and request handlers.
+src/util/dates.py,Python,328,Date parsing and fiscal-period helpers used across modules.
+src/ui/dashboard.js,JavaScript,44,Renders the dashboard charts in the browser.

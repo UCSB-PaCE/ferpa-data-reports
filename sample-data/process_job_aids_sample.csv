@@ -1,0 +1,25 @@
+aid_name,step_order,step_text
+Worklist Approval v2,1,Open the daily worklist and sort transactions by submission time.
+Worklist Approval v2,2,Verify the requester's department code before approving the transaction.
+Worklist Approval v2,3,Check that the attached job aid matches the current fiscal year.
+Worklist Approval v2,4,Route any exception over the approval threshold to the secondary approver.
+Worklist Approval v2,5,Confirm the vendor is on the approved list before releasing the order.
+Worklist Approval v2,6,Record the approval in the tracker with a timestamp.
+Worklist Approval v3,1,"For terminations, confirm the final-pay checklist is complete."
+Worklist Approval v3,2,Escalate anything still pending after three business days.
+Worklist Approval v3,3,Notify the department contact once the transaction posts.
+Worklist Approval v3,4,File the supporting documents in the shared drive folder.
+Worklist Approval v3,5,Open the daily worklist and sort transactions by submission time.
+Worklist Approval v3,6,Verify the requester's department code before approving the transaction.
+Onboarding Checklist,1,Check that the attached job aid matches the current fiscal year.
+Onboarding Checklist,2,Route any exception over the approval threshold to the secondary approver.
+Onboarding Checklist,3,Confirm the vendor is on the approved list before releasing the order.
+Onboarding Checklist,4,Record the approval in the tracker with a timestamp.
+Onboarding Checklist,5,"For terminations, confirm the final-pay checklist is complete."
+Onboarding Checklist,6,Escalate anything still pending after three business days.
+Exceptions Guide,1,Notify the department contact once the transaction posts.
+Exceptions Guide,2,File the supporting documents in the shared drive folder.
+Exceptions Guide,3,Open the daily worklist and sort transactions by submission time.
+Exceptions Guide,4,Verify the requester's department code before approving the transaction.
+Exceptions Guide,5,Check that the attached job aid matches the current fiscal year.
+Exceptions Guide,6,Route any exception over the approval threshold to the secondary approver.

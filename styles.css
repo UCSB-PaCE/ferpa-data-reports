@@ -406,7 +406,7 @@ footer .tribute{color:var(--gold-deep); font-weight:700;}
   /* wide tables stay readable: let them scroll instead of breaking the layout */
   main table{display:block; overflow-x:auto; -webkit-overflow-scrolling:touch;}
 }
-@media (max-width:520px){ .ask-bot .label{display:none;} .ask-bot{padding:13px;} }
+@media (max-width:520px){ .ask-bot .label{position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;} .ask-bot{padding:13px;} }
 @media (prefers-reduced-motion: reduce){
   *{scroll-behavior:auto !important;}
   .ci-orbit.o, .ci-orbit.i{animation:none !important;}
@@ -550,6 +550,14 @@ details.prompt[open] > summary::before{content:"\25BE";}
 details.prompt > summary:hover{text-decoration:underline;}
 details.prompt .codeblock{margin:0 10px 10px;}
 details.prompt .codeblock pre{white-space:pre-wrap; word-break:break-word;}
+/* topbar with three logos (PaCE, CoP, AI@Work): make room on small screens */
+@media (max-width:900px){ .brand img{height:34px;} }
+@media (max-width:600px){
+  .topbar .brand .tag, .topbar .brand .sep{display:none;}
+  .brand img{height:26px;}
+  .brand{gap:9px; min-width:0;}
+  .topbar{gap:8px;}
+}
 
 /* live pipeline: protected record -> stages -> FERPA gate -> report */
 .pipe{display:flex; align-items:flex-start; margin-top:clamp(30px,4.5vw,56px); gap:0; overflow-x:auto; padding-bottom:6px;}

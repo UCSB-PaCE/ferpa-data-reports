@@ -1,0 +1,21 @@
+talk_id,slide_number,slide_type,description
+TALK-2026-100,1,graph,"Line graph of monthly enrollment rising through spring, then dipping over summer."
+TALK-2026-100,2,equation,"A dense equation defining the loss function, with three additive terms."
+TALK-2026-100,3,text,"Title slide with the talk name, the date, and the presenter's affiliation."
+TALK-2026-100,4,photo,Photo of a lab setup with three instruments on a bench.
+TALK-2026-100,5,table,Table comparing four programs across three metrics; the second row is highlighted.
+TALK-2026-100,6,graph,Bar chart of quarterly spending; the third bar is the tallest by a wide margin.
+TALK-2026-101,1,graph,Scatter plot showing a weak positive trend between study hours and scores.
+TALK-2026-101,2,equation,Flow diagram with four boxes connected left to right by arrows.
+TALK-2026-101,3,text,"Line graph of monthly enrollment rising through spring, then dipping over summer."
+TALK-2026-101,4,photo,"A dense equation defining the loss function, with three additive terms."
+TALK-2026-101,5,table,"Title slide with the talk name, the date, and the presenter's affiliation."
+TALK-2026-101,6,graph,Photo of a lab setup with three instruments on a bench.
+TALK-2026-102,1,graph,Table comparing four programs across three metrics; the second row is highlighted.
+TALK-2026-102,2,equation,Bar chart of quarterly spending; the third bar is the tallest by a wide margin.
+TALK-2026-102,3,text,Scatter plot showing a weak positive trend between study hours and scores.
+TALK-2026-102,4,photo,Flow diagram with four boxes connected left to right by arrows.
+TALK-2026-102,5,table,"Line graph of monthly enrollment rising through spring, then dipping over summer."
+TALK-2026-102,6,graph,"A dense equation defining the loss function, with three additive terms."
+TALK-2026-103,1,graph,"Title slide with the talk name, the date, and the presenter's affiliation."
+TALK-2026-103,2,equation,Photo of a lab setup with three instruments on a bench.
