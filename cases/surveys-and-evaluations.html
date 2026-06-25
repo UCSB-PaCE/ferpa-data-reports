@@ -68,7 +68,7 @@
           <p>A script computes every average, response rate, and breakdown (per instructor, per course, per segment) and absorbs the export's shifting shape. Math stays in code, where it is exact and repeatable, never in the model.</p>
           <details class="prompt">
             <summary>Prompt to paste (no-code path)</summary>
-            <div class="codeblock"><pre><code>Write a Colab cell that reads course_evals_sample.csv, standardizes the column names, drops empty rows, and numbers each comment so it can be cited later. In the same cell, build a per-instructor table of the average overall_rating and the percent who would recommend. Show the first five rows and the table.</code></pre></div>
+            <div class="codeblock"><pre><code>Write a Colab cell that uses pandas to load my CSV (start with course_evals_sample.csv) into a DataFrame called df. Clean it: lowercase and snake_case the column names, drop fully empty rows, and add an integer comment_id to every row so each free-text comment can be cited later. Then build a summary table grouped by {the unit you want one report per, e.g. instructor} with the mean of the rating columns and the mean of would_recommend_pct, rounded to one decimal. Print df.head() and the summary table. Do all the math in pandas, never in a model.</code></pre></div>
           </details>
         </div>
       </li>
@@ -80,7 +80,7 @@
           <p>The model reads the numbered free-text comments and writes a fair, balanced summary where every claim links back to the comment it came from. Numbered comments in, cited summary out. It never sees who wrote what.</p>
           <details class="prompt">
             <summary>Prompt to paste (no-code path)</summary>
-            <div class="codeblock"><pre><code>Write a cell that sends each instructor's numbered comments to the LLM Sandbox gateway (not the Colab helper) and returns a fair, three-sentence summary that cites the comment numbers it used, like [2] or [5], with no names. Keep the raw comments out of this chat.</code></pre></div>
+            <div class="codeblock"><pre><code>Write a Colab cell that, for each {group, e.g. instructor}, gathers that group's numbered comments and sends only the comment_id and comment text to the LLM Sandbox gateway (an OpenAI-compatible endpoint; read the base URL and API key from Colab Secrets, never hardcode them). Ask for a fair, {N, e.g. 3}-sentence summary that cites the comment_ids it used in square brackets like [12], names no individuals, and replies "not enough responses" when a group has fewer than {min, e.g. 3} comments. Collect the results into a dict keyed by group. Never paste raw comments into this chat.</code></pre></div>
           </details>
         </div>
       </li>
@@ -100,7 +100,7 @@
           <p>A stack of small reports (one per instructor) or a single executive summary with prioritized themes, ready to send to the people who need it.</p>
           <details class="prompt">
             <summary>Prompt to paste (no-code path)</summary>
-            <div class="codeblock"><pre><code>Write a cell that assembles one report per instructor (the score table first, then the cited comment summary) and saves each as its own file I can download.</code></pre></div>
+            <div class="codeblock"><pre><code>Write a Colab cell that builds one report per {group} with the summary table first and the cited comment summary below, rendering each [comment_id] as a footnote that shows the verbatim comment. Save each report as its own file in a reports/ folder I can download, and print the list of files written. Make the format {Markdown or .docx}.</code></pre></div>
           </details>
         </div>
       </li>

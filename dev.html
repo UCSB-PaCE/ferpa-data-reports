@@ -128,7 +128,7 @@ df = pd.read_csv(<span class="ts">"export.csv"</span>)               <span class
       <p class="kicker">Stage 2 <span class="role script">script</span></p>
       <h2>Standardize <a class="anchorlink" href="#standardize">#</a></h2>
       <p>Rename columns to names your code expects, validate types, and coerce scales. Work on a copy and leave the source export read-only, so you can always re-derive and never corrupt the original.</p>
-      <div class="codeblock"><pre><code>clean = df.rename(columns={<span class="ts">"Instructor Name"</span>: <span class="ts">"subject"</span>, <span class="ts">"Comments"</span>: <span class="ts">"text"</span>})
+      <div class="codeblock"><pre><code>clean = df.rename(columns={<span class="ts">"Your subject column"</span>: <span class="ts">"subject"</span>, <span class="ts">"Your free-text column"</span>: <span class="ts">"text"</span>})  <span class="tc"># map your source names</span>
 clean[<span class="ts">"text"</span>] = clean[<span class="ts">"text"</span>].fillna(<span class="ts">""</span>).str.strip()
 clean = clean[clean[<span class="ts">"text"</span>] != <span class="ts">""</span>]      <span class="tc"># drop empty responses</span></code></pre></div>
     </section>

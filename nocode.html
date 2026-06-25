@@ -132,7 +132,7 @@
     <section id="clean">
       <p class="kicker">Step 5</p>
       <h2>Shape the data <a class="anchorlink" href="#clean">#</a></h2>
-      <p>This is where the AI helper earns its keep. Real spreadsheets are rarely clean: odd column names, blank rows, inconsistent labels. Tell the helper, in plain words, what you have and what you want. Something like: <em>"Read advising_notes.csv. Rename the advisor column to subject and the notes column to text. Drop empty rows. Show me the first five."</em> It writes the cell; you press run and look at the result.</p>
+      <p>This is where the AI helper earns its keep. Real spreadsheets are rarely clean: odd column names, blank rows, inconsistent labels. Tell the helper, in plain words, what you have and what you want. Something like: <em>"Write a cell that reads my file (try one of the samples), renames the column with the free text to text and the column I want to report on to subject, drops empty rows, and shows the first five rows."</em> It writes the cell; you press run and look at the result.</p>
       <figure class="shotfig">
         <img class="shot" src="img/colab-gemini-edit.png" alt="The Colab AI helper editing a code cell after a plain-language request to clean a dataset">
         <figcaption>Ask in plain words; the helper writes and edits the cell. You read it and run it.</figcaption>
@@ -174,12 +174,12 @@
         </div>
         <div class="card">
           <h4>Synthetic sample data</h4>
-          <p class="muted">Made-up advising notes, no real records, so you can practice safely.</p>
+          <p class="muted">Made-up datasets for many use cases, no real records, so you can practice safely.</p>
           <p style="margin-bottom:0;"><a href="https://github.com/UCSB-PaCE/ferpa-data-reports/tree/main/sample-data" target="_blank" rel="noopener">sample-data/</a></p>
         </div>
       </div>
       <div class="callout note"><span class="ti">Want to see under the hood?</span>
-        The <a href="dev.html">developer guide</a> shows the same pipeline as code, and the <a href="gateway.html">gateway page</a> shows the model call. You do not need either to finish the no-code path, but they are there when you are curious.
+        The <a href="dev.html">developer guide</a> shows the same pipeline as code, and the <a href="gateway.html">gateway page</a> shows the model call. You do not need either to finish the no-code path, but they are there when you are curious. Looking for prompts tuned to your kind of data? Browse the <a href="usecases.html">use-case gallery</a>.
       </div>
     </section>
 
