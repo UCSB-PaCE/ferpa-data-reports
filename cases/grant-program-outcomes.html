@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grant and program outcomes | Data to Reports</title>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="alternate icon" href="../favicon.svg">
+<link rel="apple-touch-icon" href="../favicon.svg">
+<meta name="description" content="How to turn a roster of funded activities with metrics and free-text progress updates into a funder-ready outcomes report tying activities to results: the abstracted pipeline, the prompts, and the no-code and developer paths.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..900&family=Nunito+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+<a class="skip-link" href="#content">Skip to content</a>
+<header class="topbar">
+  <div class="brand">
+    <img src="https://www.professional.ucsb.edu/sites/default/files/2025-05/Logo_PaCE_2025_Full.png" alt="UCSB PaCE logo">
+    <img src="https://otl.ucsb.edu/sites/default/files/images/ai-cop-spring-symposium-2026_logo.png" alt="UCSB AI Community of Practice logo">
+    <div class="sep"></div>
+    <div class="tag">Data &rarr; Reports
+      <small>Use case</small>
+    </div>
+  </div>
+  <div class="pills">
+    <a class="pill ghost" href="../usecases.html">All use cases</a>
+    <a class="pill ghost" href="../index.html">Home</a>
+    <a class="pill link" href="#build">Build it &rarr;</a>
+  </div>
+</header>
+
+<main id="content" tabindex="-1">
+<div class="lander">
+
+  <p class="crumb"><a href="../usecases.html">&larr; All use cases</a></p>
+
+  <section class="lander-hero">
+    <p class="eyebrow">Any organization use case</p>
+    <h1>Grant and program outcomes</h1>
+    <p class="uc-aud" style="font-size:.8rem; margin-bottom:var(--s4);">For Program managers and grant reporters</p>    <div class="uc-arc detail-arc">
+      <div class="uc-step have"><span class="uc-k">You have</span><p>A roster of funded activities with metrics and free-text progress updates</p></div>
+      <span class="arrow" aria-hidden="true">&darr;</span>
+      <div class="uc-step want"><span class="uc-k">You want</span><p>A funder-ready outcomes report tying activities to results</p></div>
+    </div>
+  </section>
+  <section id="how">
+    <h2>How it works</h2>
+    <p class="lede">The same pattern the whole guide teaches, applied to grant reporting: scripts roll up the metrics by goal, the model is brought in only to turn the free-text progress updates into a cited narrative against targets, and a program manager edits before it goes to the funder.</p>
+    <ol class="uc-steps">
+      <li>
+        <span class="n">1</span>
+        <div>
+          <span class="role">You</span>
+          <h3>Get the activity roster out</h3>
+          <p>Export your funded activities to a spreadsheet: one row per activity, the metric columns (goal, target, actual), and the free-text progress_note column. This is the only step that touches the raw, possibly protected, data.</p>
+        </div>
+      </li>
+      <li>
+        <span class="n">2</span>
+        <div>
+          <span class="role">Script</span>
+          <h3>Let code roll up the metrics</h3>
+          <p>A script totals the targets and actuals, computes attainment against each target, and groups everything by goal. The funder's numbers stay in code, where they are exact and repeatable, never in the model.</p>
+          <details class="prompt">
+            <summary>Prompt to paste</summary>
+            <div class="codeblock"><pre><code>Write a Colab cell that uses pandas to load my CSV (start with grant_outcomes_sample.csv) into a DataFrame called df. Clean it: lowercase and snake_case the column names, drop fully empty rows, and keep the activity_id on every row so each progress note can be cited later. Compute a percent_of_target column as actual divided by target times 100, rounded to one decimal. Then build a summary table grouped by {the unit you roll up to, e.g. goal} with the sum of target, the sum of actual, and the overall percent of target attained, rounded to one decimal. Print df.head() and the summary table. Do all the math in pandas, never in a model.</code></pre></div>
+          </details>
+        </div>
+      </li>
+      <li class="ai">
+        <span class="n">3</span>
+        <div>
+          <span class="role">AI, the one hard part</span>
+          <h3>Turn the progress notes into a cited narrative</h3>
+          <p>The model reads the free-text progress updates and writes a balanced outcomes narrative against the targets, where every claim links back to the activity it came from. Numbered notes in, cited narrative out. It never sees who wrote what.</p>
+          <details class="prompt">
+            <summary>Prompt to paste</summary>
+            <div class="codeblock"><pre><code>Write a Colab cell that, for each {goal, e.g. Retention}, gathers that goal's activities and sends only the activity_id, the percent_of_target number, and the progress_note text to the LLM Sandbox gateway (an OpenAI-compatible endpoint; read the base URL and API key from Colab Secrets, never hardcode them). Ask for a fair, {N, e.g. 4}-sentence outcomes narrative that ties activities to results against their targets, cites the activity_ids it used in square brackets like [ACT-016], names no individuals, and replies "not enough activities" when a goal has fewer than {min, e.g. 2} activities. Collect the results into a dict keyed by goal. Never paste raw progress notes into this chat.</code></pre></div>
+          </details>
+        </div>
+      </li>
+      <li class="human">
+        <span class="n">4</span>
+        <div>
+          <span class="role">A person</span>
+          <h3>Edit it before submission</h3>
+          <p>The program manager checks the narrative against its cited activities and the rolled-up numbers, edits the framing and tone for the funder, and only then submits. The human stays at the gate; the model never has the last word.</p>
+        </div>
+      </li>
+      <li>
+        <span class="n">5</span>
+        <div>
+          <span class="role">Output</span>
+          <h3>Out comes the funder-ready report</h3>
+          <p>A single outcomes report: the metrics rolled up by goal, each goal's cited narrative of what was achieved against target, ready to drop into the funder's reporting template.</p>
+          <details class="prompt">
+            <summary>Prompt to paste</summary>
+            <div class="codeblock"><pre><code>Write a Colab cell that builds one outcomes report with the summary table by goal first and each goal's cited narrative below it, rendering every [activity_id] as a footnote that shows the verbatim progress_note and its percent of target. Save the report as a file in a reports/ folder I can download, and print the path written. Make the format {Markdown or .docx}.</code></pre></div>
+          </details>
+        </div>
+      </li>
+    </ol>
+  </section>
+  <section id="try">
+    <h2>Try it with sample data</h2>
+    <p>Synthetic, FERPA-safe data to practice on before you point the pipeline at real records. No real records, names, or figures.</p>
+    <div class="detail-samples">
+      <a class="uc-sample" href="../sample-data/grant_outcomes_sample.csv" download>Grant outcomes sample (CSV)</a>
+    </div>
+  </section>
+  <section id="build">
+    <h2>Build it, your way</h2>
+    <p class="uc-intro">For this use case both paths lead to the same general walkthrough (the no-code Colab path and the developer guide); pick the one that fits how you work.</p>
+    <div class="duo">
+
+      <a class="duo-card nocode" href="../nocode.html">
+        <span class="tag">No code needed</span>
+        <h2>Do it in Google Colab</h2>
+        <p class="lede2">Run the whole pipeline in your browser. An AI helper turns plain instructions into the scripts that do the work, and you approve each step before it runs.</p>
+        <span class="go">Start the no-code path</span>
+      </a>
+
+      <a class="duo-card dev" href="../dev.html">
+        <span class="tag">For developers</span>
+        <h2>Build it with code</h2>
+        <p class="lede2">The pipeline stage by stage, with code you can lift. What the scripts handle, where a language model earns its place, and how to call one your organization controls.</p>
+        <span class="go">Open the developer guide</span>
+      </a>
+
+    </div>
+  </section>
+
+</div>
+</main>
+
+<footer>
+  <p><strong>From Data to Reports</strong>, a field guide from UCSB Professional &amp; Continuing Education, built around a real student-evaluation pipeline. It runs on UCSB's LLM Sandbox, an OpenAI-compatible, token-metered campus gateway, and the same pattern works with any organization's gateway. <a href="https://www.youtube.com/watch?v=wz-T6y6iLHI" target="_blank" rel="noopener">What is LLM Sandbox?</a></p>
+  <p class="muted">Generalized from real UCSB AI projects, credited to the teams who created them. Specifics and real figures are omitted, and every sample is synthetic. This guide describes a responsible architecture for handling protected records; it is not legal advice and certifies no specific tool as "FERPA-compliant." Always verify data-governance terms and your data's <a href="https://cio.ucsb.edu/artificial-intelligence" target="_blank" rel="noopener">UCSB protection level</a> before sending real records.</p>
+</footer>
+
+<div id="askbot">
+  <button class="ask-bot" id="askbot-toggle" aria-expanded="false" aria-controls="askbot-panel">
+    <span class="ico" aria-hidden="true">&#128172;</span><span class="label">Ask the assistant</span><span class="dot" aria-hidden="true"></span>
+  </button>
+  <div class="askbot-panel" id="askbot-panel" role="dialog" aria-modal="true" aria-label="Ask the assistant" hidden>
+    <div class="askbot-head">
+      <strong>Ask the assistant</strong>
+      <div class="ha">
+        <a href="https://llmsandbox.cloud.ucsb.edu/bot/01KVEPQV2NF2PVSBVMNW53NYA5" target="_blank" rel="noopener" title="Open the full assistant in a new tab" aria-label="Open the full assistant in a new tab">&#8599;</a>
+        <button type="button" id="askbot-close" aria-label="Close chat">&#10005;</button>
+      </div>
+    </div>
+    <div class="askbot-msgs" id="askbot-msgs" aria-live="polite" aria-atomic="false">
+      <div class="askbot-msg bot">Ask me anything about this use case, the steps, the prompts, or which path to take.</div>
+    </div>
+    <form class="askbot-form" id="askbot-form">
+      <input id="askbot-input" type="text" placeholder="Ask a question..." autocomplete="off" aria-label="Your question">
+      <button type="submit" id="askbot-send" aria-label="Send">&#10148;</button>
+    </form>
+    <div class="askbot-foot">Powered by LLM Sandbox, grounded on this site</div>
+  </div>
+</div>
+
+<script>
+  window.PAGE_REVS = {};
+  window.PAGE_REV_DATE = "Jun 25, 2026";
+  window.ASKBOT_SUGGESTIONS = ["How does this work step by step?", "Which path should I pick?", "Is my data safe to use?"];
+</script>
+<script src="../app.js" defer></script>
+</body>
+</html>

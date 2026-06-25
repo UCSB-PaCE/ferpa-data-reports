@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Right tool for the workflow | Data to Reports</title>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="alternate icon" href="../favicon.svg">
+<link rel="apple-touch-icon" href="../favicon.svg">
+<meta name="description" content="Right tool for the workflow: how UCSB teams built it with campus AI tools, the prompts, and the paths to build your own.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..900&family=Nunito+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+<a class="skip-link" href="#content">Skip to content</a>
+<header class="topbar">
+  <div class="brand">
+    <img src="https://www.professional.ucsb.edu/sites/default/files/2025-05/Logo_PaCE_2025_Full.png" alt="UCSB PaCE logo">
+    <img src="https://otl.ucsb.edu/sites/default/files/images/ai-cop-spring-symposium-2026_logo.png" alt="UCSB AI Community of Practice logo">
+    <div class="sep"></div>
+    <div class="tag">Data &rarr; Reports
+      <small>Use case</small>
+    </div>
+  </div>
+  <div class="pills">
+    <a class="pill ghost" href="../usecases.html">All use cases</a>
+    <a class="pill ghost" href="../index.html">Home</a>
+    <a class="pill link" href="#build">Build it &rarr;</a>
+  </div>
+</header>
+
+<main id="content" tabindex="-1">
+<div class="lander">
+
+  <p class="crumb"><a href="../usecases.html">&larr; All use cases</a></p>
+
+  <section class="lander-hero">
+    <p class="eyebrow">UCSB use case</p>
+    <h1>Right tool for the workflow</h1>
+    <p class="uc-aud" style="font-size:.8rem; margin-bottom:var(--s4);">For Form and workflow administrators</p>    <p class="story">Used AI to translate complex signature-tool forms into automated process maps and workflows in a better-fit tool, with a human finalizing, eliminating recurring routing issues.</p>
+    <p class="uc-tools" style="margin-top:var(--s4);"><span>Nintex AI</span><span>Gemini</span></p>
+  </section>
+  <section id="how">
+    <h2>How it works</h2>
+    <p class="lede">A signature tool kept misrouting approvals, so AI mapped the tangled forms into clean process maps and rebuilt them as workflows in a better-fit tool, with a person finalizing every map before it went live.</p>
+    <ol class="uc-steps">
+      <li>
+        <span class="n">1</span>
+        <div>
+          <span class="role">You</span>
+          <h3>Describe the form and its routing</h3>
+          <p>Write down what the signature-tool form actually does: the fields it collects, who approves in what order, the branches ("if amount over X, add a second approver"), and the routing problems that keep recurring. Export the form's structure or a process diagram if the old tool can produce one. This is plain process description, no protected records, just how approvals are supposed to flow.</p>
+        </div>
+      </li>
+      <li class="ai">
+        <span class="n">2</span>
+        <div>
+          <span class="role">AI</span>
+          <h3>Translate the form into a clean process map</h3>
+          <p>Hand the model your description and ask it to produce a structured process map: the steps in order, every decision branch with its condition, each approver role (by role, not by person), and the data each step needs. The model does the one thing that is genuinely hard here, untangling implicit, inconsistent routing logic into an explicit map you can rebuild from. It works only from your description of the process, never from real submissions or approver records.</p>
+          <details class="prompt">
+            <summary>Prompt to paste</summary>
+            <div class="codeblock"><pre><code>Set up the assistant (Nintex AI / Gemini) with this instruction, then paste your process description as the input. System instruction: "You are a process-mapping analyst. From a plain-language description of an approval form, produce a structured process map for rebuilding it in a workflow tool. Output, in order: (1) the linear steps; (2) every decision branch as an explicit condition (if {field} {operator} {value} then {route}); (3) each approver as a ROLE, never a named individual; (4) the fields each step reads or writes; (5) a list of routing ambiguities or gaps you found and the assumption you made for each. Ask a clarifying question before guessing when a branch is unclear. Use no real names, IDs, or record contents; work only from the process logic I give you."</code></pre></div>
+          </details>
+        </div>
+      </li>
+      <li>
+        <span class="n">3</span>
+        <div>
+          <span class="role">You</span>
+          <h3>Rebuild it in the better-fit tool, then finalize</h3>
+          <p>Use the map to rebuild the workflow in the tool that actually fits it (here, Nintex), wiring each step, branch, and approver role. Then a person finalizes: walk the map against real cases, confirm every branch routes correctly, fix the ambiguities the model flagged, and only then publish. The model proposed the structure; you own what goes live, which is exactly where the recurring routing issues get closed out.</p>
+        </div>
+      </li>
+    </ol>
+  </section>
+  <section id="build">
+    <h2>Build it, your way</h2>
+    <p class="uc-intro">This one leans developer and tool-setup, not the Colab data pipeline: build it inside your workflow tool (Nintex), using AI to draft the process map and a person to finalize each branch before publishing.</p>
+    <div class="duo">
+
+      <a class="duo-card nocode" href="../nocode.html">
+        <span class="tag">No code needed</span>
+        <h2>Do it in Google Colab</h2>
+        <p class="lede2">Describe what you want to an AI helper and have it write the script or set up the tool. You read it, run it, and keep a person at the gate.</p>
+        <span class="go">Start the no-code path</span>
+      </a>
+
+      <a class="duo-card dev" href="../dev.html">
+        <span class="tag">For developers</span>
+        <h2>Build it with code</h2>
+        <p class="lede2">Build it as code you own: the gateway call, the script the AI drafted, and the checks that keep it honest.</p>
+        <span class="go">Open the developer guide</span>
+      </a>
+
+    </div>
+    <p class="uc-credit" style="margin-top:var(--s5);">Built at UCSB by <b>Sarah Hong</b>, through the AI@Work Certificate Program.</p>
+  </section>
+
+</div>
+</main>
+
+<footer>
+  <p><strong>From Data to Reports</strong>, a field guide from UCSB Professional &amp; Continuing Education, built around a real student-evaluation pipeline. It runs on UCSB's LLM Sandbox, an OpenAI-compatible, token-metered campus gateway, and the same pattern works with any organization's gateway. <a href="https://www.youtube.com/watch?v=wz-T6y6iLHI" target="_blank" rel="noopener">What is LLM Sandbox?</a></p>
+  <p class="muted">Generalized from real UCSB AI projects, credited to the teams who created them. Specifics and real figures are omitted, and every sample is synthetic. This guide describes a responsible architecture for handling protected records; it is not legal advice and certifies no specific tool as "FERPA-compliant." Always verify data-governance terms and your data's <a href="https://cio.ucsb.edu/artificial-intelligence" target="_blank" rel="noopener">UCSB protection level</a> before sending real records.</p>
+</footer>
+
+<div id="askbot">
+  <button class="ask-bot" id="askbot-toggle" aria-expanded="false" aria-controls="askbot-panel">
+    <span class="ico" aria-hidden="true">&#128172;</span><span class="label">Ask the assistant</span><span class="dot" aria-hidden="true"></span>
+  </button>
+  <div class="askbot-panel" id="askbot-panel" role="dialog" aria-modal="true" aria-label="Ask the assistant" hidden>
+    <div class="askbot-head">
+      <strong>Ask the assistant</strong>
+      <div class="ha">
+        <a href="https://llmsandbox.cloud.ucsb.edu/bot/01KVEPQV2NF2PVSBVMNW53NYA5" target="_blank" rel="noopener" title="Open the full assistant in a new tab" aria-label="Open the full assistant in a new tab">&#8599;</a>
+        <button type="button" id="askbot-close" aria-label="Close chat">&#10005;</button>
+      </div>
+    </div>
+    <div class="askbot-msgs" id="askbot-msgs" aria-live="polite" aria-atomic="false">
+      <div class="askbot-msg bot">Ask me anything about this use case, the steps, the prompts, or which path to take.</div>
+    </div>
+    <form class="askbot-form" id="askbot-form">
+      <input id="askbot-input" type="text" placeholder="Ask a question..." autocomplete="off" aria-label="Your question">
+      <button type="submit" id="askbot-send" aria-label="Send">&#10148;</button>
+    </form>
+    <div class="askbot-foot">Powered by LLM Sandbox, grounded on this site</div>
+  </div>
+</div>
+
+<script>
+  window.PAGE_REVS = {};
+  window.PAGE_REV_DATE = "Jun 25, 2026";
+  window.ASKBOT_SUGGESTIONS = ["How does this work step by step?", "Which path should I pick?", "Is my data safe to use?"];
+</script>
+<script src="../app.js" defer></script>
+</body>
+</html>

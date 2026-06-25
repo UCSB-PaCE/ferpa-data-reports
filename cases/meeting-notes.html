@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meeting notes | Data to Reports</title>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="alternate icon" href="../favicon.svg">
+<link rel="apple-touch-icon" href="../favicon.svg">
+<meta name="description" content="How to turn a folder of raw meeting notes and transcripts across a quarter into a decisions-and-actions digest with owners and open items: the abstracted pipeline, the prompts, and the no-code and developer paths.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..900&family=Nunito+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+<a class="skip-link" href="#content">Skip to content</a>
+<header class="topbar">
+  <div class="brand">
+    <img src="https://www.professional.ucsb.edu/sites/default/files/2025-05/Logo_PaCE_2025_Full.png" alt="UCSB PaCE logo">
+    <img src="https://otl.ucsb.edu/sites/default/files/images/ai-cop-spring-symposium-2026_logo.png" alt="UCSB AI Community of Practice logo">
+    <div class="sep"></div>
+    <div class="tag">Data &rarr; Reports
+      <small>Use case</small>
+    </div>
+  </div>
+  <div class="pills">
+    <a class="pill ghost" href="../usecases.html">All use cases</a>
+    <a class="pill ghost" href="../index.html">Home</a>
+    <a class="pill link" href="#build">Build it &rarr;</a>
+  </div>
+</header>
+
+<main id="content" tabindex="-1">
+<div class="lander">
+
+  <p class="crumb"><a href="../usecases.html">&larr; All use cases</a></p>
+
+  <section class="lander-hero">
+    <p class="eyebrow">Any organization use case</p>
+    <h1>Meeting notes</h1>
+    <p class="uc-aud" style="font-size:.8rem; margin-bottom:var(--s4);">For Any team that runs recurring meetings</p>    <div class="uc-arc detail-arc">
+      <div class="uc-step have"><span class="uc-k">You have</span><p>A folder of raw meeting notes and transcripts across a quarter</p></div>
+      <span class="arrow" aria-hidden="true">&darr;</span>
+      <div class="uc-step want"><span class="uc-k">You want</span><p>A decisions-and-actions digest with owners and open items</p></div>
+    </div>
+  </section>
+  <section id="how">
+    <h2>How it works</h2>
+    <p class="lede">The same pattern the whole guide teaches, applied to a quarter of raw meeting notes: a script collects and numbers every note, the model is brought in only to pull out the decisions, action items, and owners, and a person approves the digest before it goes out.</p>
+    <ol class="uc-steps">
+      <li>
+        <span class="n">1</span>
+        <div>
+          <span class="role">You</span>
+          <h3>Get the notes into one sheet</h3>
+          <p>Gather the quarter's meeting notes and transcripts into a single spreadsheet: one row per note or meeting, with the meeting date, the topic, and the full note text in a free-text column. This is the only step that touches the raw notes, which can name people and carry sensitive detail.</p>
+        </div>
+      </li>
+      <li>
+        <span class="n">2</span>
+        <div>
+          <span class="role">Script</span>
+          <h3>Let code collect and number the notes</h3>
+          <p>A script loads the sheet, absorbs its inconsistent shape, and stamps every note with an id so each extracted item can be cited back to its source. It also counts the simple, exact things (notes per topic, notes per meeting date) that never need a model. Shaping and counting stay in code, where they are repeatable.</p>
+          <details class="prompt">
+            <summary>Prompt to paste</summary>
+            <div class="codeblock"><pre><code>Write a Colab cell that uses pandas to load my CSV (start with meeting_notes_sample.csv) into a DataFrame called df. Clean it: lowercase and snake_case the column names, parse meeting_date as a date, drop rows where notes_text is empty, and add an integer note_id to every row so each note can be cited later. Then build a small summary table of note counts grouped by {the unit you want one digest per, e.g. topic} sorted by most recent meeting_date. Print df.head() and the summary table. Do all the shaping and counting in pandas, never in a model.</code></pre></div>
+          </details>
+        </div>
+      </li>
+      <li class="ai">
+        <span class="n">3</span>
+        <div>
+          <span class="role">AI, the one hard part</span>
+          <h3>Extract decisions, actions, and owners</h3>
+          <p>The model reads each numbered note and pulls out the structured items a script cannot: the decisions made, the action items, who owns each one, and which items are still open. Every extracted item cites the note it came from. Numbered notes in, a structured digest out, with no name ever sent that is not already in the note text you choose to include.</p>
+          <details class="prompt">
+            <summary>Prompt to paste</summary>
+            <div class="codeblock"><pre><code>Write a Colab cell that, for each {group, e.g. topic}, gathers that group's notes and sends only the note_id and notes_text to the LLM Sandbox gateway (an OpenAI-compatible endpoint; read the base URL and API key from Colab Secrets, never hardcode them). Ask it to return JSON with three lists, decisions, action_items, and open_items, where each item is an object with a short text field, an owner field (or "unassigned"), and a sources field listing the note_ids it used in square brackets like [12]. Tell it to invent nothing not present in the notes and to leave a list empty when there is nothing to report. Collect the results into a dict keyed by group. Never paste raw notes into this chat.</code></pre></div>
+          </details>
+        </div>
+      </li>
+      <li class="human">
+        <span class="n">4</span>
+        <div>
+          <span class="role">A person</span>
+          <h3>Check it against the source notes</h3>
+          <p>You open each item, follow its cited note_id back to the original note, confirm the decision and owner are right, and fix anything the model misread before the digest goes out. The human stays at the gate; the model never has the last word on who owns what.</p>
+        </div>
+      </li>
+      <li>
+        <span class="n">5</span>
+        <div>
+          <span class="role">Output</span>
+          <h3>Out comes the digest</h3>
+          <p>A decisions-and-actions digest per topic (or one for the whole quarter): the decisions made, the action items with owners, and a clearly flagged list of open items still needing an owner, each line traceable back to the note it came from.</p>
+          <details class="prompt">
+            <summary>Prompt to paste</summary>
+            <div class="codeblock"><pre><code>Write a Colab cell that builds one digest per {group} with three sections, Decisions, Action items (with owners), and Open items, rendering each [note_id] as a footnote that shows the verbatim note and its meeting_date. Put unassigned or open items in their own clearly labeled section so nothing falls through. Save each digest as its own file in a digests/ folder I can download, and print the list of files written. Make the format {Markdown or .docx}.</code></pre></div>
+          </details>
+        </div>
+      </li>
+    </ol>
+  </section>
+  <section id="try">
+    <h2>Try it with sample data</h2>
+    <p>Synthetic, FERPA-safe data to practice on before you point the pipeline at real records. No real records, names, or figures.</p>
+    <div class="detail-samples">
+      <a class="uc-sample" href="../sample-data/meeting_notes_sample.csv" download>Meeting notes sample (CSV)</a>
+    </div>
+  </section>
+  <section id="build">
+    <h2>Build it, your way</h2>
+    <p class="uc-intro">For this use case both paths lead to the same general walkthrough: the no-code Colab path and the developer guide both work, so pick the one that fits how you work.</p>
+    <div class="duo">
+
+      <a class="duo-card nocode" href="../nocode.html">
+        <span class="tag">No code needed</span>
+        <h2>Do it in Google Colab</h2>
+        <p class="lede2">Run the whole pipeline in your browser. An AI helper turns plain instructions into the scripts that do the work, and you approve each step before it runs.</p>
+        <span class="go">Start the no-code path</span>
+      </a>
+
+      <a class="duo-card dev" href="../dev.html">
+        <span class="tag">For developers</span>
+        <h2>Build it with code</h2>
+        <p class="lede2">The pipeline stage by stage, with code you can lift. What the scripts handle, where a language model earns its place, and how to call one your organization controls.</p>
+        <span class="go">Open the developer guide</span>
+      </a>
+
+    </div>
+  </section>
+
+</div>
+</main>
+
+<footer>
+  <p><strong>From Data to Reports</strong>, a field guide from UCSB Professional &amp; Continuing Education, built around a real student-evaluation pipeline. It runs on UCSB's LLM Sandbox, an OpenAI-compatible, token-metered campus gateway, and the same pattern works with any organization's gateway. <a href="https://www.youtube.com/watch?v=wz-T6y6iLHI" target="_blank" rel="noopener">What is LLM Sandbox?</a></p>
+  <p class="muted">Generalized from real UCSB AI projects, credited to the teams who created them. Specifics and real figures are omitted, and every sample is synthetic. This guide describes a responsible architecture for handling protected records; it is not legal advice and certifies no specific tool as "FERPA-compliant." Always verify data-governance terms and your data's <a href="https://cio.ucsb.edu/artificial-intelligence" target="_blank" rel="noopener">UCSB protection level</a> before sending real records.</p>
+</footer>
+
+<div id="askbot">
+  <button class="ask-bot" id="askbot-toggle" aria-expanded="false" aria-controls="askbot-panel">
+    <span class="ico" aria-hidden="true">&#128172;</span><span class="label">Ask the assistant</span><span class="dot" aria-hidden="true"></span>
+  </button>
+  <div class="askbot-panel" id="askbot-panel" role="dialog" aria-modal="true" aria-label="Ask the assistant" hidden>
+    <div class="askbot-head">
+      <strong>Ask the assistant</strong>
+      <div class="ha">
+        <a href="https://llmsandbox.cloud.ucsb.edu/bot/01KVEPQV2NF2PVSBVMNW53NYA5" target="_blank" rel="noopener" title="Open the full assistant in a new tab" aria-label="Open the full assistant in a new tab">&#8599;</a>
+        <button type="button" id="askbot-close" aria-label="Close chat">&#10005;</button>
+      </div>
+    </div>
+    <div class="askbot-msgs" id="askbot-msgs" aria-live="polite" aria-atomic="false">
+      <div class="askbot-msg bot">Ask me anything about this use case, the steps, the prompts, or which path to take.</div>
+    </div>
+    <form class="askbot-form" id="askbot-form">
+      <input id="askbot-input" type="text" placeholder="Ask a question..." autocomplete="off" aria-label="Your question">
+      <button type="submit" id="askbot-send" aria-label="Send">&#10148;</button>
+    </form>
+    <div class="askbot-foot">Powered by LLM Sandbox, grounded on this site</div>
+  </div>
+</div>
+
+<script>
+  window.PAGE_REVS = {};
+  window.PAGE_REV_DATE = "Jun 25, 2026";
+  window.ASKBOT_SUGGESTIONS = ["How does this work step by step?", "Which path should I pick?", "Is my data safe to use?"];
+</script>
+<script src="../app.js" defer></script>
+</body>
+</html>

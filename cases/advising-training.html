@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Advising training, simulated | Data to Reports</title>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="alternate icon" href="../favicon.svg">
+<link rel="apple-touch-icon" href="../favicon.svg">
+<meta name="description" content="Advising training, simulated: how UCSB teams built it with campus AI tools, the prompts, and the paths to build your own.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..900&family=Nunito+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+<a class="skip-link" href="#content">Skip to content</a>
+<header class="topbar">
+  <div class="brand">
+    <img src="https://www.professional.ucsb.edu/sites/default/files/2025-05/Logo_PaCE_2025_Full.png" alt="UCSB PaCE logo">
+    <img src="https://otl.ucsb.edu/sites/default/files/images/ai-cop-spring-symposium-2026_logo.png" alt="UCSB AI Community of Practice logo">
+    <div class="sep"></div>
+    <div class="tag">Data &rarr; Reports
+      <small>Use case</small>
+    </div>
+  </div>
+  <div class="pills">
+    <a class="pill ghost" href="../usecases.html">All use cases</a>
+    <a class="pill ghost" href="../index.html">Home</a>
+    <a class="pill link" href="#build">Build it &rarr;</a>
+  </div>
+</header>
+
+<main id="content" tabindex="-1">
+<div class="lander">
+
+  <p class="crumb"><a href="../usecases.html">&larr; All use cases</a></p>
+
+  <section class="lander-hero">
+    <p class="eyebrow">UCSB use case</p>
+    <h1>Advising training, simulated</h1>
+    <p class="uc-aud" style="font-size:.8rem; margin-bottom:var(--s4);">For Lean advising teams training peer advisors</p>    <p class="story">Turned real, redacted advising scenarios into an interactive training module with AI-avatar video, so new advisors can practice safely instead of learning on live students.</p>
+    <p class="uc-tools" style="margin-top:var(--s4);"><span>LLM Sandbox</span><span>Google Vids</span></p>
+  </section>
+  <section id="how">
+    <h2>How it works</h2>
+    <p class="lede">The same pattern, applied to advising practice: scripts and people own the real scenarios, the model is brought in only to script and play the student, and a person approves every scenario before a peer advisor ever runs it.</p>
+    <ol class="uc-steps">
+      <li>
+        <span class="n">1</span>
+        <div>
+          <span class="role">You</span>
+          <h3>Redact the real scenarios</h3>
+          <p>Start from real advising situations your team has actually handled, then strip them down to the lesson: the student's question, the constraints, and the right and wrong moves. Remove every name, ID, and identifying detail so what is left is a generic, teachable scenario. This is the only step that touches real, possibly protected, history, and it stays in your hands, never in the model.</p>
+        </div>
+      </li>
+      <li class="ai">
+        <span class="n">2</span>
+        <div>
+          <span class="role">AI</span>
+          <h3>Have AI write the practice dialogue</h3>
+          <p>Feed the redacted scenarios to the model and have it write each one up as a branching practice script: an opening from the student, a few realistic ways the advisor might respond, and where each path leads. The model plays the student and drafts the coaching notes; it only ever sees the scrubbed scenarios, never the real records they came from.</p>
+          <details class="prompt">
+            <summary>Prompt to paste</summary>
+            <div class="codeblock"><pre><code>Write a system prompt and a per-scenario user prompt for the LLM Sandbox gateway (an OpenAI-compatible endpoint; read the base URL and API key from Colab Secrets or your tool's secret store, never hardcode them) that turns one redacted advising scenario into a branching practice script. The system prompt should cast the model as a {student persona, e.g. anxious first-quarter transfer}, hold it to {your advising policy, e.g. FERPA limits and referral rules}, and forbid inventing facts not in the scenario. The user prompt sends only the scrubbed scenario text and asks for: a 2 to 3 line student opening, {N, e.g. 3} advisor response options labeled good / risky / wrong with a one-line consequence each, and short coach notes citing the scenario point each option maps to. Return it as structured JSON so a person can review it. Never paste real student records into this chat.</code></pre></div>
+          </details>
+        </div>
+      </li>
+      <li class="human">
+        <span class="n">3</span>
+        <div>
+          <span class="role">A person</span>
+          <h3>Approve each scenario</h3>
+          <p>An experienced advisor reads every generated scenario against your real policy: is the right answer actually right, are the referrals correct, is anything misleading. They edit or cut what is off, and only approved scenarios move forward. The human stays at the gate; the model never decides what good advising looks like.</p>
+        </div>
+      </li>
+      <li>
+        <span class="n">4</span>
+        <div>
+          <span class="role">Output</span>
+          <h3>Record it as an interactive module</h3>
+          <p>Take the approved scripts into Google Vids and build the module: an AI-avatar plays the student, the practice paths become the interactive choices, and your coach notes become the feedback. New peer advisors practice the hard conversations safely, on simulated students, before they ever sit with a real one.</p>
+        </div>
+      </li>
+    </ol>
+  </section>
+  <section id="build">
+    <h2>Build it, your way</h2>
+    <p class="uc-intro">This one leans developer and tool-setup, not the no-code Colab data pipeline: the model output feeds a Google Vids module, so follow the developer guide for the gateway call and build the video in Vids around your approved scenarios.</p>
+    <div class="duo">
+
+      <a class="duo-card nocode" href="../nocode.html">
+        <span class="tag">No code needed</span>
+        <h2>Do it in Google Colab</h2>
+        <p class="lede2">Describe what you want to an AI helper and have it write the script or set up the tool. You read it, run it, and keep a person at the gate.</p>
+        <span class="go">Start the no-code path</span>
+      </a>
+
+      <a class="duo-card dev" href="../dev.html">
+        <span class="tag">For developers</span>
+        <h2>Build it with code</h2>
+        <p class="lede2">Build it as code you own: the gateway call, the script the AI drafted, and the checks that keep it honest.</p>
+        <span class="go">Open the developer guide</span>
+      </a>
+
+    </div>
+    <p class="uc-credit" style="margin-top:var(--s5);">Built at UCSB by <b>Abigail Salas</b>, through the AI@Work Certificate Program.</p>
+  </section>
+
+</div>
+</main>
+
+<footer>
+  <p><strong>From Data to Reports</strong>, a field guide from UCSB Professional &amp; Continuing Education, built around a real student-evaluation pipeline. It runs on UCSB's LLM Sandbox, an OpenAI-compatible, token-metered campus gateway, and the same pattern works with any organization's gateway. <a href="https://www.youtube.com/watch?v=wz-T6y6iLHI" target="_blank" rel="noopener">What is LLM Sandbox?</a></p>
+  <p class="muted">Generalized from real UCSB AI projects, credited to the teams who created them. Specifics and real figures are omitted, and every sample is synthetic. This guide describes a responsible architecture for handling protected records; it is not legal advice and certifies no specific tool as "FERPA-compliant." Always verify data-governance terms and your data's <a href="https://cio.ucsb.edu/artificial-intelligence" target="_blank" rel="noopener">UCSB protection level</a> before sending real records.</p>
+</footer>
+
+<div id="askbot">
+  <button class="ask-bot" id="askbot-toggle" aria-expanded="false" aria-controls="askbot-panel">
+    <span class="ico" aria-hidden="true">&#128172;</span><span class="label">Ask the assistant</span><span class="dot" aria-hidden="true"></span>
+  </button>
+  <div class="askbot-panel" id="askbot-panel" role="dialog" aria-modal="true" aria-label="Ask the assistant" hidden>
+    <div class="askbot-head">
+      <strong>Ask the assistant</strong>
+      <div class="ha">
+        <a href="https://llmsandbox.cloud.ucsb.edu/bot/01KVEPQV2NF2PVSBVMNW53NYA5" target="_blank" rel="noopener" title="Open the full assistant in a new tab" aria-label="Open the full assistant in a new tab">&#8599;</a>
+        <button type="button" id="askbot-close" aria-label="Close chat">&#10005;</button>
+      </div>
+    </div>
+    <div class="askbot-msgs" id="askbot-msgs" aria-live="polite" aria-atomic="false">
+      <div class="askbot-msg bot">Ask me anything about this use case, the steps, the prompts, or which path to take.</div>
+    </div>
+    <form class="askbot-form" id="askbot-form">
+      <input id="askbot-input" type="text" placeholder="Ask a question..." autocomplete="off" aria-label="Your question">
+      <button type="submit" id="askbot-send" aria-label="Send">&#10148;</button>
+    </form>
+    <div class="askbot-foot">Powered by LLM Sandbox, grounded on this site</div>
+  </div>
+</div>
+
+<script>
+  window.PAGE_REVS = {};
+  window.PAGE_REV_DATE = "Jun 25, 2026";
+  window.ASKBOT_SUGGESTIONS = ["How does this work step by step?", "Which path should I pick?", "Is my data safe to use?"];
+</script>
+<script src="../app.js" defer></script>
+</body>
+</html>

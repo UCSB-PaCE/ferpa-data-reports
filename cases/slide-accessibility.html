@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Slide accessibility | Data to Reports</title>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="alternate icon" href="../favicon.svg">
+<link rel="apple-touch-icon" href="../favicon.svg">
+<meta name="description" content="How to turn dense presentation decks of graphs and equations that need descriptive text into per-slide, WCAG-compliant descriptions published with the talk: the abstracted pipeline, the prompts, and the no-code and developer paths.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..900&family=Nunito+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+<a class="skip-link" href="#content">Skip to content</a>
+<header class="topbar">
+  <div class="brand">
+    <img src="https://www.professional.ucsb.edu/sites/default/files/2025-05/Logo_PaCE_2025_Full.png" alt="UCSB PaCE logo">
+    <img src="https://otl.ucsb.edu/sites/default/files/images/ai-cop-spring-symposium-2026_logo.png" alt="UCSB AI Community of Practice logo">
+    <div class="sep"></div>
+    <div class="tag">Data &rarr; Reports
+      <small>Use case</small>
+    </div>
+  </div>
+  <div class="pills">
+    <a class="pill ghost" href="../usecases.html">All use cases</a>
+    <a class="pill ghost" href="../index.html">Home</a>
+    <a class="pill link" href="#build">Build it &rarr;</a>
+  </div>
+</header>
+
+<main id="content" tabindex="-1">
+<div class="lander">
+
+  <p class="crumb"><a href="../usecases.html">&larr; All use cases</a></p>
+
+  <section class="lander-hero">
+    <p class="eyebrow">UCSB use case</p>
+    <h1>Slide accessibility</h1>
+    <p class="uc-aud" style="font-size:.8rem; margin-bottom:var(--s4);">For Accessibility and media teams</p>    <div class="uc-arc detail-arc">
+      <div class="uc-step have"><span class="uc-k">You have</span><p>Dense presentation decks of graphs and equations that need descriptive text</p></div>
+      <span class="arrow" aria-hidden="true">&darr;</span>
+      <div class="uc-step want"><span class="uc-k">You want</span><p>Per-slide, WCAG-compliant descriptions published with the talk</p></div>
+    </div>
+  </section>
+  <section id="how">
+    <h2>How it works</h2>
+    <p class="lede">The same pattern, applied to slide decks: a script slices each deck into per-slide images and a multimodal model writes one screen-reader description per slide, with citations back to the exact slide and a person at the gate.</p>
+    <ol class="uc-steps">
+      <li>
+        <span class="n">1</span>
+        <div>
+          <span class="role">You</span>
+          <h3>Gather the decks</h3>
+          <p>Collect the presentation files (PowerPoint, PDF, or Google Slides exports) into one folder and note, for each deck, the talk title and where the descriptions will be published. This is the only step that touches the raw source material, and the decks stay on your side.</p>
+        </div>
+      </li>
+      <li>
+        <span class="n">2</span>
+        <div>
+          <span class="role">Script</span>
+          <h3>Slice each deck into per-slide images</h3>
+          <p>A script renders every deck to one image per slide and builds a manifest: a deck_id, an integer slide_id, the rendered image path, and any speaker-notes or on-slide text it can read. Slicing, ordering, and bookkeeping stay in code, where they are exact and repeatable, never in the model.</p>
+          <details class="prompt">
+            <summary>Prompt to paste</summary>
+            <div class="codeblock"><pre><code>Write a Colab cell that walks a decks/ folder and, for each file, renders one PNG per slide into slides/{deck_id}/{slide_id}.png (use pdf2image for PDFs and convert PowerPoint with LibreOffice in headless mode first). Build a pandas DataFrame manifest with one row per slide holding deck_id, an integer slide_id starting at 1, the image path, and any extractable on-slide text or speaker notes. Save the manifest to slides_manifest.csv and print its head. Do all the slicing and bookkeeping in code, never in a model.</code></pre></div>
+          </details>
+        </div>
+      </li>
+      <li class="ai">
+        <span class="n">3</span>
+        <div>
+          <span class="role">AI, the one hard part</span>
+          <h3>Write the screen-reader description per slide</h3>
+          <p>The multimodal model looks at each slide image and writes a concise, WCAG-aligned description: what the graph or equation conveys, not a pixel-by-pixel readout. Image in, cited description out. It is the one thing a script cannot do, and it never sees who created the deck.</p>
+          <details class="prompt">
+            <summary>Prompt to paste</summary>
+            <div class="codeblock"><pre><code>Write a Colab cell that, for each row in the manifest, sends that slide's image (base64) plus its slide_id and any extracted on-slide text to the LLM Sandbox gateway (an OpenAI-compatible, multimodal endpoint; read the base URL and API key from Colab Secrets, never hardcode them). Ask for a WCAG-aligned screen-reader description of at most {N, e.g. 2} sentences that conveys what a graph or equation means rather than listing pixels, tags the slide it describes in square brackets like [deck_id:slide_id], and replies "needs human description" when the slide is too dense or ambiguous to caption safely. Collect the results into the DataFrame keyed by deck_id and slide_id. Never paste raw deck files into this chat.</code></pre></div>
+          </details>
+        </div>
+      </li>
+      <li class="human">
+        <span class="n">4</span>
+        <div>
+          <span class="role">A person</span>
+          <h3>Spot-check and approve</h3>
+          <p>An accessibility reviewer reads each description against its slide, rewrites anything that is wrong or thin, and clears the ones the model flagged as "needs human description". The human stays at the gate; the model never has the last word on what ships.</p>
+        </div>
+      </li>
+      <li>
+        <span class="n">5</span>
+        <div>
+          <span class="role">Output</span>
+          <h3>Out come the published descriptions</h3>
+          <p>Per-slide, WCAG-compliant descriptions attached to the deck and published alongside the talk: alt text, a long-description file, or accessible-PDF tags, each tied back to the slide it came from.</p>
+          <details class="prompt">
+            <summary>Prompt to paste</summary>
+            <div class="codeblock"><pre><code>Write a Colab cell that, from the approved DataFrame, writes the descriptions back out per deck: one descriptions file per deck (slide_id, then its approved text) and a combined long-description page in {Markdown or HTML} with each description under a heading for its slide. Save everything into a published/ folder I can download, keep slides in numeric order, and print the list of files written.</code></pre></div>
+          </details>
+        </div>
+      </li>
+    </ol>
+  </section>
+  <section id="build">
+    <h2>Build it, your way</h2>
+    <p class="uc-intro">This use case leans developer (multimodal model calls plus rendering and publishing), so the developer guide is the better fit; the no-code Colab path can still drive it step by step.</p>
+    <div class="duo">
+
+      <a class="duo-card nocode" href="../nocode.html">
+        <span class="tag">No code needed</span>
+        <h2>Do it in Google Colab</h2>
+        <p class="lede2">Run the whole pipeline in your browser. An AI helper turns plain instructions into the scripts that do the work, and you approve each step before it runs.</p>
+        <span class="go">Start the no-code path</span>
+      </a>
+
+      <a class="duo-card dev" href="../dev.html">
+        <span class="tag">For developers</span>
+        <h2>Build it with code</h2>
+        <p class="lede2">The pipeline stage by stage, with code you can lift. What the scripts handle, where a language model earns its place, and how to call one your organization controls.</p>
+        <span class="go">Open the developer guide</span>
+      </a>
+
+    </div>
+    <p class="uc-credit" style="margin-top:var(--s5);">Pioneered at UCSB by <b>Alina Gutierrez, Martina Ubaldo</b>, through the AI@Work Certificate Program.</p>
+  </section>
+
+</div>
+</main>
+
+<footer>
+  <p><strong>From Data to Reports</strong>, a field guide from UCSB Professional &amp; Continuing Education, built around a real student-evaluation pipeline. It runs on UCSB's LLM Sandbox, an OpenAI-compatible, token-metered campus gateway, and the same pattern works with any organization's gateway. <a href="https://www.youtube.com/watch?v=wz-T6y6iLHI" target="_blank" rel="noopener">What is LLM Sandbox?</a></p>
+  <p class="muted">Generalized from real UCSB AI projects, credited to the teams who created them. Specifics and real figures are omitted, and every sample is synthetic. This guide describes a responsible architecture for handling protected records; it is not legal advice and certifies no specific tool as "FERPA-compliant." Always verify data-governance terms and your data's <a href="https://cio.ucsb.edu/artificial-intelligence" target="_blank" rel="noopener">UCSB protection level</a> before sending real records.</p>
+</footer>
+
+<div id="askbot">
+  <button class="ask-bot" id="askbot-toggle" aria-expanded="false" aria-controls="askbot-panel">
+    <span class="ico" aria-hidden="true">&#128172;</span><span class="label">Ask the assistant</span><span class="dot" aria-hidden="true"></span>
+  </button>
+  <div class="askbot-panel" id="askbot-panel" role="dialog" aria-modal="true" aria-label="Ask the assistant" hidden>
+    <div class="askbot-head">
+      <strong>Ask the assistant</strong>
+      <div class="ha">
+        <a href="https://llmsandbox.cloud.ucsb.edu/bot/01KVEPQV2NF2PVSBVMNW53NYA5" target="_blank" rel="noopener" title="Open the full assistant in a new tab" aria-label="Open the full assistant in a new tab">&#8599;</a>
+        <button type="button" id="askbot-close" aria-label="Close chat">&#10005;</button>
+      </div>
+    </div>
+    <div class="askbot-msgs" id="askbot-msgs" aria-live="polite" aria-atomic="false">
+      <div class="askbot-msg bot">Ask me anything about this use case, the steps, the prompts, or which path to take.</div>
+    </div>
+    <form class="askbot-form" id="askbot-form">
+      <input id="askbot-input" type="text" placeholder="Ask a question..." autocomplete="off" aria-label="Your question">
+      <button type="submit" id="askbot-send" aria-label="Send">&#10148;</button>
+    </form>
+    <div class="askbot-foot">Powered by LLM Sandbox, grounded on this site</div>
+  </div>
+</div>
+
+<script>
+  window.PAGE_REVS = {};
+  window.PAGE_REV_DATE = "Jun 25, 2026";
+  window.ASKBOT_SUGGESTIONS = ["How does this work step by step?", "Which path should I pick?", "Is my data safe to use?"];
+</script>
+<script src="../app.js" defer></script>
+</body>
+</html>

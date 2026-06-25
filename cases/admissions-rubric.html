@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admissions review | Data to Reports</title>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="alternate icon" href="../favicon.svg">
+<link rel="apple-touch-icon" href="../favicon.svg">
+<meta name="description" content="How to turn hundreds of applications with letters of intent and faculty review notes into a criteria-based scoring rubric, overlooked-applicant flags, and an admit-success readout: the abstracted pipeline, the prompts, and the no-code and developer paths.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..900&family=Nunito+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+<a class="skip-link" href="#content">Skip to content</a>
+<header class="topbar">
+  <div class="brand">
+    <img src="https://www.professional.ucsb.edu/sites/default/files/2025-05/Logo_PaCE_2025_Full.png" alt="UCSB PaCE logo">
+    <img src="https://otl.ucsb.edu/sites/default/files/images/ai-cop-spring-symposium-2026_logo.png" alt="UCSB AI Community of Practice logo">
+    <div class="sep"></div>
+    <div class="tag">Data &rarr; Reports
+      <small>Use case</small>
+    </div>
+  </div>
+  <div class="pills">
+    <a class="pill ghost" href="../usecases.html">All use cases</a>
+    <a class="pill ghost" href="../index.html">Home</a>
+    <a class="pill link" href="#build">Build it &rarr;</a>
+  </div>
+</header>
+
+<main id="content" tabindex="-1">
+<div class="lander">
+
+  <p class="crumb"><a href="../usecases.html">&larr; All use cases</a></p>
+
+  <section class="lander-hero">
+    <p class="eyebrow">UCSB use case</p>
+    <h1>Admissions review</h1>
+    <p class="uc-aud" style="font-size:.8rem; margin-bottom:var(--s4);">For Admissions committees and program coordinators</p>    <div class="uc-arc detail-arc">
+      <div class="uc-step have"><span class="uc-k">You have</span><p>Hundreds of applications with letters of intent and faculty review notes</p></div>
+      <span class="arrow" aria-hidden="true">&darr;</span>
+      <div class="uc-step want"><span class="uc-k">You want</span><p>A criteria-based scoring rubric, overlooked-applicant flags, and an admit-success readout</p></div>
+    </div>
+  </section>
+  <section id="how">
+    <h2>How it works</h2>
+    <p class="lede">The same pattern the whole guide teaches, applied to admissions: scripts own the criteria-based scores, the model is brought in only to read the letters of intent and review notes, and a person approves before any applicant is flagged or admitted.</p>
+    <ol class="uc-steps">
+      <li>
+        <span class="n">1</span>
+        <div>
+          <span class="role">You</span>
+          <h3>Get the applications out</h3>
+          <p>Export the applicant pool to a spreadsheet: one row per applicant, an applicant_id, the structured fields you score on (GPA, a preparation index, a resources-context flag), an outcome_marker for applicants you can already track, and the free-text columns (letter of intent, faculty review notes). This is the only step that touches the raw, possibly protected, data.</p>
+        </div>
+      </li>
+      <li>
+        <span class="n">2</span>
+        <div>
+          <span class="role">Script</span>
+          <h3>Let code apply the rubric</h3>
+          <p>A script applies your scoring rubric to the structured fields the exact same way for every applicant, computes a composite score, and absorbs the export's shifting shape. The criteria and the math stay in code, where they are explicit, repeatable, and auditable, never in the model.</p>
+          <details class="prompt">
+            <summary>Prompt to paste</summary>
+            <div class="codeblock"><pre><code>Write a Colab cell that uses pandas to load my CSV (start with admissions_review_sample.csv) into a DataFrame called df. Clean it: lowercase and snake_case the column names, drop fully empty rows, and confirm applicant_id is unique so each application can be cited later. Then apply a transparent rubric in pandas: normalize each scoring field ({the fields you weight, e.g. gpa, prep_index}) to a 0-100 scale, combine them into a composite_score with weights I can edit at the top of the cell as a dict like {weights, e.g. {'gpa':0.5,'prep_index':0.5}}, and print the rubric weights plus df sorted by composite_score. Do all the scoring math in pandas, never in a model.</code></pre></div>
+          </details>
+        </div>
+      </li>
+      <li class="ai">
+        <span class="n">3</span>
+        <div>
+          <span class="role">AI, the one hard part</span>
+          <h3>Read the letters for overlooked strengths, with citations</h3>
+          <p>The model reads each applicant's letter of intent and faculty review notes and surfaces the qualities a numeric rubric misses (resilience, initiative, context behind the numbers), with every observation tied back to the line it came from. Text in, cited flags out. It never sees applicant names, only the ids.</p>
+          <details class="prompt">
+            <summary>Prompt to paste</summary>
+            <div class="codeblock"><pre><code>Write a Colab cell that, for each applicant_id, sends only the applicant_id and that applicant's letter_of_intent and review_notes text to the LLM Sandbox gateway (an OpenAI-compatible endpoint; read the base URL and API key from Colab Secrets, never hardcode them). Ask for a fair, {N, e.g. 3}-sentence read of non-numeric strengths and a single overlooked flag (true or false) for applicants whose letters show strong qualities their composite_score does not capture, citing the applicant_id in square brackets like [A-2271], naming no individuals, and replying "not enough text" when an applicant has fewer than {min, e.g. 2} sentences of free text. Collect the results into a dict keyed by applicant_id. Never paste raw applications into this chat.</code></pre></div>
+          </details>
+        </div>
+      </li>
+      <li class="human">
+        <span class="n">4</span>
+        <div>
+          <span class="role">A person</span>
+          <h3>Review the flags and approve</h3>
+          <p>The committee spot-checks each rubric score and each overlooked-applicant flag against its cited text, corrects anything off, and only then acts on it. The human stays at the gate; the model never decides an admission and never has the last word.</p>
+        </div>
+      </li>
+      <li>
+        <span class="n">5</span>
+        <div>
+          <span class="role">Output</span>
+          <h3>Out comes the readout</h3>
+          <p>A ranked rubric sheet, a short list of overlooked applicants the numbers alone would have passed over, and an admit-success readout that holds rubric scores against the outcome_marker so you can see which criteria actually predict who thrives.</p>
+          <details class="prompt">
+            <summary>Prompt to paste</summary>
+            <div class="codeblock"><pre><code>Write a Colab cell that builds the admissions readout: a ranked table by composite_score with the overlooked flag and its cited note shown inline, a separate short list of applicants flagged overlooked, and a calibration view that groups applicants by composite_score band and reports the share with each outcome_marker (e.g. thriving) so we can see how well the rubric predicts success. Save it as {Markdown or .docx} in a reports/ folder I can download, and print the list of files written.</code></pre></div>
+          </details>
+        </div>
+      </li>
+    </ol>
+  </section>
+  <section id="try">
+    <h2>Try it with sample data</h2>
+    <p>Synthetic, FERPA-safe data to practice on before you point the pipeline at real records. No real records, names, or figures.</p>
+    <div class="detail-samples">
+      <a class="uc-sample" href="../sample-data/admissions_review_sample.csv" download>Admissions sample (CSV)</a>
+    </div>
+  </section>
+  <section id="build">
+    <h2>Build it, your way</h2>
+    <p class="uc-intro">For this use case both paths lead to the same general walkthrough (the no-code Colab path and the developer guide); pick the one that fits how you work.</p>
+    <div class="duo">
+
+      <a class="duo-card nocode" href="../nocode.html">
+        <span class="tag">No code needed</span>
+        <h2>Do it in Google Colab</h2>
+        <p class="lede2">Run the whole pipeline in your browser. An AI helper turns plain instructions into the scripts that do the work, and you approve each step before it runs.</p>
+        <span class="go">Start the no-code path</span>
+      </a>
+
+      <a class="duo-card dev" href="../dev.html">
+        <span class="tag">For developers</span>
+        <h2>Build it with code</h2>
+        <p class="lede2">The pipeline stage by stage, with code you can lift. What the scripts handle, where a language model earns its place, and how to call one your organization controls.</p>
+        <span class="go">Open the developer guide</span>
+      </a>
+
+    </div>
+    <p class="uc-credit" style="margin-top:var(--s5);">Pioneered at UCSB by <b>Heidi Dinnogen</b>, through the AI@Work Certificate Program.</p>
+  </section>
+
+</div>
+</main>
+
+<footer>
+  <p><strong>From Data to Reports</strong>, a field guide from UCSB Professional &amp; Continuing Education, built around a real student-evaluation pipeline. It runs on UCSB's LLM Sandbox, an OpenAI-compatible, token-metered campus gateway, and the same pattern works with any organization's gateway. <a href="https://www.youtube.com/watch?v=wz-T6y6iLHI" target="_blank" rel="noopener">What is LLM Sandbox?</a></p>
+  <p class="muted">Generalized from real UCSB AI projects, credited to the teams who created them. Specifics and real figures are omitted, and every sample is synthetic. This guide describes a responsible architecture for handling protected records; it is not legal advice and certifies no specific tool as "FERPA-compliant." Always verify data-governance terms and your data's <a href="https://cio.ucsb.edu/artificial-intelligence" target="_blank" rel="noopener">UCSB protection level</a> before sending real records.</p>
+</footer>
+
+<div id="askbot">
+  <button class="ask-bot" id="askbot-toggle" aria-expanded="false" aria-controls="askbot-panel">
+    <span class="ico" aria-hidden="true">&#128172;</span><span class="label">Ask the assistant</span><span class="dot" aria-hidden="true"></span>
+  </button>
+  <div class="askbot-panel" id="askbot-panel" role="dialog" aria-modal="true" aria-label="Ask the assistant" hidden>
+    <div class="askbot-head">
+      <strong>Ask the assistant</strong>
+      <div class="ha">
+        <a href="https://llmsandbox.cloud.ucsb.edu/bot/01KVEPQV2NF2PVSBVMNW53NYA5" target="_blank" rel="noopener" title="Open the full assistant in a new tab" aria-label="Open the full assistant in a new tab">&#8599;</a>
+        <button type="button" id="askbot-close" aria-label="Close chat">&#10005;</button>
+      </div>
+    </div>
+    <div class="askbot-msgs" id="askbot-msgs" aria-live="polite" aria-atomic="false">
+      <div class="askbot-msg bot">Ask me anything about this use case, the steps, the prompts, or which path to take.</div>
+    </div>
+    <form class="askbot-form" id="askbot-form">
+      <input id="askbot-input" type="text" placeholder="Ask a question..." autocomplete="off" aria-label="Your question">
+      <button type="submit" id="askbot-send" aria-label="Send">&#10148;</button>
+    </form>
+    <div class="askbot-foot">Powered by LLM Sandbox, grounded on this site</div>
+  </div>
+</div>
+
+<script>
+  window.PAGE_REVS = {};
+  window.PAGE_REV_DATE = "Jun 25, 2026";
+  window.ASKBOT_SUGGESTIONS = ["How does this work step by step?", "Which path should I pick?", "Is my data safe to use?"];
+</script>
+<script src="../app.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Automate a repetitive workflow | Data to Reports</title>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="alternate icon" href="../favicon.svg">
+<link rel="apple-touch-icon" href="../favicon.svg">
+<meta name="description" content="Automate a repetitive workflow: how UCSB teams built it with campus AI tools, the prompts, and the paths to build your own.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..900&family=Nunito+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+<a class="skip-link" href="#content">Skip to content</a>
+<header class="topbar">
+  <div class="brand">
+    <img src="https://www.professional.ucsb.edu/sites/default/files/2025-05/Logo_PaCE_2025_Full.png" alt="UCSB PaCE logo">
+    <img src="https://otl.ucsb.edu/sites/default/files/images/ai-cop-spring-symposium-2026_logo.png" alt="UCSB AI Community of Practice logo">
+    <div class="sep"></div>
+    <div class="tag">Data &rarr; Reports
+      <small>Use case</small>
+    </div>
+  </div>
+  <div class="pills">
+    <a class="pill ghost" href="../usecases.html">All use cases</a>
+    <a class="pill ghost" href="../index.html">Home</a>
+    <a class="pill link" href="#build">Build it &rarr;</a>
+  </div>
+</header>
+
+<main id="content" tabindex="-1">
+<div class="lander">
+
+  <p class="crumb"><a href="../usecases.html">&larr; All use cases</a></p>
+
+  <section class="lander-hero">
+    <p class="eyebrow">UCSB use case</p>
+    <h1>Automate a repetitive workflow</h1>
+    <p class="uc-aud" style="font-size:.8rem; margin-bottom:var(--s4);">For Non-coders with a manual, repetitive process</p>    <p class="story">Used AI to write the code (often Google Apps Script) that automates a repetitive process end to end, with a human approval gate. The same approach handled quarterly course scheduling, room bookings, graduate onboarding emails, mapping inventory into a rigid system template, and consolidating leads from many tools into one live sheet. Real data stays out of the model; the AI writes the script, you run it.</p>
+    <p class="uc-tools" style="margin-top:var(--s4);"><span>Google Apps Script</span><span>Gemini</span><span>LLM Sandbox</span></p>
+  </section>
+  <section id="how">
+    <h2>How it works</h2>
+    <p class="lede">The same pattern, applied to a manual chore you repeat every week: AI writes the script, the script does the exact work on your side, and you approve every run before it acts.</p>
+    <ol class="uc-steps">
+      <li>
+        <span class="n">1</span>
+        <div>
+          <span class="role">You</span>
+          <h3>Describe the workflow, step by step</h3>
+          <p>Write down the chore exactly as you do it by hand: what you open, what you copy, where it goes, and the rule for each decision (for example, "if the room is already booked, flag the row; otherwise add the event"). The clearer the steps, the better the script. Nothing protected leaves your machine here; you are only describing the process.</p>
+        </div>
+      </li>
+      <li class="ai">
+        <span class="n">2</span>
+        <div>
+          <span class="role">AI</span>
+          <h3>Have AI write the script</h3>
+          <p>Hand your written steps to the AI and ask it to write a Google Apps Script that does the whole chore for you. It writes the code; it never sees your real records. You paste the script into the Apps Script editor (Extensions, Apps Script) attached to your sheet or doc, and the script runs on your side against your own data.</p>
+          <details class="prompt">
+            <summary>Prompt to paste</summary>
+            <div class="codeblock"><pre><code>Write a Google Apps Script that automates this workflow on my own Google Sheet: {describe the chore, e.g. read each pending room request from the "Requests" tab and create a calendar event}. Read inputs from the sheet (or the bound Google service, e.g. Calendar, Gmail, Drive) using the built-in Apps Script services, never from a hardcoded copy of the data. For every action, decide using this rule: {your rule, e.g. skip and flag any row whose time overlaps an existing event}. Do not send any row data to an external model; all logic runs in the script. Log every action to a "Log" tab with a timestamp, and put everything behind a {dry-run flag or confirmation} so it shows me what it WOULD do before it does anything. Add clear comments and a runnable main() function I can review.</code></pre></div>
+          </details>
+        </div>
+      </li>
+      <li class="human">
+        <span class="n">3</span>
+        <div>
+          <span class="role">A person</span>
+          <h3>Review, dry-run, then run</h3>
+          <p>Read the script, run it once in dry-run mode, and check the log of what it would do against a few rows you know. When it looks right, flip off the dry-run and run it for real (or set a time-based trigger so it runs on a schedule). The human stays at the gate: the script only does what you have read and approved.</p>
+        </div>
+      </li>
+    </ol>
+  </section>
+  <section id="build">
+    <h2>Build it, your way</h2>
+    <p class="uc-intro">This use case leans developer: the AI writes the script and you run it on your side, so the developer guide (and its Apps Script and human-approval-gate sections) is the better fit than the no-code Colab data pipeline.</p>
+    <div class="duo">
+
+      <a class="duo-card nocode" href="../nocode.html">
+        <span class="tag">No code needed</span>
+        <h2>Do it in Google Colab</h2>
+        <p class="lede2">Describe what you want to an AI helper and have it write the script or set up the tool. You read it, run it, and keep a person at the gate.</p>
+        <span class="go">Start the no-code path</span>
+      </a>
+
+      <a class="duo-card dev" href="../dev.html">
+        <span class="tag">For developers</span>
+        <h2>Build it with code</h2>
+        <p class="lede2">Build it as code you own: the gateway call, the script the AI drafted, and the checks that keep it honest.</p>
+        <span class="go">Open the developer guide</span>
+      </a>
+
+    </div>
+    <p class="uc-credit" style="margin-top:var(--s5);">Built at UCSB by <b>Celine Teng, Lauren Rodriguez, India Madden, Eva Cervera, Erin Moore</b>, through the AI@Work Certificate Program.</p>
+  </section>
+
+</div>
+</main>
+
+<footer>
+  <p><strong>From Data to Reports</strong>, a field guide from UCSB Professional &amp; Continuing Education, built around a real student-evaluation pipeline. It runs on UCSB's LLM Sandbox, an OpenAI-compatible, token-metered campus gateway, and the same pattern works with any organization's gateway. <a href="https://www.youtube.com/watch?v=wz-T6y6iLHI" target="_blank" rel="noopener">What is LLM Sandbox?</a></p>
+  <p class="muted">Generalized from real UCSB AI projects, credited to the teams who created them. Specifics and real figures are omitted, and every sample is synthetic. This guide describes a responsible architecture for handling protected records; it is not legal advice and certifies no specific tool as "FERPA-compliant." Always verify data-governance terms and your data's <a href="https://cio.ucsb.edu/artificial-intelligence" target="_blank" rel="noopener">UCSB protection level</a> before sending real records.</p>
+</footer>
+
+<div id="askbot">
+  <button class="ask-bot" id="askbot-toggle" aria-expanded="false" aria-controls="askbot-panel">
+    <span class="ico" aria-hidden="true">&#128172;</span><span class="label">Ask the assistant</span><span class="dot" aria-hidden="true"></span>
+  </button>
+  <div class="askbot-panel" id="askbot-panel" role="dialog" aria-modal="true" aria-label="Ask the assistant" hidden>
+    <div class="askbot-head">
+      <strong>Ask the assistant</strong>
+      <div class="ha">
+        <a href="https://llmsandbox.cloud.ucsb.edu/bot/01KVEPQV2NF2PVSBVMNW53NYA5" target="_blank" rel="noopener" title="Open the full assistant in a new tab" aria-label="Open the full assistant in a new tab">&#8599;</a>
+        <button type="button" id="askbot-close" aria-label="Close chat">&#10005;</button>
+      </div>
+    </div>
+    <div class="askbot-msgs" id="askbot-msgs" aria-live="polite" aria-atomic="false">
+      <div class="askbot-msg bot">Ask me anything about this use case, the steps, the prompts, or which path to take.</div>
+    </div>
+    <form class="askbot-form" id="askbot-form">
+      <input id="askbot-input" type="text" placeholder="Ask a question..." autocomplete="off" aria-label="Your question">
+      <button type="submit" id="askbot-send" aria-label="Send">&#10148;</button>
+    </form>
+    <div class="askbot-foot">Powered by LLM Sandbox, grounded on this site</div>
+  </div>
+</div>
+
+<script>
+  window.PAGE_REVS = {};
+  window.PAGE_REV_DATE = "Jun 25, 2026";
+  window.ASKBOT_SUGGESTIONS = ["How does this work step by step?", "Which path should I pick?", "Is my data safe to use?"];
+</script>
+<script src="../app.js" defer></script>
+</body>
+</html>

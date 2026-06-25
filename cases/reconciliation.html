@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Transaction reconciliation | Data to Reports</title>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="alternate icon" href="../favicon.svg">
+<link rel="apple-touch-icon" href="../favicon.svg">
+<meta name="description" content="How to turn hundreds of multi-line card transactions (charges, reversals, allocations) across several reports into an exception report flagging what needs review, and optionally the whole match automated: the abstracted pipeline, the prompts, and the no-code and developer paths.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..900&family=Nunito+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+<a class="skip-link" href="#content">Skip to content</a>
+<header class="topbar">
+  <div class="brand">
+    <img src="https://www.professional.ucsb.edu/sites/default/files/2025-05/Logo_PaCE_2025_Full.png" alt="UCSB PaCE logo">
+    <img src="https://otl.ucsb.edu/sites/default/files/images/ai-cop-spring-symposium-2026_logo.png" alt="UCSB AI Community of Practice logo">
+    <div class="sep"></div>
+    <div class="tag">Data &rarr; Reports
+      <small>Use case</small>
+    </div>
+  </div>
+  <div class="pills">
+    <a class="pill ghost" href="../usecases.html">All use cases</a>
+    <a class="pill ghost" href="../index.html">Home</a>
+    <a class="pill link" href="#build">Build it &rarr;</a>
+  </div>
+</header>
+
+<main id="content" tabindex="-1">
+<div class="lander">
+
+  <p class="crumb"><a href="../usecases.html">&larr; All use cases</a></p>
+
+  <section class="lander-hero">
+    <p class="eyebrow">UCSB use case</p>
+    <h1>Transaction reconciliation</h1>
+    <p class="uc-aud" style="font-size:.8rem; margin-bottom:var(--s4);">For Department financial analysts</p>    <div class="uc-arc detail-arc">
+      <div class="uc-step have"><span class="uc-k">You have</span><p>Hundreds of multi-line card transactions (charges, reversals, allocations) across several reports</p></div>
+      <span class="arrow" aria-hidden="true">&darr;</span>
+      <div class="uc-step want"><span class="uc-k">You want</span><p>An exception report flagging what needs review, and optionally the whole match automated</p></div>
+    </div>
+  </section>
+  <section id="how">
+    <h2>How it works</h2>
+    <p class="lede">The same pattern the whole guide teaches, applied to card reconciliation: scripts do every match and every sum, the model is brought in only to write the plain-language note for each flagged mismatch, and a person approves before anything ships.</p>
+    <ol class="uc-steps">
+      <li>
+        <span class="n">1</span>
+        <div>
+          <span class="role">You</span>
+          <h3>Get the transactions out</h3>
+          <p>Export the card transactions to a spreadsheet: one row per line, with the transaction id, posting date, vendor, amount, and allocation status. Pull every report you reconcile across (charges, reversals, allocations) into the same shape. This is the only step that touches the raw, possibly protected, financial data.</p>
+        </div>
+      </li>
+      <li>
+        <span class="n">2</span>
+        <div>
+          <span class="role">Script</span>
+          <h3>Let code do the matching and the math</h3>
+          <p>A script groups the charge, reversal, and allocation lines, sums each group, and flags every line where the numbers do not net to zero or the allocation is short. All matching and arithmetic stay in code, where they are exact and repeatable, never in the model. Out comes a clean list of exceptions with the amounts already computed.</p>
+          <details class="prompt">
+            <summary>Prompt to paste</summary>
+            <div class="codeblock"><pre><code>Write a Colab cell that uses pandas to load my CSV (start with flex_card_reconciliation_sample.csv) into a DataFrame called df. Clean it: lowercase and snake_case the column names, parse amount to a float and posting_date to a date, and add an integer txn_ref to every row so each flagged line can be cited later. Group the related lines by {the key that ties a charge to its reversal and allocation, e.g. vendor + posting_date}, sum the amount per group, and flag a group as an exception when the net is not zero (beyond a {tolerance, e.g. 0.01} cent rounding tolerance) or the allocation_status is not "allocated". Build an exceptions table with the txn_ref, the group key, the computed net, and a short reason code. Print df.head() and the exceptions table. Do all the matching and math in pandas, never in a model.</code></pre></div>
+          </details>
+        </div>
+      </li>
+      <li class="ai">
+        <span class="n">3</span>
+        <div>
+          <span class="role">AI, the one hard part</span>
+          <h3>Write the plain-language note for each flag</h3>
+          <p>The model takes the numbers the script already computed for each flagged group (the net, the reason code, the line count) and writes one clear sentence an analyst can read at a glance, like "reversal recorded with no matching original charge". It does the one thing a script cannot: turn a reason code and a few figures into readable English. It never does the math and never sees who spent what.</p>
+          <details class="prompt">
+            <summary>Prompt to paste</summary>
+            <div class="codeblock"><pre><code>Write a Colab cell that, for each flagged group, sends only the computed figures (the txn_ref, the reason code, the net amount, and the line count) to the LLM Sandbox gateway (an OpenAI-compatible endpoint; read the base URL and API key from Colab Secrets, never hardcode them). Ask for one plain-language sentence, at most {N, e.g. 25} words, that explains what an analyst should review, references the txn_ref in square brackets like [14], names no vendor or person, and states no dollar figure the script did not provide. Collect the notes into a dict keyed by txn_ref. Never paste raw transaction rows into this chat; send only the numbers the script computed.</code></pre></div>
+          </details>
+        </div>
+      </li>
+      <li class="human">
+        <span class="n">4</span>
+        <div>
+          <span class="role">A person</span>
+          <h3>Review the exceptions and approve</h3>
+          <p>An analyst reads each flagged line against its note, confirms the real mismatches, clears the false alarms, and only then signs off. The human stays at the gate; the model never decides what counts as a problem.</p>
+        </div>
+      </li>
+      <li>
+        <span class="n">5</span>
+        <div>
+          <span class="role">Output</span>
+          <h3>Out comes the exception report</h3>
+          <p>A short, sorted exception report: only the lines that need review, each with the computed net and a one-sentence note, ready to hand to the analyst or feed into the next reconciliation pass.</p>
+          <details class="prompt">
+            <summary>Prompt to paste</summary>
+            <div class="codeblock"><pre><code>Write a Colab cell that builds an exception report from the exceptions table and the notes dict, sorted by {priority, e.g. largest net first}. For each flagged line, show the txn_ref, the group key, the computed net, the reason code, and the plain-language note. Save it as a file I can download (make the format {Markdown or .xlsx}) and print the count of lines flagged. Include only the flagged lines, not the full ledger.</code></pre></div>
+          </details>
+        </div>
+      </li>
+    </ol>
+  </section>
+  <section id="try">
+    <h2>Try it with sample data</h2>
+    <p>Synthetic, FERPA-safe data to practice on before you point the pipeline at real records. No real records, names, or figures.</p>
+    <div class="detail-samples">
+      <a class="uc-sample" href="../sample-data/flex_card_reconciliation_sample.csv" download>Transactions sample (CSV)</a>
+    </div>
+  </section>
+  <section id="build">
+    <h2>Build it, your way</h2>
+    <p class="uc-intro">This one leans developer: the exception report is doable on the no-code Colab path, but the real payoff is wiring the same matching logic into a scheduled Google Apps Script so reconciliation runs in the background with real data never sent to the model, which is covered in the developer guide.</p>
+    <div class="duo">
+
+      <a class="duo-card nocode" href="../nocode.html">
+        <span class="tag">No code needed</span>
+        <h2>Do it in Google Colab</h2>
+        <p class="lede2">Run the whole pipeline in your browser. An AI helper turns plain instructions into the scripts that do the work, and you approve each step before it runs.</p>
+        <span class="go">Start the no-code path</span>
+      </a>
+
+      <a class="duo-card dev" href="../dev.html">
+        <span class="tag">For developers</span>
+        <h2>Build it with code</h2>
+        <p class="lede2">The pipeline stage by stage, with code you can lift. What the scripts handle, where a language model earns its place, and how to call one your organization controls.</p>
+        <span class="go">Open the developer guide</span>
+      </a>
+
+    </div>
+    <p class="uc-credit" style="margin-top:var(--s5);">Pioneered at UCSB by <b>Emi Sautot, Julia Choi</b>, through the AI@Work Certificate Program.</p>
+  </section>
+
+</div>
+</main>
+
+<footer>
+  <p><strong>From Data to Reports</strong>, a field guide from UCSB Professional &amp; Continuing Education, built around a real student-evaluation pipeline. It runs on UCSB's LLM Sandbox, an OpenAI-compatible, token-metered campus gateway, and the same pattern works with any organization's gateway. <a href="https://www.youtube.com/watch?v=wz-T6y6iLHI" target="_blank" rel="noopener">What is LLM Sandbox?</a></p>
+  <p class="muted">Generalized from real UCSB AI projects, credited to the teams who created them. Specifics and real figures are omitted, and every sample is synthetic. This guide describes a responsible architecture for handling protected records; it is not legal advice and certifies no specific tool as "FERPA-compliant." Always verify data-governance terms and your data's <a href="https://cio.ucsb.edu/artificial-intelligence" target="_blank" rel="noopener">UCSB protection level</a> before sending real records.</p>
+</footer>
+
+<div id="askbot">
+  <button class="ask-bot" id="askbot-toggle" aria-expanded="false" aria-controls="askbot-panel">
+    <span class="ico" aria-hidden="true">&#128172;</span><span class="label">Ask the assistant</span><span class="dot" aria-hidden="true"></span>
+  </button>
+  <div class="askbot-panel" id="askbot-panel" role="dialog" aria-modal="true" aria-label="Ask the assistant" hidden>
+    <div class="askbot-head">
+      <strong>Ask the assistant</strong>
+      <div class="ha">
+        <a href="https://llmsandbox.cloud.ucsb.edu/bot/01KVEPQV2NF2PVSBVMNW53NYA5" target="_blank" rel="noopener" title="Open the full assistant in a new tab" aria-label="Open the full assistant in a new tab">&#8599;</a>
+        <button type="button" id="askbot-close" aria-label="Close chat">&#10005;</button>
+      </div>
+    </div>
+    <div class="askbot-msgs" id="askbot-msgs" aria-live="polite" aria-atomic="false">
+      <div class="askbot-msg bot">Ask me anything about this use case, the steps, the prompts, or which path to take.</div>
+    </div>
+    <form class="askbot-form" id="askbot-form">
+      <input id="askbot-input" type="text" placeholder="Ask a question..." autocomplete="off" aria-label="Your question">
+      <button type="submit" id="askbot-send" aria-label="Send">&#10148;</button>
+    </form>
+    <div class="askbot-foot">Powered by LLM Sandbox, grounded on this site</div>
+  </div>
+</div>
+
+<script>
+  window.PAGE_REVS = {};
+  window.PAGE_REV_DATE = "Jun 25, 2026";
+  window.ASKBOT_SUGGESTIONS = ["How does this work step by step?", "Which path should I pick?", "Is my data safe to use?"];
+</script>
+<script src="../app.js" defer></script>
+</body>
+</html>
