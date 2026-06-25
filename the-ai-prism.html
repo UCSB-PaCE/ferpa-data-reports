@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The AI Prism: the AI@Work showcase | Data to Reports</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="alternate icon" href="favicon.svg">
+<link rel="apple-touch-icon" href="favicon.svg">
+<meta name="description" content="The AI Prism: an accessible recreation of the AI@Work cohort showcase. 25 campus AI projects across five spectrums of transformation, the tool-selection matrix, the human-at-the-gate framework, and the aggregated impact.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..900&family=Nunito+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip-link" href="#content">Skip to content</a>
+
+<header class="topbar">
+  <div class="brand">
+    <img src="https://www.professional.ucsb.edu/sites/default/files/2025-05/Logo_PaCE_2025_Full.png" alt="UCSB PaCE logo">
+    <img src="https://otl.ucsb.edu/sites/default/files/images/ai-cop-spring-symposium-2026_logo.png" alt="UCSB AI Community of Practice logo">
+    <img src="img/ai-at-work-ucsb.png" alt="AI@Work UCSB logo">
+    <div class="sep"></div>
+    <div class="tag">Data &rarr; Reports
+      <small>AI@Work showcase</small>
+    </div>
+  </div>
+  <div class="pills">
+    <a class="pill ghost" href="index.html">Home</a>
+    <a class="pill ghost" href="usecases.html">Use cases</a>
+    <a class="pill link" href="#spectrums">Jump in &rarr;</a>
+  </div>
+</header>
+
+<main id="content" tabindex="-1">
+<div class="lander">
+
+  <p class="crumb"><a href="usecases.html">&larr; Use-case gallery</a></p>
+
+  <section class="prism-hero" aria-labelledby="prism-h">
+    <p class="eyebrow">AI@Work Certificate Program</p>
+    <h1 id="prism-h">The AI Prism</h1>
+    <p class="sub">Refracting administrative complexity into operational brilliance</p>
+    <p class="lead">An accessible recreation of the cohort showcase: the innovations, results, and wins of 25 transformative campus AI projects from UCSB's inaugural AI@Work cohort.</p>
+  </section>
+
+  <p class="uc-credit" style="margin:0 0 var(--s4);">Created by <b>Claudio Alunan</b> with Gemini Gems and NotebookLM, and recreated here as an accessible page. The original is a visual slide deck; this version is real, screen-reader-friendly text.</p>
+
+  <details class="prompt">
+    <summary>How this deck was made (the prompt)</summary>
+    <div class="codeblock"><pre><code>Claudio's method: he wrote an initial prompt in his own words, had Gemini turn it into a structured "Gem" prompt, then re-tweaked the wording the model got wrong, an alignment between how the model wants to understand the task and how the human wants the deliverable. He then asked it to group the output by theme (it found five), and fed that into NotebookLM with one instruction: make it vibrant and fun.
+
+THE GEM PROMPT
+Purpose and Goals:
+- Act as an 'AI Expert' specializing in academic project synthesization to transform source documents into clear, professional slide deck summaries.
+- Synthesize complex AI project documents into concise, high-impact bullet points for academic personnel.
+- Structure every summary across three specific categories: Current State and Desired Change, Approach and Iteration Process, and Results and Looking Ahead. Emphasize Wins if there are any.
+
+Behaviors and Rules:
+1) Clarification Phase:
+   a) Before generating any summaries, you must ask exactly 3 targeted questions to clarify the project's details or the user's specific focus areas within the source document.
+   b) Do not provide the summary output until the user has provided answers or feedback to these 3 questions.
+2) Summary Generation:
+   a) Create a slide deck summary for each presenter mentioned in the source document.
+   b) Each summary must include these categories: Background, Goal, Approach, Testing, Wins, and Future Project.
+   c) Ensure each category uses clear, concise bullet points suitable for a professional presentation.
+   d) Focus strictly on the provided source document for all content. Do not include external information, outside knowledge, or 'hallucinations'.
+3) Audience Alignment:
+   a) Tailor the language for 'academic personnel cohorts' to showcase the benefits of AI.
+   b) Explicitly highlight how the AI projects facilitate 'process improvements'.
+
+Overall Tone: Professional, analytical, and authoritative. Academic and highly structured. Precise and strictly grounded in the provided source material.</code></pre></div>
+  </details>
+
+  <section id="spectrums" aria-labelledby="spectrums-h">
+    <h2 id="spectrums-h">The spectrums of transformation</h2>
+    <p class="lede">Twenty-five projects, refracted into themes. Jump to any spectrum.</p>
+    <ul class="spectrum-list">
+      <li><a href="#personnel" style="--sp:#b5450a"><span class="lab">Academic personnel &amp; admissions</span><br><b>Driving equity &amp; speed</b></a></li>
+      <li><a href="#finance" style="--sp:#1f7a4d"><span class="lab">Financial compliance &amp; ledgers</span><br><b>Ensuring accuracy &amp; auditing</b></a></li>
+      <li><a href="#interop" style="--sp:#0f6ca6"><span class="lab">Interoperability &amp; scheduling</span><br><b>Bridging disconnected platforms</b></a></li>
+      <li><a href="#advising" style="--sp:#9c2b86"><span class="lab">Student advising &amp; analytics</span><br><b>Extracting signal from noise</b></a></li>
+      <li><a href="#policy" style="--sp:#8a5c00"><span class="lab">Regulatory compliance &amp; UX</span><br><b>Demystifying dense policy</b></a></li>
+      <li><a href="#blueprints" style="--sp:#6a2bd9"><span class="lab">Living blueprints</span><br><b>From static policies to dynamic tools</b></a></li>
+    </ul>
+  </section>
+
+  <section class="slide" id="personnel" style="--sp:#b5450a" aria-labelledby="personnel-h">
+    <span class="lab">Spectrum 1 &middot; Academic personnel &amp; admissions</span>
+    <h2 id="personnel-h">Elevating academic personnel and admissions through AI</h2>
+    <div class="win-grid">
+      <div class="win"><h3>Debi Vance</h3><p class="who">Unit-18 Lecturer Gem</p><p class="tag-win">The win</p><p>Proved custom Gems outperform NotebookLM for precise prioritizing logic, instantly locating specific policies across 85 complex contract URLs.</p></div>
+      <div class="win"><h3>Heidi Dinnogen</h3><p class="who">Equity-centered admissions</p><p class="tag-win">The win</p><span class="stat">94.3% alignment</span><p>Back-tested AI rubrics against historical data to reveal a stunning alignment rate with successful student outcomes, stripping away institutional privilege bias.</p></div>
+      <div class="win"><h3>Shawnee Oren</h3><p class="who">Sabbatical tracker automation</p><p class="tag-win">The win</p><p>Engineered a functional sabbatical-review Gem to ingest complex AP Folio data, brainstorm logic, and automatically track systemic policy constraints for faculty leaves.</p></div>
+    </div>
+  </section>
+
+  <section class="slide" id="finance" style="--sp:#1f7a4d" aria-labelledby="finance-h">
+    <span class="lab">Spectrum 2 &middot; Financial compliance &amp; ledgers</span>
+    <h2 id="finance-h">Accelerating financial compliance and institutional ledgers</h2>
+    <div class="win-grid">
+      <div class="win"><h3>Eva Cervera</h3><p class="who">Oracle fixed assets</p><p class="tag-win">The win</p><span class="stat">1-3 days to 10 minutes</span><p>Collapsed manual data processing per department across 7,014 assets, eliminating manual entry errors.</p></div>
+      <div class="win"><h3>Emi Sautot</h3><p class="who">AI-assisted financial compliance</p><p class="tag-win">The win</p><span class="stat">800+ lines</span><p>Successfully processed and filtered complex FlexCard transaction lines, proving NotebookLM's strength over Gemini for strict accounting business rules.</p></div>
+      <div class="win"><h3>Julia Choi</h3><p class="who">Optimizing flexcard reconciliation</p><p class="tag-win">The win</p><span class="stat">5,500 rows</span><p>Built a permanent Google Apps Script that automatically aggregates and verifies split ledger data rows year-to-date across isolated workbooks.</p></div>
+      <div class="win"><h3>Darshan Etz &amp; Yasmin Gutierrez</h3><p class="who">Eliminating invoice friction</p><p class="tag-win">The win</p><p>Constructed a workflow transformation layout securely bridging raw procurement tracking data with institutional asset and resource planning targets.</p></div>
+    </div>
+  </section>
+
+  <section class="slide" id="interop" style="--sp:#0f6ca6" aria-labelledby="interop-h">
+    <span class="lab">Spectrum 3 &middot; Interoperability &amp; scheduling</span>
+    <h2 id="interop-h">Bridging disjointed systems and automating complex pipelines</h2>
+    <div class="win-grid">
+      <div class="win"><h3>Jonathan Engeln Lambinet-Lacson</h3><p class="who">PaCE Reflect pipeline</p><p class="tag-win">The win</p><span class="stat">40 hours to minutes</span><p>Collapsed survey processing with 100% instructor matching, and engineered a SQLite cache that drops recurring analysis token costs to zero.</p></div>
+      <div class="win"><h3>Celine Teng</h3><p class="who">Escaping the scheduling matrix</p><p class="tag-win">The win</p><p>Built an automated logic script that simultaneously screens all five major tracks for course overlaps while instantly balancing faculty requests and policy constraints.</p></div>
+      <div class="win"><h3>Chad Christensen</h3><p class="who">Inventory refresh query bot</p><p class="tag-win">The win</p><p>Completely eliminated manual ServiceNow spreadsheet manipulation by building a single, secure interface for instant asset retrieval and lifespan tracking.</p></div>
+      <div class="win"><h3>Sarah Hong</h3><p class="who">Smart forms &amp; Nintex workflows</p><p class="tag-win">The win</p><span class="stat">80% fewer anomalies</span><p>Translated clunky DocuSign templates into active Nintex workflows in half the standard time, cutting complex routing anomalies sharply.</p></div>
+    </div>
+  </section>
+
+  <section class="slide" id="advising" style="--sp:#9c2b86" aria-labelledby="advising-h">
+    <span class="lab">Spectrum 4 &middot; Student advising &amp; analytics</span>
+    <h2 id="advising-h">Amplifying student advising and survey analytics</h2>
+    <div class="win-grid">
+      <div class="win"><h3>Erin Moore</h3><p class="who">Automating MTM recruitment</p><p class="tag-win">The win</p><span class="stat">112 interactions</span><p>Launched a live tracking matrix driven by eight active component workflows, seamlessly capturing unique student interactions in a unified database.</p></div>
+      <div class="win"><h3>Abigail Salas</h3><p class="who">AI-driven advising simulations</p><p class="tag-win">The win</p><span class="stat">2,000+ students</span><p>Upgraded flat training scripts into realistic, interactive peer-to-peer case scenarios paired with custom video to support communication students.</p></div>
+      <div class="win"><h3>Sofia Muller</h3><p class="who">From noise to signal</p><p class="tag-win">The win</p><span class="stat">1 week to 1 hour</span><p>Collapsed a grueling survey-data processing cycle via Claude Sonnet, instantly identifying a critical logic flaw in the survey design.</p></div>
+      <div class="win"><h3>Michelle Stransky</h3><p class="who">Unlocking queue efficiency</p><p class="tag-win">The win</p><span class="stat">1,361 visits in 18 min</span><p>Mapped the distribution of advising visits across stations, providing immediate data to re-balance staff workloads ahead of afternoon surges.</p></div>
+    </div>
+  </section>
+
+  <section class="slide" id="policy" style="--sp:#8a5c00" aria-labelledby="policy-h">
+    <span class="lab">Spectrum 5 &middot; Regulatory compliance &amp; UX</span>
+    <h2 id="policy-h">Demystifying regulatory compliance and system UI</h2>
+    <div class="win-grid">
+      <div class="win"><h3>Claudio Alunan</h3><p class="who">UCPath process optimization</p><p class="tag-win">The win</p><span class="stat">5 gaps, 6 fixes</span><p>AI independently discovered hidden operational gaps in existing job aids and generated concrete process-improvement recommendations.</p></div>
+      <div class="win"><h3>Francesca Palermino</h3><p class="who">eGrades redesign</p><p class="tag-win">The win</p><span class="stat">Top 10 pain points</span><p>Successfully extracted and prioritized the most frequent UI pain points from a twenty-year-old legacy system's help-desk data.</p></div>
+      <div class="win"><h3>Martina Ubaldo</h3><p class="who">Accessibility auditing</p><p class="tag-win">The win</p><p>Built a trusted, hallucination-free notebook that automatically links every generated answer directly to authoritative university sources to build trust.</p></div>
+      <div class="win"><h3>Alina Gutierrez</h3><p class="who">Compliant science publishing</p><p class="tag-win">The win</p><span class="stat">WCAG 2.1 / 2.2 AA</span><p>Automated the translation of dense visual content into compliant HTML plain text without slowing publishing cycles.</p></div>
+      <div class="win"><h3>Rachel Lewis</h3><p class="who">Sponsored Projects helper-bot</p><p class="tag-win">The win</p><span class="stat">Zero hallucinations</span><p>Engineered a bot that answers complex grant queries by explicitly programming it never to guess when information is absent.</p></div>
+    </div>
+  </section>
+
+  <section class="slide" id="blueprints" style="--sp:#6a2bd9" aria-labelledby="blueprints-h">
+    <span class="lab">Living blueprints</span>
+    <h2 id="blueprints-h">Building living blueprints from static policies</h2>
+    <div class="win-grid">
+      <div class="win"><h3>Yentran Tran</h3><p class="who">Frozen files to forward motion</p><p class="tag-win">The win</p><p>Extracted a hidden insight from 100+ page static reports, revealing that the bulk of a future budget write-off stemmed from unpaid undergraduate premiums.</p></div>
+      <div class="win"><h3>LeeAnn Trusela</h3><p class="who">Covered-services compliance</p><p class="tag-win">The win</p><span class="stat">5-step guide</span><p>Transformed harrowing, dense catering policies into a simplified, instantly deployable infographic guide.</p></div>
+      <div class="win"><h3>Aasritha Sakhamuri</h3><p class="who">Code Chronicler</p><p class="tag-win">The win</p><p>Drastically reduced onboarding time by having AI document legacy codebases, explicitly flagging logic uncertainties ("inferred from code, confirm").</p></div>
+      <div class="win"><h3>India Madden</h3><p class="who">Bottlenecks to blueprints</p><p class="tag-win">The win</p><span class="stat">Hours to seconds</span><p>Compressed grad-admin bottlenecks, transforming a self-described AI skeptic into an inspired digital builder.</p></div>
+      <div class="win"><h3>Jackie Spier</h3><p class="who">Living subject navigator</p><p class="tag-win">The win</p><p>Launched a four-phase synthesis pipeline to replace single-point-of-failure subject-matter experts with dynamic training guides.</p></div>
+    </div>
+  </section>
+
+  <section class="slide" id="diagnostic" style="--sp:var(--navy)" aria-labelledby="diagnostic-h">
+    <span class="lab">The deployment matrix</span>
+    <h2 id="diagnostic-h">The AI engine diagnostic: which tool when?</h2>
+    <p class="lede">Distilling the cohort's comparative testing into an actionable deployment matrix.</p>
+    <div class="win-grid">
+      <div class="win"><h3>NotebookLM</h3><p class="who">Proven by Emi Sautot, Martina Ubaldo, LeeAnn Trusela</p><p><strong>Best for:</strong> strict policy adherence, eliminating hallucinations, and grounding outputs in localized documents.</p><p><strong>Limitation:</strong> lacks precise prioritizing logic for complex routing.</p></div>
+      <div class="win"><h3>Claude (Sonnet / Opus)</h3><p class="who">Proven by Sofia Muller, Alina Gutierrez, Claudio Alunan</p><p><strong>Best for:</strong> massive-context reasoning, precise data formatting, and unstructured PDF parsing.</p><p><strong>Limitation:</strong> high token draw, rewarding careful, compact prompts.</p></div>
+      <div class="win"><h3>Custom Gemini Gems</h3><p class="who">Proven by Debi Vance, Celine Teng, Julia Choi</p><p><strong>Best for:</strong> collaborative brainstorming, custom script generation, and rapid integration into existing Google workflows.</p><p><strong>Limitation:</strong> needs strict boundary prompting to avoid context drift.</p></div>
+    </div>
+  </section>
+
+  <section class="slide" id="framework" style="--sp:#0a4d78" aria-labelledby="framework-h">
+    <span class="lab">The operating truth</span>
+    <h2 id="framework-h">The human-AI collaboration framework</h2>
+    <p class="lede">Across 25 distinct projects, one truth held: AI was never granted agency to make final decisions. It was used strictly to augment and elevate human judgment.</p>
+    <p class="gate"><span>AI processing engine</span><span class="arrow" aria-hidden="true">&rarr;</span><span>Human gatekeeper</span></p>
+    <div class="win-grid">
+      <div class="win"><h3>Strict validation</h3><p>AI requires mandatory secondary human validation for sensitive constraints (for example, unpublished sabbatical research or institutional procurement data).</p></div>
+      <div class="win"><h3>Preserving agency</h3><p>AI diagnoses and scores localized datasets (like non-traditional applicant rubrics), but the absolute authority to accept or reject remains fundamentally human.</p></div>
+      <div class="win"><h3>Directed curiosity</h3><p>The most successful prompts forced AI to flag its own uncertainties, directing human reviewers exactly where to apply their localized expertise.</p></div>
+    </div>
+  </section>
+
+  <section class="slide" id="impact" style="--sp:#9c2b86" aria-labelledby="impact-h">
+    <span class="lab">Impact dashboard</span>
+    <h2 id="impact-h">Aggregated impact and institutional ROI</h2>
+    <div class="impact-grid">
+      <div class="impact"><h3>Time reclaimed</h3><span class="big">Weeks to hours</span><p class="cap">Processing cycles collapsed, from "1 to 3 days" down to "10 minutes," with millions of API tokens saved via engineered SQLite caching.</p></div>
+      <div class="impact"><h3>Volume mastered</h3><span class="big">Thousands</span><p class="cap">Complex ledger rows, flexcard lines, and disjointed survey responses processed without manual data-entry fatigue.</p></div>
+      <div class="impact"><h3>Accuracy elevated</h3><span class="big">94.3%</span><p class="cap">Alignment in equity rubrics, plus 100% qualitative instructor matching and an 80% reduction in digital routing anomalies.</p></div>
+    </div>
+  </section>
+
+  <section class="slide" id="ahead" style="--sp:#b5450a" aria-labelledby="ahead-h">
+    <span class="lab">Looking ahead</span>
+    <h2 id="ahead-h">The future of campus innovation</h2>
+    <p class="lede">The work of these 25 pioneers is a foundation, not a finish line.</p>
+    <div class="win-grid">
+      <div class="win"><h3>Scaling secure APIs</h3><p>Transitioning from manual CSV uploads to live, read-only API integrations directly over enterprise systems.</p></div>
+      <div class="win"><h3>Deploying agentic bots</h3><p>Moving beyond reactive, human-prompted tools to autonomous, around-the-clock background agents for rote administrative tasks.</p></div>
+      <div class="win"><h3>Standardizing campus templates</h3><p>Elevating isolated departmental wins into standardized, university-wide operational frameworks.</p></div>
+    </div>
+    <div class="takeaway" style="margin-top:var(--s5);">The blueprint is yours. The institutional future is being built now. Explore the <a href="usecases.html">use-case gallery</a> and start your own.</div>
+  </section>
+
+</div>
+</main>
+
+<footer>
+  <p><strong>From Data to Reports</strong>, a field guide from UCSB Professional &amp; Continuing Education. The AI Prism is an accessible recreation of a cohort showcase created by Claudio Alunan with Gemini Gems and NotebookLM. <a href="https://www.youtube.com/watch?v=wz-T6y6iLHI" target="_blank" rel="noopener">What is LLM Sandbox?</a></p>
+  <p class="muted">Project wins and figures are reproduced from the original AI@Work cohort presentation. This guide describes a responsible architecture for handling protected records; it is not legal advice and certifies no specific tool as "FERPA-compliant." Always verify data-governance terms and your data's <a href="https://cio.ucsb.edu/artificial-intelligence" target="_blank" rel="noopener">UCSB protection level</a> before sending real records.</p>
+</footer>
+
+<div id="askbot">
+  <button class="ask-bot" id="askbot-toggle" aria-expanded="false" aria-controls="askbot-panel" aria-label="Ask the assistant">
+    <span class="ico" aria-hidden="true">&#128172;</span><span class="label">Ask the assistant</span><span class="dot" aria-hidden="true"></span>
+  </button>
+  <div class="askbot-panel" id="askbot-panel" role="dialog" aria-modal="true" aria-label="Ask the assistant" hidden>
+    <div class="askbot-head">
+      <strong>Ask the assistant</strong>
+      <div class="ha">
+        <a href="https://llmsandbox.cloud.ucsb.edu/bot/01KVEPQV2NF2PVSBVMNW53NYA5" target="_blank" rel="noopener" title="Open the full assistant in a new tab" aria-label="Open the full assistant in a new tab">&#8599;</a>
+        <button type="button" id="askbot-close" aria-label="Close chat">&#10005;</button>
+      </div>
+    </div>
+    <div class="askbot-msgs" id="askbot-msgs" aria-live="polite" aria-atomic="false">
+      <div class="askbot-msg bot">Ask me about the AI@Work projects, which tool fits a task, or how to build one of these for your own data.</div>
+    </div>
+    <form class="askbot-form" id="askbot-form">
+      <input id="askbot-input" type="text" placeholder="Ask a question..." autocomplete="off" aria-label="Your question">
+      <button type="submit" id="askbot-send" aria-label="Send">&#10148;</button>
+    </form>
+    <div class="askbot-foot">Powered by LLM Sandbox, grounded on this site</div>
+  </div>
+</div>
+
+<script>
+  window.PAGE_REVS = {};
+  window.PAGE_REV_DATE = "Jun 25, 2026";
+  window.ASKBOT_SUGGESTIONS = ["What is the AI@Work program?", "Which AI tool fits my task?", "How do I build one of these?"];
+</script>
+<script src="app.js" defer></script>
+</body>
+</html>

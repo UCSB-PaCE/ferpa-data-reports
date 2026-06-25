@@ -558,6 +558,48 @@ details.prompt .codeblock pre{white-space:pre-wrap; word-break:break-word;}
   .brand{gap:9px; min-width:0;}
   .topbar{gap:8px;}
 }
+/* ── The AI Prism slide-deck page ───────────────────────────────────────── */
+.prism-hero{position:relative; overflow:hidden; border-radius:18px; color:#fff;
+  padding:clamp(26px,5vw,52px); margin:var(--s4) 0 var(--s6);
+  background:linear-gradient(120deg,#06243a 35%, #0a4d78);}
+.prism-hero::after{content:""; position:absolute; inset:-40% -10% -40% 45%; opacity:.55; pointer-events:none;
+  background:conic-gradient(from 210deg at 70% 50%, #ff6a00,#febc11,#1f7a4d,#0f6ca6,#b3309e,#ff6a00);
+  filter:blur(46px);}
+.prism-hero > *{position:relative; z-index:1;}
+.prism-hero .eyebrow{color:#ffe6a6;}
+.prism-hero h1{color:#fff; margin:0 0 var(--s2);}
+.prism-hero .sub{font-family:var(--display); font-weight:600; color:#eaf3fb; font-size:clamp(1.1rem,2.2vw,1.55rem); margin:0 0 var(--s3);}
+.prism-hero .lead{color:#d7e6f2; max-width:58ch; margin:0;}
+@media (prefers-reduced-motion:no-preference){.prism-hero::after{transition:none;}}
+/* spectrum index */
+.spectrum-list{display:grid; gap:10px; margin:var(--s4) 0 0; padding:0; list-style:none;}
+.spectrum-list a{display:block; text-decoration:none; color:inherit; background:var(--white);
+  border:1px solid var(--line); border-left:6px solid var(--sp,var(--navy)); border-radius:10px; padding:11px 14px;}
+.spectrum-list a:hover{background:var(--soft-blue);}
+.spectrum-list .lab{font-family:var(--mono); font-size:.62rem; letter-spacing:.1em; text-transform:uppercase; color:var(--sp,var(--muted)); font-weight:700;}
+.spectrum-list b{color:var(--navy); font-size:1.05rem;}
+/* deck slide as an accessible section */
+.slide{background:var(--white); border:1px solid var(--line); border-top:5px solid var(--sp,var(--navy));
+  border-radius:16px; padding:clamp(20px,3vw,34px); margin:var(--s5) 0; scroll-margin-top:84px; box-shadow:var(--shadow-sm);}
+.slide > .lab{display:block; font-family:var(--mono); font-size:.64rem; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--sp,var(--sea)); font-weight:700; margin-bottom:6px;}
+.slide > h2{margin:0 0 var(--s4);}
+.win-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(238px,1fr)); gap:var(--s4); margin-top:var(--s4);}
+.win{border:1px solid var(--line); border-radius:12px; padding:var(--s4); background:#fbfdff; display:flex; flex-direction:column;}
+.win h3{font-size:1.05rem; margin:0;}
+.win .who{font-family:var(--mono); font-size:.62rem; letter-spacing:.04em; text-transform:uppercase; color:var(--muted); margin:3px 0 9px;}
+.win .tag-win{font-family:var(--mono); font-size:.58rem; letter-spacing:.12em; text-transform:uppercase; color:var(--green); font-weight:700;}
+.win .stat{font-family:var(--display); font-weight:700; color:var(--gold-deep); font-size:clamp(1.7rem,4.5vw,2.3rem); line-height:1.04; margin:4px 0;}
+.win p{margin:5px 0 0; font-size:.92rem; line-height:1.5; color:#33536e;}
+/* impact figures */
+.impact-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:var(--s4); margin-top:var(--s4);}
+.impact{border:1px solid var(--line); border-radius:12px; padding:var(--s5); background:var(--white);}
+.impact h3{margin:0 0 var(--s3); font-size:1.05rem;}
+.impact .big{display:block; font-family:var(--display); font-weight:700; color:var(--navy); font-size:clamp(1.6rem,4.5vw,2.2rem); line-height:1.05;}
+.impact .big + .cap{color:var(--muted); font-size:.9rem;}
+.gate{display:flex; flex-wrap:wrap; align-items:center; gap:12px; margin:var(--s4) 0; font-family:var(--mono);
+  font-size:.8rem; color:var(--navy); background:var(--soft-blue); border:1px solid #cfe0ee; border-radius:12px; padding:14px 16px;}
+.gate .arrow{color:var(--gold-deep); font-weight:800;}
 
 /* live pipeline: protected record -> stages -> FERPA gate -> report */
 .pipe{display:flex; align-items:flex-start; margin-top:clamp(30px,4.5vw,56px); gap:0; overflow-x:auto; padding-bottom:6px;}
