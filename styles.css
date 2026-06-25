@@ -589,7 +589,7 @@ details.prompt .codeblock pre{white-space:pre-wrap; word-break:break-word;}
 .win h3{font-size:1.05rem; margin:0;}
 .win .who{font-family:var(--mono); font-size:.62rem; letter-spacing:.04em; text-transform:uppercase; color:var(--muted); margin:3px 0 9px;}
 .win .tag-win{font-family:var(--mono); font-size:.58rem; letter-spacing:.12em; text-transform:uppercase; color:var(--green); font-weight:700;}
-.win .stat{font-family:var(--display); font-weight:700; color:var(--gold-deep); font-size:clamp(1.7rem,4.5vw,2.3rem); line-height:1.04; margin:4px 0;}
+.win .stat{font-family:var(--display); font-weight:700; color:var(--gold-deep); font-size:clamp(1.25rem,2.8vw,1.65rem); line-height:1.12; margin:4px 0; overflow-wrap:break-word; hyphens:auto;}
 .win p{margin:5px 0 0; font-size:.92rem; line-height:1.5; color:#33536e;}
 /* impact figures */
 .impact-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:var(--s4); margin-top:var(--s4);}
