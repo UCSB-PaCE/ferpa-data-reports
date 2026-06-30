@@ -13,3 +13,15 @@ node_modules/
 .playwright-mcp/
 .DS_Store
 Thumbs.db
+
+# Secrets & credentials (never commit)
+.env
+.env.*
+!.env.example
+token_*.json
+*credentials*.json
+cookies.txt
+
+# Temp / scratch
+*.tmp
+*.bak
