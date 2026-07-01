@@ -28,3 +28,7 @@ cookies.txt
 
 # Internal meeting notes / feedback (never publish to the public Pages site)
 feedback/
+
+# Stray root-level slide-deck / PDF artifacts (hosted on Google Drive; do not commit).
+# Anchored to root so tracked PDFs under sample-data/ are unaffected.
+/*.pdf
