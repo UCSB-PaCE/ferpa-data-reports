@@ -25,3 +25,6 @@ cookies.txt
 # Temp / scratch
 *.tmp
 *.bak
+
+# Internal meeting notes / feedback (never publish to the public Pages site)
+feedback/
