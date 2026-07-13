@@ -17,11 +17,15 @@ UCSB's **LLM Sandbox** API, with a no-code Google Colab path for non-technical u
 
 ## How it is built and deployed
 
-This is **plain static HTML**, no build step. The site is **seven pages sharing one
-`styles.css` and one `app.js`**. `index.html` is the landing (origin-story hook + two
-tracks). The split is by audience: a **no-code track** (`nocode.html`, `colab-intro.html`)
-and a **developer track** (`dev.html` the build, `gateway.html` the generic API,
-`sandbox.html` the UCSB specifics), plus `about.html`. Display face is **Fraunces** (serif);
+This is **plain static HTML**, no build step. The site is **30 tracked HTML pages sharing
+one `styles.css` and one `app.js`**: **9 top-level pages** plus a **21-page `cases/`
+gallery** (one detail page per use case). `index.html` is the landing (the "turn your data
+into reports" hook, a few featured cases, and the track chooser); `usecases.html` is the
+full **"Find your use case"** gallery that links to all 21 `cases/*.html` detail pages;
+`the-ai-prism.html` is the AI@Work **"AI Prism"** showcase. The rest split by audience: a
+**no-code track** (`nocode.html`, `colab-intro.html`) and a **developer track** (`dev.html`
+the build, `gateway.html` the generic API, `sandbox.html` the UCSB specifics), plus
+`about.html`. Display face is **Fraunces** (serif);
 labels are **JetBrains Mono**; body is **Nunito Sans**. Per-page data (the "revised N×"
 badge counts/date and the chat's suggested questions) is set in a small inline `<script>`
 that runs before `app.js`. There is **no test suite, no linter, and no
@@ -45,7 +49,10 @@ python -m http.server 8000      # then open http://localhost:8000/
 
 | Path | Purpose |
 |------|---------|
-| `index.html` | **Landing** (root URL): a calm hero with the origin-story hook, then two track cards (no-code / developer) + About and "New to Colab?" entrances. |
+| `index.html` | **Landing** (root URL): the "turn your data into reports" hook, a few featured use-case cards, and the track chooser (Find your use case / no-code / developer) + About and "New to Colab?" entrances. |
+| `usecases.html` | **"Find your use case" gallery**: the full grid of use cases, each card linking to its `cases/*.html` detail page. This is the primary browse surface. |
+| `cases/` | **21 use-case detail pages** (`cases/*.html`), one per dataset/scenario (advising notes, admissions rubric, helpdesk emails, grant outcomes, etc.). Each pairs with a synthetic file in `sample-data/`. |
+| `the-ai-prism.html` | **The AI Prism**: the AI@Work showcase page (the content of the "Innovation Prism" slide deck served as a page instead of a committed PDF). Links back to the landing and the gallery. |
 | `nocode.html` | **No-code track**: the explanatory Google Colab walkthrough (an AI helper writes each step; you approve). Written for smart, mildly-technical readers. |
 | `colab-intro.html` | **"New to Google Colab?"** five-minute primer (cells, run, Secrets, Files). |
 | `dev.html` | **Developer guide**: the six pipeline stages with code, each tagged by role (`script` / `AI` / `human` via the `.role` badge), caching, token economics, the continuous-improvement loop, principles + checklist. |
@@ -55,7 +62,7 @@ python -m http.server 8000      # then open http://localhost:8000/
 | `styles.css`, `app.js` | The **shared design system** + behaviors (tabbed code, copy buttons, scrollspy, mobile nav, chat widget, "revised N×" badge renderer) used by every page. Edit these once; every page updates. |
 | `img/` | Annotated screenshots (PNG). `_annot.py` is the annotation helper (crop / box / numbered badge / legend). |
 | `knowledge/ferpa-data-reports.md` | The chat assistant's curated knowledge file (one of its two sources; see below). |
-| `sample-data/` | Synthetic `advising_notes_sample.csv` / `.xlsx` (KPI columns; no real records). |
+| `sample-data/` | Synthetic sample files, one per use case (CSV, plus an XLSX and a PDF), e.g. `advising_notes_sample.csv` / `.xlsx`, `helpdesk_emails_sample.csv`, `grant_outcomes_sample.csv`. KPI columns only; no real records. |
 | `ferpa_pipeline_colab.ipynb` | Ready-to-run companion notebook. |
 | `worker/` | Cloudflare Worker proxy that hides the bot API key (`worker.js`, `wrangler.jsonc`, `README.md`). |
 | `favicon.svg`, `README.md` | Site favicon; public README. |

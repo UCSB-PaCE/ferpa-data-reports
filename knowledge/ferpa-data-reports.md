@@ -1,6 +1,6 @@
 # From FERPA Data to Reports: A Transferable Pipeline
 
-This is the knowledge source for the "Ferpa Data Reports Website Assistant" bot. It mirrors the documentation site at https://sites.google.com/ucsb.edu/ferpa-data-reports. The site explains how to transfer a "FERPA-protected data to report" pipeline to any FERPA-protected dataset, not just course evaluations. It is built on UCSB's LLM Sandbox, an OpenAI-compatible, token-metered institutional LLM gateway.
+This is the knowledge source for the "Ferpa Data Reports Website Assistant" bot. It mirrors the documentation site at https://ucsb-pace.github.io/ferpa-data-reports/. The site explains how to transfer a "FERPA-protected data to report" pipeline to any FERPA-protected dataset, not just course evaluations. It is built on UCSB's LLM Sandbox, an OpenAI-compatible, token-metered institutional LLM gateway.
 
 ## Overview
 
