@@ -27,3 +27,18 @@ The "Ask the assistant" chat calls a Cloudflare Worker proxy that holds the bot 
 server-side, so the key is never in this repo or the page.
 
 Built with the help of UCSB's LLM Sandbox under human review.
+
+## Contributor setup (commit hooks)
+
+Commits in this repo must follow [Conventional Commits](https://www.conventionalcommits.org/) (`feat:`, `fix:`, `docs:`, `chore:` ...), and are scanned for secrets. Git does not version `.git/hooks`, so **every fresh clone must run one of these once**:
+
+```sh
+# Option 1: pre-commit (also runs the secret scan)
+pip install pre-commit
+pre-commit install --hook-type pre-commit --hook-type commit-msg
+
+# Option 2: dependency-free commit-msg hook only (needs a pace-core checkout)
+<path-to-pace-core>/STANDARDS/hooks/install-hook.sh --copy .
+```
+
+Check it worked: `git commit --allow-empty -m "bad message"` should be rejected, and `git commit --allow-empty -m "chore: test"` should pass (undo with `git reset --soft HEAD~1`).

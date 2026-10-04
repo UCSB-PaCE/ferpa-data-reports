@@ -1,7 +1,16 @@
-# UCSB-PaCE secret-scanning pre-commit hook. Setup: pip install pre-commit && pre-commit install
+# UCSB-PaCE pre-commit hooks: secret scanning + Conventional Commits.
+# Per-clone setup (once):
+#   pip install pre-commit
+#   pre-commit install --hook-type pre-commit --hook-type commit-msg
+# Dependency-free alternative: pace-core/STANDARDS/hooks/install-hook.sh
 # See pace-core/STANDARDS/secret-scanning.md
 repos:
   - repo: https://github.com/gitleaks/gitleaks
     rev: v8.18.4
     hooks:
       - id: gitleaks
+  - repo: https://github.com/compilerla/conventional-pre-commit
+    rev: v3.4.0
+    hooks:
+      - id: conventional-pre-commit
+        stages: [commit-msg]
