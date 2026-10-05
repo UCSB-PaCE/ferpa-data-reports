@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  pull_request:
+    paths:
+      - "**/*.html"
+      - "app.js"
+      - "styles.css"
+      - "worker/**"
+      - "scripts/**"
+      - ".github/workflows/ci.yml"
+  push:
+    branches: [main]
+    paths:
+      - "**/*.html"
+      - "app.js"
+      - "styles.css"
+      - "worker/**"
+      - "scripts/**"
+      - ".github/workflows/ci.yml"
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Syntax-check JS (worker, app.js, inline scripts) and local links
+        run: node scripts/check-site.mjs
